@@ -1,13 +1,13 @@
 import React from "react";
 import "./App.css";
-import SignIn from "./templates/auth/Login";
-import SignInSide from "./sign-in-side/SignInSide";
+import Login from "./templates/auth/Login";
+import Register from "./templates/auth/Register";
 
 function App() {
   return (
     <div className="App">
-      <SignIn />
-      {/* <SignInSide /> */}
+      {/* <Login /> */}
+      <Register />
     </div>
   );
 }
