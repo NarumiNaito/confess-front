@@ -3,7 +3,7 @@ import SvgIcon from "@mui/material/SvgIcon";
 
 export function SignInIcon() {
   return (
-    <SvgIcon sx={{ height: 50, width: "100%" }}>
+    <SvgIcon sx={{ height: 50, width: 150 }}>
       <svg xmlns="http://www.w3.org/2000/svg" zoomAndPan="magnify" viewBox="0 0 1440 809.999993" preserveAspectRatio="xMidYMid meet" version="1.0">
         <defs>
           <g />
