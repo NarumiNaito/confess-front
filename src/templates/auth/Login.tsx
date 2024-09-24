@@ -10,14 +10,12 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
-import { styled } from "@mui/material/styles";
-import ForgotPassword from "../../components/Auth/ForgotPassword";
-import { GoogleIcon } from "../../components/Auth/CustomIcons";
-import AppTheme from "../../components/Auth/AppTheme";
-import Header from "../../components/Auth/Header";
+import { createTheme, styled } from "@mui/material/styles";
+import ForgotPassword from "../../components/auth/ForgotPassword";
+import { GoogleIcon } from "../../components/CustomIcons";
+import Header from "../../components/auth/Header";
 import Footer from "../../components/Footer";
-
-import Container from "@mui/material/Container";
+import { ThemeProvider } from "@emotion/react";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -106,8 +104,14 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     return isValid;
   };
 
+  const themeDark = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
   return (
-    <AppTheme {...props}>
+    <ThemeProvider theme={themeDark}>
       <CssBaseline enableColorScheme />
       <Box
         sx={{
@@ -119,7 +123,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
         <Header />
         <SignInContainer direction="column" justifyContent="space-between" sx={{ flexGrow: 1 }}>
           <Card variant="outlined">
-            <Typography component="h1" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}>
+            <Typography color="error" component="h1" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}>
               ログイン
             </Typography>
             <Box
@@ -174,7 +178,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               </FormControl>
 
               <Typography sx={{ textAlign: "right" }}>
-                <Link component="button" onClick={handleClickOpen} variant="body2" sx={{ alignSelf: "baseline" }}>
+                <Link component="button" onClick={handleClickOpen} variant="body2" color="error" sx={{ alignSelf: "baseline" }}>
                   パスワードをお忘れの方はこちら
                 </Link>
               </Typography>
@@ -184,7 +188,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 ログイン
               </Button>
               <Typography sx={{ textAlign: "right" }}>
-                <Link href="/material-ui/getting-started/templates/sign-in/" variant="body2" sx={{ alignSelf: "baseline" }}>
+                <Link href="/material-ui/getting-started/templates/sign-in/" variant="body2" color="error" sx={{ alignSelf: "baseline" }}>
                   アカウントをお持ちでない方はこちら
                 </Link>
               </Typography>
@@ -201,6 +205,6 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           <Footer />
         </Box>
       </Box>
-    </AppTheme>
+    </ThemeProvider>
   );
 }
