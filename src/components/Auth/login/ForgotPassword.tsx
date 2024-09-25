@@ -28,7 +28,7 @@ export default function ForgotPassword({ open, handleClose }: ForgotPasswordProp
       <DialogTitle>パスワードリセット</DialogTitle>
       <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}>
         <DialogContentText>アカウントのメールアドレスを入力すると、パスワードをリセットするためのリンクをお送りします。</DialogContentText>
-        <OutlinedInput autoFocus required margin="dense" id="email" name="email" label="Email address" placeholder="Email address" type="email" fullWidth />
+        <OutlinedInput autoFocus required margin="dense" id="email" name="email" label="Email address" placeholder="メールアドレスを入力して下さい" type="email" fullWidth />
       </DialogContent>
       <DialogActions sx={{ pb: 3, px: 3 }}>
         <Button onClick={handleClose}>戻る</Button>
