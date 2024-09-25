@@ -13,7 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Badge } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { SignInIcon } from "./CustomIcons";
+import { SiteMarkIcon } from "./CustomIcons";
 
 const pages = ["みんなの懺悔", "懺悔ランキング", "聖母に相談"];
 const settings = ["アカウント編集", "懺悔一覧", "コメント一覧", "赦し一覧", "ログアウト"];
@@ -42,7 +42,7 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
-            <SignInIcon />
+            <SiteMarkIcon />
           </Box>
           <Typography
             variant="h5"
@@ -89,7 +89,7 @@ function Header() {
               ))}
             </Menu>
             <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
-              <SignInIcon />
+              <SiteMarkIcon />
             </Box>
           </Box>
 
