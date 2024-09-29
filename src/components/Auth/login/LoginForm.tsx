@@ -9,9 +9,10 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
-import { createTheme, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import ForgotPassword from "../login/ForgotPassword";
 import { GoogleIcon } from "../../CustomIcons";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -24,10 +25,6 @@ const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     maxWidth: "450px",
   },
-  boxShadow: "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
-  ...theme.applyStyles("dark", {
-    boxShadow: "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
-  }),
 }));
 
 const LoginContainer = styled(Stack)(({ theme }) => ({
@@ -41,11 +38,19 @@ const LoginContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+interface INPUTS {
+  email: string;
+  password: string;
+}
+
 export default function LoginForm(props: { disableCustomTheme?: boolean }) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -56,41 +61,8 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!validateInputs()) return; // Prevent submission if validation fails
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
-
-  const validateInputs = () => {
-    const email = document.getElementById("email") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
-
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage("メールアドレスを入力して下さい");
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage("");
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("パスワードは８文字以上、２０文字以内で入力して下さい");
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
-    }
-
-    return isValid;
+  const onSubmit: SubmitHandler<INPUTS> = (data) => {
+    console.log(data);
   };
 
   return (
@@ -101,7 +73,7 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
         </Typography>
         <Box
           component="form"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           noValidate
           sx={{
             display: "flex",
@@ -114,42 +86,63 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <FormLabel htmlFor="email">メールアドレス</FormLabel>
             </Box>
-            <TextField
-              error={emailError}
-              helperText={emailErrorMessage}
-              id="email"
-              type="email"
+            <Controller
+              control={control}
               name="email"
-              placeholder="メールアドレスを入力"
-              autoComplete="email"
-              autoFocus
-              required
-              fullWidth
-              variant="outlined"
-              color={emailError ? "error" : "primary"}
-              sx={{ ariaLabel: "email" }}
+              defaultValue={""}
+              rules={{
+                required: { value: true, message: "メールアドレスを入力して下さい" },
+                pattern: { value: /^[a-z\d][\w.-]*@[\w.-]+\.[a-z\d]+$/i, message: "メールアドレスを正しく入力して下さい" },
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  id="email"
+                  type="email"
+                  placeholder="メールアドレスを入力して下さい"
+                  autoComplete="email"
+                  autoFocus
+                  required
+                  fullWidth
+                  variant="outlined"
+                  sx={{ ariaLabel: "email" }}
+                  {...field}
+                  error={!!error?.message}
+                  helperText={error?.message}
+                />
+              )}
             />
           </FormControl>
           <FormControl>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <FormLabel htmlFor="password">パスワード</FormLabel>
             </Box>
-            <TextField
-              error={passwordError}
-              helperText={passwordErrorMessage}
+            <Controller
+              control={control}
               name="password"
-              placeholder="パスワードを入力"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              autoFocus
-              required
-              fullWidth
-              variant="outlined"
-              color={passwordError ? "error" : "primary"}
+              defaultValue={""}
+              rules={{
+                required: { value: true, message: "パスワードを入力して下さい" },
+                minLength: { value: 7, message: "8文字以上で入力してください" },
+                maxLength: { value: 20, message: "20文字以内で入力してください" },
+                pattern: { value: /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,20}$/i, message: "パスワードは英数文字で8文字以上、20文字以内で入力して下さい" },
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  placeholder="パスワードを入力して下さい"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  autoFocus
+                  required
+                  fullWidth
+                  variant="outlined"
+                  {...field}
+                  error={!!error?.message}
+                  helperText={error?.message}
+                />
+              )}
             />
           </FormControl>
-
           <Typography sx={{ textAlign: "right" }}>
             <Link component="button" onClick={handleClickOpen} variant="body2" color="error" sx={{ alignSelf: "baseline" }}>
               パスワードをお忘れの方はこちら
@@ -157,7 +150,7 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
           </Typography>
           <Divider />
           <ForgotPassword open={open} handleClose={handleClose} />
-          <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
+          <Button type="submit" fullWidth variant="contained">
             ログイン
           </Button>
           <Typography sx={{ textAlign: "right" }}>
