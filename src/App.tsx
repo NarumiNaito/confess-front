@@ -1,32 +1,35 @@
 import React from "react";
-import "./App.css";
 import { createTheme, CssBaseline, Stack, ThemeProvider } from "@mui/material";
 import Router from "./router/Router";
 import styled from "@emotion/styled";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const themeDark = createTheme({
+const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
 });
 
-const Gradient = styled(Stack)(({ theme }) => ({
+const BackgroundImage = styled(Stack)(({ theme }) => ({
   zIndex: -1,
   inset: 0,
+  textAlign: "center",
   backgroundRepeat: "no-repeat",
   backgroundImage: "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
 }));
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <ThemeProvider theme={themeDark}>
-      <Gradient>
-        <CssBaseline enableColorScheme />
-        <div className="App">
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={darkTheme}>
+        <BackgroundImage>
+          <CssBaseline enableColorScheme />
           <Router />
-        </div>
-      </Gradient>
-    </ThemeProvider>
+        </BackgroundImage>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 
