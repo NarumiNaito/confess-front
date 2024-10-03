@@ -14,7 +14,7 @@ const navItems = ["利用規約", "プライバシーポリシー", "お問合�
 function Footer() {
   return (
     <AppBar position="sticky">
-      <Container sx={{ Bottom: 0, padding: 5 }}>
+      <Container sx={{ Bottom: 0, padding: 2, mt: 1 }}>
         <Box>
           <Box sx={{ display: { sm: "block" } }} justifyContent={"center"}>
             {navItems.map((item) => (

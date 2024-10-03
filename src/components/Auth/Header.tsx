@@ -15,7 +15,7 @@ const navItems = [
 ];
 const pages = [
   { name: "みんなの懺悔", path: "/" },
-  { name: "懺悔ランキング", path: "/rank" },
+  { name: "成就した懺悔", path: "/rank" },
 ];
 
 function Header() {
