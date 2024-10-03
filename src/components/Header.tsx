@@ -14,9 +14,8 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Badge } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { SiteMarkIcon } from "./CustomIcons";
-
-const pages = ["みんなの懺悔", "懺悔ランキング", "聖母に相談"];
-const settings = ["アカウント編集", "懺悔一覧", "コメント一覧", "赦し一覧", "ログアウト"];
+import { axios } from "../api/Axios";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -33,9 +32,61 @@ function Header() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (name: string) => {
     setAnchorElUser(null);
   };
+
+  const navigate = useNavigate();
+
+  const handleAccount = () => {
+    navigate("/account");
+    setAnchorElUser(null);
+  };
+
+  const handleZange = () => {
+    navigate("/zange");
+    setAnchorElUser(null);
+  };
+
+  const handleYurushi = () => {
+    navigate("/yurushi");
+    setAnchorElUser(null);
+  };
+
+  const handleComment = () => {
+    navigate("/comment");
+    setAnchorElUser(null);
+  };
+  const handleLogout = () => {
+    axios.get(`sanctum/csrf-cookie`).then((response) => {
+      axios
+        .post(`api/logout`)
+        .then((res) => {
+          setAnchorElUser(null);
+          navigate("/login");
+        })
+        .catch((res) => {
+          if (res.status === 409) {
+            console.log(res);
+            return;
+          }
+
+          if (res.status === 422) {
+            console.log(res);
+          }
+        });
+    });
+  };
+
+  const pages = ["みんなの懺悔", "懺悔ランキング", "聖母に相談"];
+
+  const settings = [
+    { name: "アカウント編集", path: "/", clickEvent: handleAccount },
+    { name: "懺悔一覧", path: "/", clickEvent: handleZange },
+    { name: "コメント一覧", path: "/", clickEvent: handleComment },
+    { name: "赦し一覧", path: "/", clickEvent: handleYurushi },
+    { name: "ログアウト", path: "/login", clickEvent: handleLogout },
+  ];
 
   return (
     <AppBar position="sticky">
@@ -131,9 +182,9 @@ function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
+              {settings.map((setting, i) => (
+                <MenuItem key={i} onClick={() => setting.clickEvent()}>
+                  <Typography sx={{ textAlign: "center" }}>{setting.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
