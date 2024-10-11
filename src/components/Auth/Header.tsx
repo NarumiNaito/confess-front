@@ -8,14 +8,18 @@ import { IconButton, MenuItem, Toolbar, Typography } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate } from "react-router-dom";
+import ChurchIcon from "@mui/icons-material/Church";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import LoginIcon from "@mui/icons-material/Login";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 const navItems = [
-  { name: "ログイン", path: "/login" },
-  { name: "新規登録", path: "/register" },
+  { name: "ログイン", path: "/login", icon: <LoginIcon /> },
+  { name: "新規登録", path: "/register", icon: <PersonAddIcon /> },
 ];
 const pages = [
-  { name: "みんなの懺悔", path: "/" },
-  { name: "成就した懺悔", path: "/rank" },
+  { name: "みんなの懺悔", path: "/", icon: <ChurchIcon /> },
+  { name: "成就した懺悔", path: "/rank", icon: <CelebrationIcon /> },
 ];
 
 function Header() {
@@ -79,14 +83,14 @@ function Header() {
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page, i) => (
-                <MenuItem key={i} onClick={handleCloseNavMenu}>
-                  <Button key={i} onClick={() => navigate(page.path)} sx={{ color: "#fff", textAlign: "center" }}>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Button key={i} onClick={() => navigate(page.path)} sx={{ color: "#fff", textAlign: "center" }} startIcon={page.icon}>
                     {page.name}
                   </Button>
                 </MenuItem>
               ))}
             </Menu>
-            <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
+            <Box sx={{ display: { xs: "flex", md: "none" }, mr: 2 }}>
               <Link to="/">
                 <SiteMarkIcon />
               </Link>
@@ -95,8 +99,8 @@ function Header() {
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, i) => (
-              <Button key={i} onClick={handleCloseNavMenu} sx={{ my: 2, display: "block" }}>
-                <Button key={i} onClick={() => navigate(page.path)} sx={{ color: "#fff" }}>
+              <Button onClick={handleCloseNavMenu} sx={{ my: 2, display: "block" }}>
+                <Button key={i} onClick={() => navigate(page.path)} sx={{ color: "#fff" }} startIcon={page.icon}>
                   {page.name}
                 </Button>
               </Button>
@@ -104,7 +108,7 @@ function Header() {
           </Box>
           <Box sx={{ display: { sm: "block" } }}>
             {navItems.map((item, i) => (
-              <Button key={i} onClick={() => navigate(item.path)} sx={{ color: "#fff" }}>
+              <Button key={i} onClick={() => navigate(item.path)} sx={{ color: "#fff" }} startIcon={item.icon}>
                 {item.name}
               </Button>
             ))}

@@ -4,7 +4,8 @@ import Login from "../templates/auth/Login";
 import Register from "../templates/auth/Register";
 import MyPage from "../templates/myPage/MyPage";
 import Page404 from "../templates/Page404";
-import Loading from "../components/Loading";
+import Loading from "../components/loaging/Loading";
+import SkeletonLoading from "../components/loaging/SkeletonLoading";
 
 const Router = () => {
   return (
@@ -14,8 +15,10 @@ const Router = () => {
         <Route path="/myPage" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/Loading" element={<Loading />} />
         <Route path="*" element={<Page404 />} />
+
+        <Route path="/loading" element={<Loading />} />
+        <Route path="/skeletonLoading" element={<SkeletonLoading />} />
       </Routes>
     </BrowserRouter>
   );

@@ -5,199 +5,230 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
-import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-
-const articleInfo = [
-  {
-    tag: "Engineering",
-    title: "The future of AI in software engineering",
-    description: "Artificial intelligence is revolutionizing software engineering. Explore how AI-driven tools are enhancing development processes and improving software quality.",
-    authors: [
-      { name: "Remy Sharp", avatar: "/static/images/avatar/1.jpg" },
-      { name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" },
-    ],
-  },
-  {
-    tag: "Product",
-    title: "Driving growth with user-centric product design",
-    description: "Our user-centric product design approach is driving significant growth. Learn about the strategies we employ to create products that resonate with users.",
-    authors: [{ name: "Erica Johns", avatar: "/static/images/avatar/6.jpg" }],
-  },
-  {
-    tag: "Design",
-    title: "Embracing minimalism in modern design",
-    description: "Minimalism is a key trend in modern design. Discover how our design team incorporates minimalist principles to create clean and impactful user experiences.",
-    authors: [{ name: "Kate Morrison", avatar: "/static/images/avatar/7.jpg" }],
-  },
-  {
-    tag: "Company",
-    title: "Cultivating a culture of innovation",
-    description: "Innovation is at the heart of our company culture. Learn about the initiatives we have in place to foster creativity and drive groundbreaking solutions.",
-    authors: [{ name: "Cindy Baker", avatar: "/static/images/avatar/3.jpg" }],
-  },
-  {
-    tag: "Engineering",
-    title: "Advancing cybersecurity with next-gen solutions",
-    description: "Our next-generation cybersecurity solutions are setting new standards in the industry. Discover how we protect our clients from evolving cyber threats.",
-    authors: [
-      { name: "Agnes Walker", avatar: "/static/images/avatar/4.jpg" },
-      { name: "Trevor Henderson", avatar: "/static/images/avatar/5.jpg" },
-    ],
-  },
-  {
-    tag: "Product",
-    title: "Enhancing customer experience through innovation",
-    description: "Our innovative approaches are enhancing customer experience. Learn about the new features and improvements that are delighting our users.",
-    authors: [{ name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" }],
-  },
-  {
-    tag: "Engineering",
-    title: "Pioneering sustainable engineering solutions",
-    description:
-      "Learn about our commitment to sustainability and the innovative engineering solutions we're implementing to create a greener future. Discover the impact of our eco-friendly initiatives.",
-    authors: [
-      { name: "Agnes Walker", avatar: "/static/images/avatar/4.jpg" },
-      { name: "Trevor Henderson", avatar: "/static/images/avatar/5.jpg" },
-    ],
-  },
-  {
-    tag: "Product",
-    title: "Maximizing efficiency with our latest product updates",
-    description:
-      "Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.",
-    authors: [{ name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" }],
-  },
-  {
-    tag: "Design",
-    title: "Designing for the future: trends and insights",
-    description: "Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.",
-    authors: [{ name: "Kate Morrison", avatar: "/static/images/avatar/7.jpg" }],
-  },
-  {
-    tag: "Company",
-    title: "Our company's journey: milestones and achievements",
-    description: "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
-    authors: [{ name: "Cindy Baker", avatar: "/static/images/avatar/3.jpg" }],
-  },
-];
-
-const StyledTypography = styled(Typography)({
-  display: "-webkit-box",
-  WebkitBoxOrient: "vertical",
-  WebkitLineClamp: 2,
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-});
-
-const TitleTypography = styled(Typography)(({ theme }) => ({
-  position: "relative",
-  textDecoration: "none",
-  "&:hover": { cursor: "pointer" },
-  "& .arrow": {
-    visibility: "hidden",
-    position: "absolute",
-    right: 0,
-    top: "50%",
-    transform: "translateY(-50%)",
-  },
-  "&:hover .arrow": {
-    visibility: "visible",
-    opacity: 0.7,
-  },
-  "&:focus-visible": {
-    outline: "3px solid",
-    outlineColor: "hsla(210, 98%, 48%, 0.5)",
-    outlineOffset: "3px",
-    borderRadius: "8px",
-  },
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    width: 0,
-    height: "1px",
-    bottom: 0,
-    left: 0,
-    backgroundColor: theme.palette.text.primary,
-    opacity: 0.3,
-    transition: "width 0.3s ease, opacity 0.3s ease",
-  },
-  "&:hover::before": {
-    width: "100%",
-  },
-}));
-
-function Author({ authors }: { authors: { name: string; avatar: string }[] }) {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        gap: 2,
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
-        <AvatarGroup max={3}>
-          {authors.map((author, index) => (
-            <Avatar key={index} alt={author.name} src={author.avatar} sx={{ width: 24, height: 24 }} />
-          ))}
-        </AvatarGroup>
-        <Typography variant="caption">{authors.map((author) => author.name).join(", ")}</Typography>
-      </Box>
-      <Typography variant="caption">July 14, 2021</Typography>
-    </Box>
-  );
-}
+import { axios } from "../../api/Axios";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import CommentIcon from "@mui/icons-material/Comment";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import SkeletonLoading from "../loaging/SkeletonLoading";
+import Chip from "@mui/material/Chip";
+import { categoryItems } from "../../data/Category";
+import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 export default function Latest() {
-  const [focusedCardIndex, setFocusedCardIndex] = React.useState<number | null>(null);
-
-  const handleFocus = (index: number) => {
-    setFocusedCardIndex(index);
+  const getPageNumberFromSession = (): number => {
+    const pageNumber = sessionStorage.getItem("getPage");
+    return pageNumber ? parseInt(pageNumber, 10) : 1;
   };
 
-  const handleBlur = () => {
-    setFocusedCardIndex(null);
+  const [loading, setLoading] = React.useState(false);
+  const [posts, setPosts] = React.useState([]);
+  const [page, setPage] = React.useState(getPageNumberFromSession());
+  const [currentPage, setCurrentPage] = React.useState({ current_page: 1, last_page: 1, total: 0 });
+  const [category, setCategory] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [showPosts, setShowPosts] = React.useState(posts);
+
+  // const navigate = useNavigate();
+  const pageCount = currentPage.last_page;
+
+  React.useEffect(() => {
+    sessionStorage.setItem("getPage", page.toString());
+    fetchPost(page);
+  }, [page]);
+
+  React.useEffect(() => {
+    if (category) {
+      selectCategory(category);
+    } else {
+      setShowPosts(posts);
+    }
+  }, [category, posts]);
+
+  const fetchPost = async (getPage: number) => {
+    // React.useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`api/posts?page=${getPage}`)
+      .then((res) => {
+        console.log(res.data);
+        setPosts(res.data.data);
+        setCurrentPage(res.data);
+      })
+      .catch((res) => {
+        if (res.status === 401) {
+          // setAuthError(true);
+          return;
+        }
+      })
+      .finally(() => {
+        setTimeout(() => setLoading(false), 1000);
+      });
+  };
+  // }, [page]);
+
+  const selectCategory = (selectedCategory: string) => {
+    if (selectedCategory === "全て") {
+      setShowPosts(posts);
+      return;
+    }
+
+    const filteredPosts = posts.filter((post) => post["category_name"] === selectedCategory);
+    setShowPosts(filteredPosts);
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setCategory(event.target.value);
+  };
+
+  const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
+    console.log(page);
+    setPage(page);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClick = (selectedCategory: string) => {
+    setCategory(selectedCategory);
   };
 
   return (
-    <div>
-      <Typography variant="h4" gutterBottom>
-        懺悔
-      </Typography>
-      <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-        {articleInfo.map((article, index) => (
-          <Grid key={index} size={{ xs: 12, sm: 6 }}>
+    <>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <Box mb={2}>
+          <Typography variant="h5" mb={3}>
+            みんなの懺悔
+          </Typography>
+          <Typography>自分が犯した罪や過ちなど、心残りを神の前で告白しませんか？</Typography>
+        </Box>
+
+        <Box sx={{ display: { md: "none" } }}>
+          <Button sx={{ mr: 6 }} color="error" onClick={handleOpen}>
+            カテゴリー検索
+          </Button>
+          <Box>
+            <FormControl sx={{ minWidth: 150 }} size="small">
+              <InputLabel id="demo-select-small-label">カテゴリー</InputLabel>
+              <Select labelId="demo-select-small-label" id="demo-select-small" open={open} onClose={handleClose} onOpen={handleOpen} value={category} label="カテゴリー" onChange={handleChange}>
+                {categoryItems.map((category, id) => (
+                  <MenuItem key={id} value={category.category_name}>
+                    {category.category_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: { xs: "none", md: "flex" },
+            flexDirection: { xs: "column-reverse", md: "row" },
+            width: "100%",
+            justifyContent: "center",
+            alignItems: { xs: "center" },
+            gap: 4,
+            overflow: "auto",
+          }}
+        >
+          {categoryItems.map((category, id) => (
             <Box
+              key={id}
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                gap: 1,
-                height: "100%",
+                flexDirection: "row",
+                gap: 3,
+                overflow: "auto",
               }}
             >
-              <Typography gutterBottom variant="caption" component="div">
-                {article.tag}
-              </Typography>
-              <TitleTypography gutterBottom variant="h6" onFocus={() => handleFocus(index)} onBlur={handleBlur} tabIndex={0} className={focusedCardIndex === index ? "Mui-focused" : ""}>
-                {article.title}
-                <NavigateNextRoundedIcon className="arrow" sx={{ fontSize: "1rem" }} />
-              </TitleTypography>
-              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {article.description}
-              </StyledTypography>
-
-              <Author authors={article.authors} />
+              <Chip
+                onClick={() => handleClick(category.category_name)}
+                size="medium"
+                label={category.category_name}
+                icon={category.icon}
+                sx={{
+                  backgroundColor: "transparent",
+                }}
+              />
             </Box>
-          </Grid>
-        ))}
-      </Grid>
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }}>
-        <Pagination hidePrevButton hideNextButton count={10} boundaryCount={10} />
+          ))}
+        </Box>
       </Box>
-    </div>
+      {loading ? (
+        <SkeletonLoading />
+      ) : (
+        <>
+          <div>
+            <Box sx={{ flexGrow: 1, overflow: "hidden", margin: "0 auto", display: "flex", justifyContent: "center", px: 3 }}>
+              <Grid sx={{ width: 800 }}>
+                {showPosts.map((post, id) => (
+                  <Grid key={id} size={{ xs: 12, sm: 6 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        gap: 1,
+                        height: "100%",
+                      }}
+                    >
+                      <Typography mt={3} variant="h6" component="div" color="error">
+                        「{post["category_name"]}」
+                      </Typography>
+
+                      <Typography m={1} variant="h6">
+                        {post["content"]}
+                      </Typography>
+
+                      <Box sx={{ position: "relative", mb: 3 }}>
+                        <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
+                          <Tooltip title="赦す">
+                            <Button component="label" variant="outlined" sx={{ color: "#fff", mr: 1 }} tabIndex={-1} size="small" startIcon={<VolunteerActivismIcon />}>
+                              (0)
+                            </Button>
+                          </Tooltip>
+                          <Tooltip title="コメント">
+                            <Button component="label" variant="outlined" sx={{ color: "#fff" }} tabIndex={-1} size="small" startIcon={<CommentIcon />}>
+                              (0)
+                            </Button>
+                          </Tooltip>
+                        </Box>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          gap: 2,
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+                          <AvatarGroup max={3}>
+                            <Avatar src={post["image"]} sx={{ width: 24, height: 24 }} />
+                          </AvatarGroup>
+                          <Typography variant="subtitle1">{post["name"]}</Typography>
+                        </Box>
+
+                        <Typography variant="subtitle1">{dayjs(post["created_at"]).format("YYYY年M月D日")}</Typography>
+                      </Box>
+                    </Box>
+                    <Divider />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </div>
+        </>
+      )}
+      <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }} justifyContent={"center"}>
+        <Pagination hidePrevButton hideNextButton page={page} onChange={handleChangePage} count={pageCount} boundaryCount={10} />
+      </Box>
+    </>
   );
 }
