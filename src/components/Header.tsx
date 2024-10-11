@@ -16,6 +16,10 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import { SiteMarkIcon } from "./CustomIcons";
 import { axios } from "../api/Axios";
 import { useNavigate } from "react-router-dom";
+import ChurchIcon from "@mui/icons-material/Church";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import WomanIcon from "@mui/icons-material/Woman";
+import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -78,7 +82,11 @@ function Header() {
     });
   };
 
-  const pages = ["みんなの懺悔", "懺悔ランキング", "聖母に相談"];
+  const pages = [
+    { name: "みんなの懺悔", icon: <ChurchIcon /> },
+    { name: "成就した懺悔", icon: <CelebrationIcon /> },
+    { name: "聖母に相談", icon: <SelfImprovementIcon /> },
+  ];
 
   const settings = [
     { name: "アカウント編集", path: "/", clickEvent: handleAccount },
@@ -133,9 +141,11 @@ function Header() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+              {pages.map((page, i) => (
+                <MenuItem key={i} onClick={handleCloseNavMenu}>
+                  <Button sx={{ textAlign: "center", color: "#fff" }} startIcon={page.icon}>
+                    {page.name}
+                  </Button>
                 </MenuItem>
               ))}
             </Menu>
@@ -145,9 +155,9 @@ function Header() {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
-                {page}
+            {pages.map((page, i) => (
+              <Button key={i} onClick={handleCloseNavMenu} sx={{ my: 2, m: 1, color: "#fff" }} startIcon={page.icon}>
+                {page.name}
               </Button>
             ))}
           </Box>

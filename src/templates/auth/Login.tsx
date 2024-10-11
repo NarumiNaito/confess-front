@@ -14,11 +14,7 @@ export default function Login() {
           flexDirection: "column",
         }}
       >
-        <Header />
         <LoginForm />
-        <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
-          <Footer />
-        </Box>
       </Box>
     </>
   );
