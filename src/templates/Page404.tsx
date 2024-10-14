@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import PageImage from "../assets/Image404.png";
 import { AppBar, Box, Container, IconButton, Toolbar, Typography } from "@mui/material";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 import { SiteMarkIcon } from "../components/CustomIcons";
 
 function Page404() {

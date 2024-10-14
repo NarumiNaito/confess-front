@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import { SiteMarkIcon } from "./CustomIcons";
+import { SiteMarkIcon } from "../CustomIcons";
 import { IconButton } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
@@ -34,6 +34,14 @@ function Footer() {
           </Typography>
         </Box>
       </Container>
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          right: 16,
+          zIndex: 1000,
+        }}
+      ></Box>
     </AppBar>
   );
 }

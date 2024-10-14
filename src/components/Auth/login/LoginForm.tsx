@@ -18,9 +18,9 @@ import { axios } from "../../../api/Axios";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { InputAdornment } from "@mui/material";
-import Loading from "../../loaging/Loading";
-import Header from "../Header";
-import Footer from "../../Footer";
+import Loading from "../../loading/Loading";
+import Header from "../../header/AuthHeader";
+import AuthFooter from "../../footer/AuthFooter";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -246,7 +246,7 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
             </Card>
           </LoginContainer>
           <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
-            <Footer />
+            <AuthFooter />
           </Box>
         </>
       )}

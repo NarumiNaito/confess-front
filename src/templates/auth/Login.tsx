@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Header from "../../components/auth/Header";
-import Footer from "../../components/Footer";
+import Header from "../../components/header/AuthHeader";
+import Footer from "../../components/footer/Footer";
 import LoginForm from "../../components/auth/login/LoginForm";
 
 export default function Login() {
