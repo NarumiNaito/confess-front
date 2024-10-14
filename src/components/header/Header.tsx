@@ -13,12 +13,11 @@ import MenuItem from "@mui/material/MenuItem";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Badge } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { SiteMarkIcon } from "./CustomIcons";
-import { axios } from "../api/Axios";
-import { useNavigate } from "react-router-dom";
+import { SiteMarkIcon } from "../CustomIcons";
+import { axios } from "../../api/Axios";
+import { Link, useNavigate } from "react-router-dom";
 import ChurchIcon from "@mui/icons-material/Church";
 import CelebrationIcon from "@mui/icons-material/Celebration";
-import WomanIcon from "@mui/icons-material/Woman";
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 
 function Header() {
@@ -42,18 +41,13 @@ function Header() {
 
   const navigate = useNavigate();
 
-  const handleAccount = () => {
-    navigate("/account");
+  const handlePost = () => {
+    navigate("/myPage/post");
     setAnchorElUser(null);
   };
 
-  const handleZange = () => {
-    navigate("/zange");
-    setAnchorElUser(null);
-  };
-
-  const handleYurushi = () => {
-    navigate("/yurushi");
+  const handleList = () => {
+    navigate("/postList");
     setAnchorElUser(null);
   };
 
@@ -61,6 +55,17 @@ function Header() {
     navigate("/comment");
     setAnchorElUser(null);
   };
+
+  const handleForgive = () => {
+    navigate("/forgive");
+    setAnchorElUser(null);
+  };
+
+  const handleAccount = () => {
+    navigate("/account");
+    setAnchorElUser(null);
+  };
+
   const handleLogout = () => {
     axios.get(`sanctum/csrf-cookie`).then((response) => {
       axios
@@ -83,16 +88,17 @@ function Header() {
   };
 
   const pages = [
-    { name: "みんなの懺悔", icon: <ChurchIcon /> },
-    { name: "成就した懺悔", icon: <CelebrationIcon /> },
-    { name: "聖母に相談", icon: <SelfImprovementIcon /> },
+    { name: "みんなの懺悔", icon: <ChurchIcon />, path: "/myPage" },
+    { name: "成就した懺悔", icon: <CelebrationIcon />, path: "/myPage" },
+    { name: "聖母に相談", icon: <SelfImprovementIcon />, path: "/myPage" },
   ];
 
   const settings = [
-    { name: "アカウント編集", path: "/", clickEvent: handleAccount },
-    { name: "懺悔一覧", path: "/", clickEvent: handleZange },
+    { name: "懺悔する", path: "/post", clickEvent: handlePost },
+    { name: "懺悔一覧", path: "/", clickEvent: handleList },
     { name: "コメント一覧", path: "/", clickEvent: handleComment },
-    { name: "赦し一覧", path: "/", clickEvent: handleYurushi },
+    { name: "赦し一覧", path: "/", clickEvent: handleForgive },
+    { name: "アカウント編集", path: "/", clickEvent: handleAccount },
     { name: "ログアウト", path: "/login", clickEvent: handleLogout },
   ];
 
@@ -101,7 +107,9 @@ function Header() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
-            <SiteMarkIcon />
+            <Link to="/myPage">
+              <SiteMarkIcon />
+            </Link>
           </Box>
           <Typography
             variant="h5"
@@ -143,21 +151,25 @@ function Header() {
             >
               {pages.map((page, i) => (
                 <MenuItem key={i} onClick={handleCloseNavMenu}>
-                  <Button sx={{ textAlign: "center", color: "#fff" }} startIcon={page.icon}>
+                  <Button onClick={() => navigate(page.path)} sx={{ textAlign: "center", color: "#fff" }} startIcon={page.icon}>
                     {page.name}
                   </Button>
                 </MenuItem>
               ))}
             </Menu>
             <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
-              <SiteMarkIcon />
+              <Link to="/myPage">
+                <SiteMarkIcon />
+              </Link>
             </Box>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page, i) => (
               <Button key={i} onClick={handleCloseNavMenu} sx={{ my: 2, m: 1, color: "#fff" }} startIcon={page.icon}>
-                {page.name}
+                <Button onClick={() => navigate(page.path)} sx={{ color: "#fff" }}>
+                  {page.name}
+                </Button>
               </Button>
             ))}
           </Box>
