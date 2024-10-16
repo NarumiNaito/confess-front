@@ -15,13 +15,3 @@ export const categoryItems = [
   { id: 5, category_name: "学校", icon: <SchoolIcon /> },
   { id: 6, category_name: "その他", icon: <MoreIcon /> },
 ];
-
-export const categories = [
-  { id: 0, category_name: "全て", icon: <SelfImprovementIcon /> },
-  { id: 1, category_name: "友達", icon: <PeopleIcon /> },
-  { id: 2, category_name: "家族", icon: <FamilyRestroomIcon /> },
-  { id: 3, category_name: "恋愛", icon: <FavoriteIcon /> },
-  { id: 4, category_name: "職場", icon: <FactoryIcon /> },
-  { id: 5, category_name: "学校", icon: <SchoolIcon /> },
-  { id: 6, category_name: "その他", icon: <MoreIcon /> },
-];

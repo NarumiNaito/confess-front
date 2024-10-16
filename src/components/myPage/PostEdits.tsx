@@ -17,7 +17,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { InputAdornment, InputLabel, MenuItem, Select } from "@mui/material";
 import Loading from "../loading/Loading";
-import { categories } from "../../data/Category";
+import { categoryItems } from "../../data/Category";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -83,13 +83,15 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
     };
     console.log(Posts);
     // setLoading(true);
-    await axios.get(`sanctum/csrf-cookie`).then((response) => {
-      // setLoading(true);
-      axios.post(`api/posts/register`, Posts);
-    });
-    //   .then((res) => {
-    //     navigate("/myPage");
-    //   });
+    await axios
+      .get(`sanctum/csrf-cookie`)
+      .then((response) => {
+        // setLoading(true);
+        axios.post(`api/posts/register`, Posts);
+      })
+      .then((res) => {
+        navigate("/myPage");
+      });
     // .catch((res) => {
     //   if (res.status === 401) {
     //     setAuthError(true);
@@ -100,9 +102,12 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
     //     setIsError(true);
     //   }
     // })
-    // .then(() => {
-    //   setTimeout(() => setLoading(false), 2000);
+    // .finally(() => {
+    //   setTimeout(() => setLoading(false), 1000);
     // });
+  };
+  const getCategories = () => {
+    return categoryItems.filter((category) => category.id !== 0);
   };
 
   return (
@@ -115,10 +120,6 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
             <Card variant="outlined">
               <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
                 懺悔を投稿
-              </Typography>
-
-              <Typography color="error" variant="overline">
-                {isError && "何かしらのエラーが発生しました。もう一度お試し下さい。"}
               </Typography>
               <Box
                 component="form"
@@ -158,14 +159,18 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
                                 value={field.value}
                                 label="カテゴリー"
                                 onChange={(e) => field.onChange(e.target.value)}
-                                error={!!error}
                               >
-                                {categories.map((category, id) => (
+                                {getCategories().map((category, id) => (
                                   <MenuItem key={id} value={category.id}>
                                     {category.category_name}
                                   </MenuItem>
                                 ))}
                               </Select>
+                              {error && (
+                                <Typography variant="caption" color="error">
+                                  {error.message}
+                                </Typography>
+                              )}
                             </FormControl>
                           </Box>
                         </Box>
@@ -195,7 +200,7 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
                         fullWidth
                         variant="outlined"
                         multiline
-                        rows={6}
+                        rows={8}
                         {...field}
                         error={!!error?.message}
                         helperText={error?.message}
@@ -205,8 +210,13 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
                 </FormControl>
 
                 <Divider />
+                <Typography color="error" variant="subtitle1">
+                  過去に犯した過ちを神の前で告白し,
+                  <br />
+                  赦しを請うため懺悔しますか？
+                </Typography>
                 <Button type="submit" fullWidth variant="contained">
-                  投稿
+                  懺悔する
                 </Button>
               </Box>
 

@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import { axios } from "../../api/Axios";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
@@ -16,36 +16,25 @@ import { categoryItems } from "../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 
 export default function Content() {
-  const getPageNumberFromSession = (): number => {
-    const pageNumber = sessionStorage.getItem("getPage");
-    return pageNumber ? parseInt(pageNumber, 10) : 1;
-  };
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = React.useState(false);
   const [posts, setPosts] = React.useState([]);
-  const [page, setPage] = React.useState(getPageNumberFromSession());
-  const [currentPage, setCurrentPage] = React.useState({ current_page: 1, last_page: 1, total: 0 });
-  const [category, setCategory] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
   const [open, setOpen] = React.useState(false);
-  const [showPosts, setShowPosts] = React.useState(posts);
 
-  // const navigate = useNavigate();
+  const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
 
   React.useEffect(() => {
-    sessionStorage.setItem("getPage", page.toString());
-    fetchPost(page);
-  }, [page, category]);
+    const qpPage = parseInt(searchParams.get("page") || "1", 10);
+    const qpCategory = parseInt(searchParams.get("category_id") || "0", 10);
+    fetchPost(qpPage, qpCategory);
+  }, [searchParams]);
 
-  React.useEffect(() => {
-    setShowPosts(posts);
-  }, [posts]);
-
-  const fetchPost = async (page: number) => {
-    // React.useEffect(() => {
+  const fetchPost = async (page: number, categoryId: number) => {
     setLoading(true);
     axios
-      .get(`api/posts?page=${page}&category_id=${category}`)
+      .get(`api/posts?page=${page}&category_id=${categoryId}`)
       .then((res) => {
         console.log(res.data);
         setPosts(res.data.data);
@@ -53,7 +42,6 @@ export default function Content() {
       })
       .catch((res) => {
         if (res.status === 401) {
-          // setAuthError(true);
           return;
         }
       })
@@ -61,17 +49,13 @@ export default function Content() {
         setTimeout(() => setLoading(false), 1000);
       });
   };
-  // }, [page]);
 
   const handleChange = (event: SelectChangeEvent<number>) => {
-    setCategory(Number(event.target.value));
-    sessionStorage.setItem("getPage", "1");
-    setPage(1);
+    setSearchParams({ page: "1", category_id: String(event.target.value) });
   };
 
-  const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
-    console.log(page);
-    setPage(page);
+  const handleClick = (categoryId: number) => {
+    setSearchParams({ page: "1", category_id: String(categoryId) });
   };
 
   const handleClose = () => {
@@ -82,10 +66,9 @@ export default function Content() {
     setOpen(true);
   };
 
-  const handleClick = (categoryId: number) => {
-    setCategory(categoryId);
-    sessionStorage.setItem("getPage", "1");
-    setPage(1);
+  const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
+    console.log(page);
+    setSearchParams({ page: String(page), category_id: searchParams.get("category_id") || "0" });
   };
 
   return (
@@ -105,7 +88,7 @@ export default function Content() {
           <Box>
             <FormControl sx={{ minWidth: 150 }} size="small">
               <InputLabel id="demo-select-small-label">カテゴリー</InputLabel>
-              <Select labelId="demo-select-small-label" id="demo-select-small" open={open} onClose={handleClose} onOpen={handleOpen} value={category} label="カテゴリー" onChange={handleChange}>
+              <Select labelId="demo-select-small-label" id="demo-select-small" label="カテゴリー" open={open} onClose={handleClose} onOpen={handleOpen} onChange={handleChange}>
                 {categoryItems.map((category, id) => (
                   <MenuItem key={id} value={category.id}>
                     {category.category_name}
@@ -155,7 +138,7 @@ export default function Content() {
           <div>
             <Box sx={{ flexGrow: 1, overflow: "hidden", margin: "0 auto", display: "flex", justifyContent: "center", px: 3 }}>
               <Grid sx={{ width: 800 }}>
-                {showPosts.map((post, id) => (
+                {posts.map((post, id) => (
                   <Grid key={id} size={{ xs: 12, sm: 6 }}>
                     <Box
                       sx={{
@@ -199,9 +182,11 @@ export default function Content() {
                         }}
                       >
                         <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
-                          <AvatarGroup max={3}>
-                            <Avatar src={post["image"]} sx={{ width: 24, height: 24 }} />
-                          </AvatarGroup>
+                          <Tooltip title={post["name"]}>
+                            <AvatarGroup max={3}>
+                              <Avatar src={post["image"]} sx={{ width: 24, height: 24 }} />
+                            </AvatarGroup>
+                          </Tooltip>
                           <Typography variant="subtitle1">{post["name"]}</Typography>
                         </Box>
 
@@ -217,7 +202,7 @@ export default function Content() {
         </>
       )}
       <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }} justifyContent={"center"}>
-        <Pagination hidePrevButton hideNextButton page={page} onChange={handleChangePage} count={pageCount} boundaryCount={10} />
+        <Pagination hidePrevButton hideNextButton page={page} onChange={handleChangePage} count={pageCount} boundaryCount={1} />
       </Box>
     </>
   );

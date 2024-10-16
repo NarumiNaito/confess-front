@@ -1,9 +1,9 @@
 import { Box, Container } from "@mui/material";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import Content from "../../components/myPage/Content";
+import List from "../../components/myPage/PostLists";
 
-function MyPage() {
+function PostList() {
   return (
     <>
       <Box
@@ -15,7 +15,7 @@ function MyPage() {
       >
         <Header />
         <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <Content />
+          <List />
         </Container>
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <Footer />
@@ -24,4 +24,4 @@ function MyPage() {
     </>
   );
 }
-export default MyPage;
+export default PostList;

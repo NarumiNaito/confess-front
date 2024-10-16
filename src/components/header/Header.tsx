@@ -47,7 +47,7 @@ function Header() {
   };
 
   const handleList = () => {
-    navigate("/postList");
+    navigate("/myPage/postList");
     setAnchorElUser(null);
   };
 
@@ -95,7 +95,7 @@ function Header() {
 
   const settings = [
     { name: "懺悔する", path: "/post", clickEvent: handlePost },
-    { name: "懺悔一覧", path: "/", clickEvent: handleList },
+    { name: "懺悔一覧", path: "/postList", clickEvent: handleList },
     { name: "コメント一覧", path: "/", clickEvent: handleComment },
     { name: "赦し一覧", path: "/", clickEvent: handleForgive },
     { name: "アカウント編集", path: "/", clickEvent: handleAccount },
@@ -176,14 +176,16 @@ function Header() {
 
           <Box>
             <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              <Tooltip title="通知">
+                <Badge badgeContent={17} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </Tooltip>
             </IconButton>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="マイページ">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <AccountCircle />
               </IconButton>
