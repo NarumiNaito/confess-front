@@ -6,7 +6,9 @@ import MyPage from "../templates/myPage/MyPage";
 import Page404 from "../templates/Page404";
 import Loading from "../components/loading/Loading";
 import SkeletonLoading from "../components/loading/SkeletonLoading";
-import Post from "../templates/myPage/Post";
+import PostRegister from "../templates/myPage/PostRegister";
+import PostList from "../templates/myPage/PostList";
+import PostEdit from "../templates/myPage/PostEdit";
 
 const Router = () => {
   return (
@@ -14,7 +16,9 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/myPage" element={<MyPage />} />
-        <Route path="/myPage/post" element={<Post />} />
+        <Route path="/myPage/post" element={<PostRegister />} />
+        <Route path="/myPage/postList" element={<PostList />} />
+        <Route path="/myPage/postList/:id" element={<PostEdit />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Page404 />} />
