@@ -18,7 +18,6 @@ import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, Se
 
 export default function Content() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [loading, setLoading] = React.useState(false);
   const [posts, setPosts] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
 
@@ -32,22 +31,11 @@ export default function Content() {
   }, [searchParams]);
 
   const fetchPost = async (page: number) => {
-    setLoading(true);
-    axios
-      .get(`api/posts/show?page=${page}`)
-      .then((res) => {
-        console.log(res);
-        setPosts(res.data.data);
-        setCurrentPage(res.data);
-      })
-      // .catch((res) => {
-      //   if (res.status === 401) {
-      //     return;
-      //   }
-      // })
-      .finally(() => {
-        setTimeout(() => setLoading(false), 1000);
-      });
+    axios.get(`api/posts/show?page=${page}`).then((res) => {
+      console.log(res);
+      setPosts(res.data.data);
+      setCurrentPage(res.data);
+    });
   };
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
@@ -84,7 +72,7 @@ export default function Content() {
                     「{post["category_name"]}」
                   </Typography>
 
-                  <Typography m={1} variant="h6">
+                  <Typography m={1} whiteSpace={"pre-line"} variant="h6">
                     {post["content"]}
                   </Typography>
 
@@ -96,7 +84,7 @@ export default function Content() {
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="編集する">
-                        <IconButton component="label" sx={{ color: "#fff" }} tabIndex={-1} size="small" onClick={() => navigate(`/myPage/postList/${post["id"]}`)}>
+                        <IconButton component="label" sx={{ color: "#fff" }} tabIndex={-1} size="small" onClick={() => navigate(`/myPage/postList/${post["id"]}`, { state: post })}>
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
