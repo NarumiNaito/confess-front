@@ -153,7 +153,7 @@ export default function Content() {
                         「{post["category_name"]}」
                       </Typography>
 
-                      <Typography m={1} variant="h6">
+                      <Typography m={1} whiteSpace={"pre-line"} variant="h6">
                         {post["content"]}
                       </Typography>
 

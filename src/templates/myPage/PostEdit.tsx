@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import List from "../../components/myPage/PostLists";
+import Edit from "../../components/myPage/Edit";
 
 function PostEdit() {
   return (
@@ -15,7 +15,7 @@ function PostEdit() {
       >
         <Header />
         <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          {/* <List /> */}
+          <Edit />
         </Container>
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <Footer />

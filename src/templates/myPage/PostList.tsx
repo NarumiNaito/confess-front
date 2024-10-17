@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/material";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import List from "../../components/myPage/PostLists";
+import List from "../../components/myPage/List";
 
 function PostList() {
   return (
