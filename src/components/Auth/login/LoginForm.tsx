@@ -21,6 +21,7 @@ import { InputAdornment } from "@mui/material";
 import Loading from "../../loading/Loading";
 import Header from "../../header/AuthHeader";
 import AuthFooter from "../../footer/AuthFooter";
+import { useAuthContext } from "../../../router/useAuthContext";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -52,6 +53,7 @@ interface INPUTS {
 }
 
 export default function LoginForm(props: { disableCustomTheme?: boolean }) {
+  const { login } = useAuthContext();
   const { control, handleSubmit } = useForm({
     defaultValues: {
       email: "",
@@ -228,7 +230,7 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
                 </Typography>
                 <Divider />
                 <ForgotPassword open={open} handleClose={handleClose} />
-                <Button type="submit" fullWidth variant="contained">
+                <Button type="submit" onClick={login} fullWidth variant="contained">
                   ログイン
                 </Button>
                 <Typography sx={{ textAlign: "right" }}>

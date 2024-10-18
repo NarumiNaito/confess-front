@@ -83,13 +83,33 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
       category_id: data.category_id,
       content: data.content,
     };
-    console.log(Posts);
+    // console.log(Posts);
 
     await axios
       .get(`sanctum/csrf-cookie`)
       .then((response) => {
         axios.post(`api/posts/update`, Posts);
       })
+      .then((res) => {
+        navigate("/myPage/postList");
+      })
+      .catch((res) => {
+        if (res.status === 401) {
+          setAuthError(true);
+          return;
+        }
+      });
+  };
+
+  const Posts = {
+    id: location.state.id,
+  };
+
+  const deletePost = async (posts: any) => {
+    console.log(posts);
+    await axios
+      .delete(`api/posts/delete`, posts)
+      // })
       .then((res) => {
         navigate("/myPage/postList");
       })
@@ -225,9 +245,6 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
             <Typography color="error" variant="subtitle1">
               悔い改めたため削除しますか？
             </Typography>
-            {/* <Button color="error" fullWidth variant="contained">
-              削除する
-            </Button> */}
           </Box>
           <Button color="error" fullWidth variant="contained" onClick={handleClickOpen}>
             削除する
@@ -245,7 +262,7 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClickClose}>戻る</Button>
-              <Button color="error" onClick={handleClickClose} autoFocus>
+              <Button color="error" onClick={() => deletePost(Posts)} autoFocus>
                 削除
               </Button>
             </DialogActions>
