@@ -56,6 +56,7 @@ interface INPUTS {
 
 export default function Edit(props: { disableCustomTheme?: boolean }) {
   const location = useLocation();
+  console.log(location);
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -105,11 +106,11 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
     id: location.state.id,
   };
 
-  const deletePost = async (posts: any) => {
-    console.log(posts);
+  const deletePost = async (Posts: any) => {
+    console.log(Posts);
     await axios
-      .delete(`api/posts/delete`, posts)
-      // })
+      .delete(`api/posts/delete`, { data: Posts })
+
       .then((res) => {
         navigate("/myPage/postList");
       })

@@ -12,8 +12,9 @@ import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import SkeletonLoading from "../loading/SkeletonLoading";
 import Chip from "@mui/material/Chip";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { categoryItems } from "../../data/Category";
-import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
 
 export default function Content() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -140,6 +141,15 @@ export default function Content() {
               <Grid sx={{ width: 800 }}>
                 {posts.map((post, id) => (
                   <Grid key={id} size={{ xs: 12, sm: 6 }}>
+                    <Box sx={{ position: "relative", mb: 3 }}>
+                      <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
+                        <Tooltip title="ブックマーク">
+                          <IconButton component="label" sx={{ color: "#fff", mr: 1 }} tabIndex={-1} size="small">
+                            <BookmarkIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </Box>
                     <Box
                       sx={{
                         display: "flex",
