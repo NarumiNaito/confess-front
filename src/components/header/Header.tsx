@@ -19,8 +19,10 @@ import { Link, useNavigate } from "react-router-dom";
 import ChurchIcon from "@mui/icons-material/Church";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
+import { useAuthContext } from "../../router/useAuthContext";
 
 function Header() {
+  const { logout } = useAuthContext();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -72,6 +74,7 @@ function Header() {
         .post(`api/logout`)
         .then((res) => {
           setAnchorElUser(null);
+          logout();
           navigate("/login");
         })
         .catch((res) => {
