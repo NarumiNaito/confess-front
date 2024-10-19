@@ -12,6 +12,7 @@ import PostEdit from "../templates/myPage/PostEdit";
 import { AuthContextProvider } from "./AuthContextProvider";
 import PublicLayout from "./PublicLayout";
 import PrivateLayout from "./PrivateLayout";
+import Comment from "../templates/comment/Comment";
 
 const Router = () => {
   return (
@@ -28,6 +29,7 @@ const Router = () => {
             <Route path="/myPage/post" element={<PostRegister />} />
             <Route path="/myPage/postList" element={<PostList />} />
             <Route path="/myPage/postList/:id" element={<PostEdit />} />
+            <Route path="/myPage/comment/:id" element={<Comment />} />
           </Route>
           <Route path="*" element={<Page404 />} />
 
