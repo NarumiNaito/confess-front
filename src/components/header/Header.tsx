@@ -99,8 +99,7 @@ function Header() {
   const settings = [
     { name: "懺悔する", path: "/post", clickEvent: handlePost },
     { name: "懺悔一覧", path: "/postList", clickEvent: handleList },
-    { name: "コメント一覧", path: "/", clickEvent: handleComment },
-    { name: "赦し一覧", path: "/", clickEvent: handleForgive },
+    { name: "ブックマーク一覧", path: "/", clickEvent: handleComment },
     { name: "アカウント編集", path: "/", clickEvent: handleAccount },
     { name: "ログアウト", path: "/login", clickEvent: handleLogout },
   ];

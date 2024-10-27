@@ -10,10 +10,11 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { axios } from "../../api/Axios";
-import { InputLabel, MenuItem, Select } from "@mui/material";
-import { categoryItems } from "../../data/Category";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { axios } from "../../../api/Axios";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputLabel, MenuItem, Select, Slide } from "@mui/material";
+import { categoryItems } from "../../../data/Category";
+import { TransitionProps } from "@mui/material/transitions";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -39,20 +40,34 @@ const LoginContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 interface INPUTS {
   category_id: string;
   content: string;
 }
 
-export default function PostForm(props: { disableCustomTheme?: boolean }) {
+export default function Edit(props: { disableCustomTheme?: boolean }) {
+  const location = useLocation();
+  console.log(location);
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      category_id: "",
-      content: "",
+      category_id: location.state.category_id,
+      content: location.state.content,
     },
   });
 
   const [open, setOpen] = React.useState(false);
+  const [dialog, setDialog] = React.useState(false);
+  const [authError, setAuthError] = React.useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -65,34 +80,56 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
 
   const onSubmit: SubmitHandler<INPUTS> = async (data) => {
     const Posts = {
+      id: location.state.id,
       category_id: data.category_id,
       content: data.content,
     };
-    console.log(Posts);
-    // setLoading(true);
+    // console.log(Posts);
+
     await axios
       .get(`sanctum/csrf-cookie`)
       .then((response) => {
-        // setLoading(true);
-        axios.post(`api/posts/register`, Posts);
+        axios.post(`api/posts/update`, Posts);
       })
       .then((res) => {
-        navigate("/myPage");
+        navigate("/myPage/postList");
+      })
+      .catch((res) => {
+        if (res.status === 401) {
+          setAuthError(true);
+          return;
+        }
       });
-    // .catch((res) => {
-    //   if (res.status === 401) {
-    //     setAuthError(true);
-    //     return;
-    //   }
-
-    //   if (res.status === 422) {
-    //     setIsError(true);
-    //   }
-    // })
-    // .finally(() => {
-    //   setTimeout(() => setLoading(false), 1000);
-    // });
   };
+
+  const Posts = {
+    id: location.state.id,
+  };
+
+  const deletePost = async (Posts: any) => {
+    console.log(Posts);
+    await axios
+      .delete(`api/posts/delete`, { data: Posts })
+
+      .then((res) => {
+        navigate("/myPage/postList");
+      })
+      .catch((res) => {
+        if (res.status === 401) {
+          setAuthError(true);
+          return;
+        }
+      });
+  };
+
+  const handleClickOpen = () => {
+    setDialog(true);
+  };
+
+  const handleClickClose = () => {
+    setDialog(false);
+  };
+
   const getCategories = () => {
     return categoryItems.filter((category) => category.id !== 0);
   };
@@ -101,8 +138,11 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
     <>
       <LoginContainer direction="column" justifyContent="space-between" sx={{ flexGrow: 1 }}>
         <Card variant="outlined">
-          <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
-            懺悔を投稿
+          <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 4 }}>
+            懺悔を編集
+          </Typography>
+          <Typography color="error" variant="overline">
+            {authError && "更新対象の懺悔が存在しません。"}
           </Typography>
           <Box
             component="form"
@@ -174,6 +214,7 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
                 }}
                 render={({ field, fieldState: { error } }) => (
                   <TextField
+                    sx={{ whiteSpace: "pre-line" }}
                     placeholder="懺悔の内容を入力して下さい"
                     type="text"
                     id="content"
@@ -201,8 +242,32 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
             <Button type="submit" fullWidth variant="contained">
               懺悔する
             </Button>
+            <Divider />
+            <Typography color="error" variant="subtitle1">
+              悔い改めたため削除しますか？
+            </Typography>
           </Box>
-
+          <Button color="error" fullWidth variant="contained" onClick={handleClickOpen}>
+            削除する
+          </Button>
+          <Dialog open={dialog} TransitionComponent={Transition} onClose={handleClickClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+            <DialogTitle id="alert-dialog-title" color="error">
+              {"この懺悔を削除しますか?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                一度削除した内容は復元することができません。
+                <br />
+                本当に削除しますか？
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClickClose}>戻る</Button>
+              <Button color="error" onClick={() => deletePost(Posts)} autoFocus>
+                削除
+              </Button>
+            </DialogActions>
+          </Dialog>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}></Box>
         </Card>
       </LoginContainer>
