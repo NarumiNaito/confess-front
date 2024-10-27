@@ -1,9 +1,9 @@
 import { Box, Container } from "@mui/material";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
-import Edit from "../../components/myPage/Edit";
+import Header from "../../../components/header/Header";
+import Footer from "../../../components/footer/Footer";
+import Content from "../../../components/myPage/post/Content";
 
-function PostEdit() {
+function MyPage() {
   return (
     <>
       <Box
@@ -15,7 +15,7 @@ function PostEdit() {
       >
         <Header />
         <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <Edit />
+          <Content />
         </Container>
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <Footer />
@@ -24,4 +24,4 @@ function PostEdit() {
     </>
   );
 }
-export default PostEdit;
+export default MyPage;

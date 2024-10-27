@@ -5,15 +5,15 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
-import { axios } from "../../api/Axios";
+import { axios } from "../../../api/Axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import EditIcon from "@mui/icons-material/Edit";
-import SkeletonLoading from "../loading/SkeletonLoading";
+import SkeletonLoading from "../../loading/SkeletonLoading";
 import Chip from "@mui/material/Chip";
-import { categoryItems } from "../../data/Category";
+import { categoryItems } from "../../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
 
 export default function Content() {
@@ -79,7 +79,7 @@ export default function Content() {
                   <Box sx={{ position: "relative", mb: 3 }}>
                     <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
                       <Tooltip title="コメントを見る">
-                        <IconButton component="label" sx={{ color: "#fff", mr: 2 }} tabIndex={-1} size="small">
+                        <IconButton component="label" sx={{ color: "#fff", mr: 2 }} tabIndex={-1} size="small" onClick={() => navigate(`/myPage/myComment/${post["id"]}`, { state: post })}>
                           <CommentIcon />
                         </IconButton>
                       </Tooltip>

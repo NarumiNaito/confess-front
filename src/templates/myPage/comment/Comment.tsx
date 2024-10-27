@@ -1,14 +1,13 @@
 import { Box, Container, Fab, FormControl, FormLabel, TextField, Tooltip } from "@mui/material";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
-import Content from "../../components/comment/Content";
-import { useLocation, useNavigate } from "react-router-dom";
+import Header from "../../../components/header/Header";
+import Content from "../../../components/myPage/comment/CommentContent";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { SiteMarkIcon } from "../../components/CustomIcons";
+import { SiteMarkIcon } from "../../../components/CustomIcons";
 import { IconButton } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
@@ -20,7 +19,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { Controller, useForm } from "react-hook-form";
-import { axios } from "../../api/Axios";
+import { axios } from "../../../api/Axios";
 
 const navItems = ["利用規約", "プライバシーポリシー", "お問合せ"];
 
@@ -36,10 +35,11 @@ const Transition = React.forwardRef(function Transition(
 function Comment() {
   const navigate = useNavigate();
   const location = useLocation();
+  const params = useParams();
   const [open, setOpen] = React.useState(false);
 
+  console.log(params);
   console.log(location);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -54,26 +54,19 @@ function Comment() {
     },
   });
 
-  interface INPUTS {
-    content: string;
-  }
-
   const onSubmit = async (data: any) => {
     const comments = {
       content: data.content,
       post_id: location.state.id,
     };
     console.log(comments);
-    // console.log(comments);
-    // setLoading(true);
     await axios
       .get(`sanctum/csrf-cookie`)
       .then((res) => {
-        // setLoading(true);
         axios.post(`api/comments/register`, comments);
       })
       .then((res) => {
-        navigate("/myPage");
+        navigate(`/myPage/comment/${location.state.id}`, { state: location.state });
       });
   };
   return (
@@ -111,26 +104,18 @@ function Comment() {
                 </Typography>
               </Box>
             </Container>
-            {/* <Box
-              sx={{
-                position: "fixed",
-                bottom: 16,
-                right: 16,
-                zIndex: 1000,
-              }}
-            ></Box> */}
+
             <Fab
-              color="secondary"
+              color="primary"
               aria-label="edit"
               onClick={handleClickOpen}
               sx={{
-                position: "fixed", // Fix the position on the screen
-                bottom: 20, // Position it from the bottom
-                right: 20, // Position it from the right
-                zIndex: 1000, // Ensure it's above other content
+                position: "fixed",
+                bottom: 20,
+                right: 20,
+                zIndex: 1000,
               }}
             >
-              {" "}
               <Tooltip title="コメントする">
                 <EditIcon />
               </Tooltip>
