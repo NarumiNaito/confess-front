@@ -15,7 +15,7 @@ import Chip from "@mui/material/Chip";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { categoryItems } from "../../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
-import { CurrentPage, ForgiveState, Post } from "../../../types/Types";
+import { CurrentPage, ForgiveState, BookMarkState, Post } from "../../../types/Types";
 
 // interface CurrentPage {
 //   last_page: number;
@@ -28,6 +28,8 @@ export default function Content() {
   const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
   const [open, setOpen] = React.useState<boolean>(false);
   const [forgiveState, setForgiveState] = React.useState<ForgiveState>({});
+  const [bookmark, setBookmark] = React.useState<BookMarkState>({});
+  const [userId, setUserId] = React.useState<number>();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
@@ -58,6 +60,21 @@ export default function Content() {
           return acc;
         }, {});
         setForgiveState(initialForgiveState);
+
+        // 初期の bookmark を作成し、is_bookmarks の状態も含める
+        const initialBookMarkState = res.data.data.reduce((prev: BookMarkState, post: Post) => {
+          prev[post.id] = {
+            bookmark: post.is_bookmarks || false,
+          };
+          return prev;
+        }, {});
+        setBookmark(initialBookMarkState);
+      })
+      .then((res) => {
+        axios.get("api/user").then((res) => {
+          // console.log(res.data[0]);
+          setUserId(res.data[0].id);
+        });
       })
       .catch((res) => {
         if (res.status === 401) {
@@ -107,6 +124,24 @@ export default function Content() {
       axios.post("api/forgives/toggle", {
         post_id: postId,
         is_forgive: !currentForgive,
+      });
+    });
+  };
+
+  const toggleBookmark = async (postId: number) => {
+    const currentBookMark = bookmark[postId]?.bookmark || false;
+
+    // 状態を更新
+    setBookmark((prevBookMarkState) => ({
+      ...prevBookMarkState,
+      [postId]: { bookmark: !currentBookMark },
+    }));
+
+    // API 呼び出し
+    await axios.get(`sanctum/csrf-cookie`).then(() => {
+      axios.post("api/bookmarks/toggle", {
+        post_id: postId,
+        is_bookmarks: !currentBookMark,
       });
     });
   };
@@ -182,11 +217,20 @@ export default function Content() {
                   <Grid key={id} size={{ xs: 12, sm: 6 }}>
                     <Box sx={{ position: "relative", mb: 3 }}>
                       <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
-                        <Tooltip title="ブックマーク">
-                          <IconButton component="label" sx={{ color: "#fff", mr: 1 }} tabIndex={-1} size="small">
-                            <BookmarkIcon />
-                          </IconButton>
-                        </Tooltip>
+                        {userId === post.user_id || (
+                          <Tooltip title="ブックマーク">
+                            <IconButton
+                              onClick={() => toggleBookmark(post["id"])}
+                              color={bookmark[post["id"]]?.bookmark ? "primary" : "inherit"}
+                              component="label"
+                              sx={{ mr: 1 }}
+                              tabIndex={-1}
+                              size="small"
+                            >
+                              <BookmarkIcon />
+                            </IconButton>
+                          </Tooltip>
+                        )}
                       </Box>
                     </Box>
                     <Box

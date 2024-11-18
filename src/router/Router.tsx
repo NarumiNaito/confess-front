@@ -17,6 +17,7 @@ import Comment from "../templates/myPage/comment/Comment";
 import HomeComment from "../templates/home/HomeComment";
 import Fulfillment from "../templates/myPage/fulfillment/Fulfillment";
 import HomeFulfillment from "../templates/home/HomeFulfillment";
+import Bookmark from "../templates/myPage/bookmark/Bookmark";
 
 const Router = () => {
   return (
@@ -37,7 +38,8 @@ const Router = () => {
             <Route path="/myPage/postList/:id" element={<PostEdit />} />
             <Route path="/myPage/myComment/:id" element={<MyComment />} />
             <Route path="/myPage/comment/:id" element={<Comment />} />
-            <Route path="/myPage/fulfillment/" element={<Fulfillment />} />
+            <Route path="/myPage/fulfillment" element={<Fulfillment />} />
+            <Route path="/myPage/bookmarkList" element={<Bookmark />} />
           </Route>
           <Route path="*" element={<Page404 />} />
 

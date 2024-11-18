@@ -12,10 +12,12 @@ export interface InputsRegister {
 
 export interface Post {
   id: number;
+  user_id: number;
   category_name: string;
   content: string;
   forgives_count: number;
   is_like: boolean;
+  is_bookmarks: boolean;
   comment_count: number;
   name: string;
   image: string;
@@ -46,6 +48,10 @@ export interface Comment {}
 
 export interface ForgiveState {
   [key: number]: { forgive: boolean; forgiveCount: number };
+}
+
+export interface BookMarkState {
+  [key: number]: { bookmark: boolean };
 }
 
 export interface ForgotPasswordProps {

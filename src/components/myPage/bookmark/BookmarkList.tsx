@@ -21,7 +21,7 @@ import { BookMarkState, CurrentPage, ForgiveState, Post } from "../../../types/T
 //   last_page: number;
 // }
 
-export default function FulfillmentContent() {
+export default function BookmarkList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [posts, setPosts] = React.useState<Post[]>([]);
@@ -29,7 +29,6 @@ export default function FulfillmentContent() {
   const [open, setOpen] = React.useState<boolean>(false);
   const [forgiveState, setForgiveState] = React.useState<ForgiveState>({});
   const [bookmark, setBookmark] = React.useState<BookMarkState>({});
-  const [userId, setUserId] = React.useState<number>();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
@@ -44,7 +43,7 @@ export default function FulfillmentContent() {
   const fetchPost = async (page: number, categoryId: number) => {
     setLoading(true);
     axios
-      .get(`api/posts/fulfillment?page=${page}&category_id=${categoryId}`)
+      .get(`api/posts/bookmark?page=${page}&category_id=${categoryId}`)
       .then((res) => {
         console.log(res.data.data);
         setPosts(res.data.data);
@@ -68,12 +67,6 @@ export default function FulfillmentContent() {
           return prev;
         }, {});
         setBookmark(initialBookMarkState);
-      })
-      .then((res) => {
-        axios.get("api/user").then((res) => {
-          // console.log(res.data[0]);
-          setUserId(res.data[0].id);
-        });
       })
       .catch((res) => {
         if (res.status === 401) {
@@ -148,9 +141,9 @@ export default function FulfillmentContent() {
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
         <Box mb={2}>
           <Typography variant="h5" mb={3}>
-            成就した懺悔
+            ブックマーク
           </Typography>
-          <Typography>神より赦しを得て成就した投稿一覧</Typography>
+          <Typography>他人の懺悔は人生の教訓となる</Typography>
         </Box>
 
         <Box sx={{ display: { md: "none" } }}>
@@ -214,20 +207,18 @@ export default function FulfillmentContent() {
                   <Grid key={id} size={{ xs: 12, sm: 6 }}>
                     <Box sx={{ position: "relative", mb: 3 }}>
                       <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
-                        {userId === post.user_id || (
-                          <Tooltip title="ブックマーク">
-                            <IconButton
-                              onClick={() => toggleBookmark(post["id"])}
-                              color={bookmark[post["id"]]?.bookmark ? "primary" : "inherit"}
-                              component="label"
-                              sx={{ mr: 1 }}
-                              tabIndex={-1}
-                              size="small"
-                            >
-                              <BookmarkIcon />
-                            </IconButton>
-                          </Tooltip>
-                        )}
+                        <Tooltip title="ブックマーク">
+                          <IconButton
+                            onClick={() => toggleBookmark(post["id"])}
+                            color={bookmark[post["id"]]?.bookmark ? "primary" : "inherit"}
+                            component="label"
+                            sx={{ mr: 1 }}
+                            tabIndex={-1}
+                            size="small"
+                          >
+                            <BookmarkIcon />
+                          </IconButton>
+                        </Tooltip>
                       </Box>
                     </Box>
                     <Box
