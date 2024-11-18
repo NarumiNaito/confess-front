@@ -14,6 +14,8 @@ import PublicLayout from "./PublicLayout";
 import PrivateLayout from "./PrivateLayout";
 import MyComment from "../templates/myPage/comment/MyComment";
 import Comment from "../templates/myPage/comment/Comment";
+import HomeComment from "../templates/home/HomeComment";
+import Fulfillment from "../templates/myPage/fulfillment/Fulfillment";
 
 const Router = () => {
   return (
@@ -22,6 +24,7 @@ const Router = () => {
         <Routes>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/comment/:id" element={<HomeComment />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
@@ -32,6 +35,7 @@ const Router = () => {
             <Route path="/myPage/postList/:id" element={<PostEdit />} />
             <Route path="/myPage/myComment/:id" element={<MyComment />} />
             <Route path="/myPage/comment/:id" element={<Comment />} />
+            <Route path="/myPage/fulfillment/" element={<Fulfillment />} />
           </Route>
           <Route path="*" element={<Page404 />} />
 

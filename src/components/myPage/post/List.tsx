@@ -15,11 +15,12 @@ import SkeletonLoading from "../../loading/SkeletonLoading";
 import Chip from "@mui/material/Chip";
 import { categoryItems } from "../../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
+import { CurrentPage, Post } from "../../../types/Types";
 
 export default function Content() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [posts, setPosts] = React.useState([]);
-  const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
+  const [posts, setPosts] = React.useState<Post[]>([]);
+  const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
@@ -103,7 +104,7 @@ export default function Content() {
                     <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
                       <Tooltip title="赦された数">
                         <Button component="label" sx={{ color: "#fff", mr: 1 }} tabIndex={-1} size="small" startIcon={<VolunteerActivismIcon />}>
-                          (0)件成就
+                          ({post["forgives_count"]})件成就
                         </Button>
                       </Tooltip>
                     </Box>

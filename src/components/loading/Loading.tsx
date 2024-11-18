@@ -1,8 +1,6 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import { CircularProgress, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import { createTheme, Stack, ThemeProvider } from "@mui/material";
 
 const DisabledBackground = styled(Box)({
   width: "100%",
@@ -36,24 +34,8 @@ export default function Loading() {
     </Box>
   );
 
-  // const darkTheme = createTheme({
-  //   palette: {
-  //     mode: "dark",
-  //   },
-  // });
-
-  // const BackgroundImage = styled(Stack)(({ theme }) => ({
-  //   zIndex: -1,
-  //   inset: 0,
-  //   textAlign: "center",
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundImage: "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
-  // }));
-
   return (
     <>
-      {/* <ThemeProvider theme={darkTheme}> */}
-      {/* <BackgroundImage> */}
       <CircularLoading />
       <Box
         sx={{
@@ -80,8 +62,6 @@ export default function Loading() {
           読み込み中
         </Typography>
       </Box>
-      {/* </BackgroundImage> */}
-      {/* </ThemeProvider> */}
     </>
   );
 }

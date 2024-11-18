@@ -6,19 +6,22 @@ import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import { axios } from "../../../api/Axios";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
-import { Divider, Tooltip } from "@mui/material";
+import { Button, Divider, Tooltip } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const commonStyles = {
-  bgcolor: "#212121",
-  px: 2,
-  border: 0.1,
-};
+// const commonStyles = {
+//   bgcolor: "#212121",
+//   px: 2,
+//   border: 0.1,
+// };
 
 export default function CommentContent(props: any) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [comments, setComments] = React.useState([]);
+  const [userId, setUserId] = React.useState<number>();
+
   const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
 
   const page = parseInt(searchParams.get("page") || "1", 10);
@@ -26,6 +29,9 @@ export default function CommentContent(props: any) {
   const navigate = useNavigate();
   const params = useParams();
   const id = params.id;
+  const location = useLocation();
+
+  console.log(location.state);
 
   React.useEffect(() => {
     const qpPage = parseInt(searchParams.get("page") || "1", 10);
@@ -33,18 +39,30 @@ export default function CommentContent(props: any) {
   }, [searchParams]);
 
   const fetchComment = async (page: number) => {
-    axios
+    await axios
       .get(`api/comments/index/${id}?page=${page}`)
       .then((res) => {
         console.log(res.data.data);
         setComments(res.data.data);
         setCurrentPage(res.data);
       })
+      .then((res) => {
+        axios.get("api/user").then((res) => {
+          console.log(res.data[0]);
+          setUserId(res.data[0].id);
+        });
+      })
       .catch((res) => {
         if (res.status === 401) {
           return;
         }
       });
+  };
+
+  const deleteComment = async (comment: any) => {
+    await axios.delete(`api/comments/delete`, { data: comment }).then((res) => {
+      navigate(`/myPage/myComment/${comment.post_id}`, { state: props.state });
+    });
   };
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
@@ -136,6 +154,17 @@ export default function CommentContent(props: any) {
                     {comment["content"]}
                   </Typography>
 
+                  {userId === comment["user_id"] && (
+                    <Box sx={{ position: "relative", mb: 3 }}>
+                      <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
+                        <Tooltip title="削除">
+                          <Button onClick={() => deleteComment(comment)} component="label" variant="outlined" color="error" tabIndex={-1} size="small" startIcon={<DeleteIcon />}>
+                            削除
+                          </Button>
+                        </Tooltip>
+                      </Box>
+                    </Box>
+                  )}
                   <Box
                     sx={{
                       display: "flex",

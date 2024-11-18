@@ -8,19 +8,7 @@ import { IconButton, MenuItem, Toolbar, Typography } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate } from "react-router-dom";
-import ChurchIcon from "@mui/icons-material/Church";
-import CelebrationIcon from "@mui/icons-material/Celebration";
-import LoginIcon from "@mui/icons-material/Login";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-
-const navItems = [
-  { name: "ログイン", path: "/login", icon: <LoginIcon /> },
-  { name: "新規登録", path: "/register", icon: <PersonAddIcon /> },
-];
-const pages = [
-  { name: "みんなの懺悔", path: "/", icon: <ChurchIcon /> },
-  { name: "成就した懺悔", path: "/rank", icon: <CelebrationIcon /> },
-];
+import { navItems, pages } from "../../data/NavItems";
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);

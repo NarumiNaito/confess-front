@@ -21,13 +21,14 @@ import { CurrentPage, ForgiveState, Post } from "../../../types/Types";
 //   last_page: number;
 // }
 
-export default function Content() {
+export default function Fulfillment() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
   const [open, setOpen] = React.useState<boolean>(false);
   const [forgiveState, setForgiveState] = React.useState<ForgiveState>({});
+  const [post, setPost] = React.useState<Post[]>([]);
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
@@ -43,7 +44,7 @@ export default function Content() {
   const fetchPost = async (page: number, categoryId: number) => {
     setLoading(true);
     axios
-      .get(`api/posts/myIndex?page=${page}&category_id=${categoryId}`)
+      .get(`api/posts/fulfillmentIndex?page=${page}&category_id=${categoryId}`)
       .then((res) => {
         console.log(res.data.data);
         setPosts(res.data.data);
@@ -59,6 +60,11 @@ export default function Content() {
         }, {});
         setForgiveState(initialForgiveState);
       })
+      // .then(() => {
+      //   axios.get("api/forgives/index").then((res) => {
+      //     console.log(res);
+      //   });
+      // })
       .catch((res) => {
         if (res.status === 401) {
           return;
@@ -116,9 +122,9 @@ export default function Content() {
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
         <Box mb={2}>
           <Typography variant="h5" mb={3}>
-            みんなの懺悔
+            成就した懺悔
           </Typography>
-          <Typography>自分が犯した罪や過ちなど、心残りを神の前で告白しませんか？</Typography>
+          <Typography>神より赦しを得た投稿一覧</Typography>
         </Box>
 
         <Box sx={{ display: { md: "none" } }}>
@@ -255,7 +261,6 @@ export default function Content() {
                           </Tooltip>
                           <Typography variant="subtitle1">{post["name"]}</Typography>
                         </Box>
-
                         <Typography variant="subtitle1">{dayjs(post["created_at"]).format("YYYY年M月D日")}</Typography>
                       </Box>
                     </Box>

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { axios } from "../../../api/Axios";
 import { InputLabel, MenuItem, Select } from "@mui/material";
 import { categoryItems } from "../../../data/Category";
+import { PostInputs } from "../../../types/Types";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -39,11 +40,6 @@ const LoginContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-interface INPUTS {
-  category_id: string;
-  content: string;
-}
-
 export default function PostForm(props: { disableCustomTheme?: boolean }) {
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -63,7 +59,7 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<INPUTS> = async (data) => {
+  const onSubmit: SubmitHandler<PostInputs> = async (data) => {
     const Posts = {
       category_id: data.category_id,
       content: data.content,

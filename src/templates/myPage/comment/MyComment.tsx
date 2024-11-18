@@ -11,8 +11,6 @@ import FacebookIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
 import Footer from "../../../components/footer/Footer";
 
-const navItems = ["利用規約", "プライバシーポリシー", "お問合せ"];
-
 function MyComment() {
   const location = useLocation();
   const params = useParams();

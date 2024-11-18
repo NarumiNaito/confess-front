@@ -8,8 +8,7 @@ import { SiteMarkIcon } from "../CustomIcons";
 import { IconButton } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/GitHub";
 import { Link } from "react-router-dom";
-
-const navItems = ["利用規約", "プライバシーポリシー", "お問合せ"];
+import { footerItems } from "../../data/NavItems";
 
 function Footer() {
   return (
@@ -17,7 +16,7 @@ function Footer() {
       <Container sx={{ Bottom: 0, padding: 2, mt: 1 }}>
         <Box>
           <Box sx={{ display: { sm: "block" } }} justifyContent={"center"}>
-            {navItems.map((item) => (
+            {footerItems.map((item) => (
               <Button color="inherit" key={item} sx={{ textAlign: "white" }}>
                 {item}
               </Button>
