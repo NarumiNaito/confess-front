@@ -52,13 +52,8 @@ function Header() {
     setAnchorElUser(null);
   };
 
-  const handleComment = () => {
-    navigate("/comment");
-    setAnchorElUser(null);
-  };
-
-  const handleForgive = () => {
-    navigate("/forgive");
+  const handleBookmarkList = () => {
+    navigate("/myPage/bookmarkList");
     setAnchorElUser(null);
   };
 
@@ -108,7 +103,7 @@ function Header() {
   const settings = [
     { name: "懺悔する", path: "/post", clickEvent: handlePost },
     { name: "懺悔一覧", path: "/postList", clickEvent: handleList },
-    { name: "ブックマーク一覧", path: "/", clickEvent: handleComment },
+    { name: "ブックマーク一覧", path: "/bookmarkList", clickEvent: handleBookmarkList },
     { name: "アカウント編集", path: "/", clickEvent: handleAccount },
     { name: "ログアウト", path: "/login", clickEvent: handleLogout },
   ];
