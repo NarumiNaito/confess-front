@@ -12,7 +12,7 @@ export const navItems = [
 
 export const pages = [
   { name: "みんなの懺悔", path: "/", icon: <ChurchIcon /> },
-  { name: "成就した懺悔", path: "/", icon: <CelebrationIcon /> },
+  { name: "成就した懺悔", path: "/fulfillment", icon: <CelebrationIcon /> },
 ];
 
 export const myPages = [
