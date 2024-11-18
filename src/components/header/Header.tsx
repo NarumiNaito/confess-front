@@ -16,15 +16,14 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import { SiteMarkIcon } from "../CustomIcons";
 import { axios } from "../../api/Axios";
 import { Link, useNavigate } from "react-router-dom";
-import ChurchIcon from "@mui/icons-material/Church";
-import CelebrationIcon from "@mui/icons-material/Celebration";
-import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import { useAuthContext } from "../../router/useAuthContext";
+import { myPages } from "../../data/NavItems";
 
 function Header() {
   const { logout } = useAuthContext();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [userName, setUserName] = React.useState<number>();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -68,6 +67,22 @@ function Header() {
     setAnchorElUser(null);
   };
 
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("api/user");
+        console.log(res.data);
+        if (res.data && res.data.length > 0) {
+          setUserName(res.data[0].name);
+        }
+      } catch (error) {
+        console.error("ユーザー情報の取得に失敗しました:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const handleLogout = () => {
     axios.get(`sanctum/csrf-cookie`).then((response) => {
       axios
@@ -89,12 +104,6 @@ function Header() {
         });
     });
   };
-
-  const pages = [
-    { name: "みんなの懺悔", icon: <ChurchIcon />, path: "/myPage" },
-    { name: "成就した懺悔", icon: <CelebrationIcon />, path: "/myPage" },
-    { name: "聖母に相談", icon: <SelfImprovementIcon />, path: "/myPage" },
-  ];
 
   const settings = [
     { name: "懺悔する", path: "/post", clickEvent: handlePost },
@@ -151,7 +160,7 @@ function Header() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages.map((page, i) => (
+              {myPages.map((page, i) => (
                 <MenuItem key={i} onClick={handleCloseNavMenu}>
                   <Button onClick={() => navigate(page.path)} sx={{ textAlign: "center", color: "#fff" }} startIcon={page.icon}>
                     {page.name}
@@ -167,7 +176,7 @@ function Header() {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page, i) => (
+            {myPages.map((page, i) => (
               <Button key={i} onClick={handleCloseNavMenu} sx={{ my: 2, m: 1, color: "#fff" }} startIcon={page.icon}>
                 <Button onClick={() => navigate(page.path)} sx={{ color: "#fff" }}>
                   {page.name}
@@ -176,7 +185,7 @@ function Header() {
             ))}
           </Box>
 
-          <Box>
+          <Box paddingRight={1}>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Tooltip title="通知">
                 <Badge badgeContent={17} color="error">
@@ -188,9 +197,9 @@ function Header() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="マイページ">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <AccountCircle />
-              </IconButton>
+              <Button onClick={handleOpenUserMenu} sx={{ p: 0, color: "white", textTransform: "none" }} startIcon={<AccountCircle />}>
+                {userName}
+              </Button>
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}

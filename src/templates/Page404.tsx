@@ -1,10 +1,16 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PageImage from "../assets/Image404.png";
-import { AppBar, Box, Container, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
 import Footer from "../components/footer/Footer";
 import { SiteMarkIcon } from "../components/CustomIcons";
 
 function Page404() {
+  const navigate = useNavigate();
+
+  const clickBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
       <Box
@@ -18,9 +24,9 @@ function Page404() {
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Box sx={{ display: { xs: "none", md: "flex" }, mr: 1, mt: 1 }}>
-                <Link to="/">
+                <Button onClick={clickBack}>
                   <SiteMarkIcon />
-                </Link>
+                </Button>
               </Box>
               <Typography
                 variant="h5"
@@ -41,15 +47,15 @@ function Page404() {
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                 <Box sx={{ display: { xs: "flex", md: "none" }, mr: 1, mt: 1 }}>
-                  <Link to="/">
+                  <Button onClick={clickBack}>
                     <SiteMarkIcon />
-                  </Link>
+                  </Button>
                 </Box>
               </Box>
               <Box sx={{ display: { xs: "block", md: "block" }, ml: "auto" }}>
-                <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                  TOPに戻る
-                </Link>
+                <Button onClick={clickBack} style={{ color: "white", textDecoration: "none" }}>
+                  戻る
+                </Button>
               </Box>
             </Toolbar>
           </Container>

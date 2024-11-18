@@ -5,11 +5,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
-import { axios } from "../../../api/Axios";
+import { axios } from "../../api/Axios";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
-import { Button, Divider, Tooltip } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Divider, Tooltip } from "@mui/material";
+import { Comment, CurrentPage } from "../../types/Types";
 
 // const commonStyles = {
 //   bgcolor: "#212121",
@@ -17,14 +17,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 //   border: 0.1,
 // };
 
-export default function CommentContent(props: any) {
+export default function HomeCommentContent(props: any) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [comments, setComments] = React.useState([]);
-  const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
-  const [userId, setUserId] = React.useState<number>();
 
-  console.log(props);
-  console.log(comments);
+  const [comments, setComments] = React.useState<Comment[]>([]);
+  const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
@@ -39,17 +36,11 @@ export default function CommentContent(props: any) {
 
   const fetchComment = async (page: number) => {
     axios
-      .get(`api/comments/index/${id}?page=${page}`)
+      .get(`api/comments/show/${id}?page=${page}`)
       .then((res) => {
         console.log(res.data.data);
         setComments(res.data.data);
         setCurrentPage(res.data);
-      })
-      .then((res) => {
-        axios.get("api/user").then((res) => {
-          // console.log(res.data[0]);
-          setUserId(res.data[0].id);
-        });
       })
       .catch((res) => {
         if (res.status === 401) {
@@ -59,13 +50,7 @@ export default function CommentContent(props: any) {
   };
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
-    navigate(`/myPage/myComment/${id}?page=${page}`, { state: props.state });
-  };
-
-  const deleteComment = async (comment: any) => {
-    await axios.delete(`api/comments/delete`, { data: comment }).then((res) => {
-      navigate(`/myPage/myComment/${comment.post_id}`, { state: props.state });
-    });
+    navigate(`/comment/${id}?page=${page}`, { state: props.state });
   };
 
   return (
@@ -76,7 +61,7 @@ export default function CommentContent(props: any) {
             <Grid size={{ xs: 12, sm: 6 }}>
               <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <Box mb={2}>
-                  <Typography variant="h5">神からの助言</Typography>
+                  <Typography variant="h5">迷える子羊への助言</Typography>
                 </Box>
               </Box>
               <Box
@@ -86,6 +71,7 @@ export default function CommentContent(props: any) {
                   justifyContent: "space-between",
                   gap: 1,
                   height: "100%",
+
                   // ...commonStyles,
                   // borderRadius: 1,
                   // borderColor: "grey.500",
@@ -108,7 +94,15 @@ export default function CommentContent(props: any) {
                     justifyContent: "space-between",
                   }}
                 >
-                  <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}></Box>
+                  <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+                    <Tooltip title={props.state.name}>
+                      <AvatarGroup max={3}>
+                        <Avatar src={props.state.image} sx={{ width: 24, height: 24 }} />
+                      </AvatarGroup>
+                    </Tooltip>
+                    <Typography variant="subtitle1">{props.state.name}</Typography>
+                  </Box>
+
                   <Typography variant="subtitle1">{dayjs(props.state.updated_at).format("YYYY年M月D日")}</Typography>
                 </Box>
                 <Divider />
@@ -138,26 +132,12 @@ export default function CommentContent(props: any) {
                     gap: 1,
                     height: "100%",
                     mb: 5,
-                    // ...commonStyles,
-                    // borderRadius: 1,
-                    // borderColor: "grey.500",
                   }}
                 >
                   <Typography m={1} whiteSpace={"pre-line"} variant="h6">
                     {comment["content"]}
                   </Typography>
 
-                  {userId === comment["user_id"] && (
-                    <Box sx={{ position: "relative", mb: 3 }}>
-                      <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
-                        <Tooltip title="削除">
-                          <Button onClick={() => deleteComment(comment)} component="label" variant="outlined" color="error" tabIndex={-1} size="small" startIcon={<DeleteIcon />}>
-                            削除
-                          </Button>
-                        </Tooltip>
-                      </Box>
-                    </Box>
-                  )}
                   <Box
                     sx={{
                       display: "flex",

@@ -19,6 +19,8 @@ import { InputAdornment } from "@mui/material";
 import Loading from "../../loading/Loading";
 import Header from "../../header/AuthHeader";
 import AuthFooter from "../../footer/AuthFooter";
+import { useAuthContext } from "../../../router/useAuthContext";
+import { InputsRegister } from "../../../types/Types";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -44,13 +46,6 @@ const RegisterContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-interface INPUTS {
-  name: string;
-  email: string;
-  password: string;
-  reenter: string;
-}
-
 export default function RegisterForm(props: { disableCustomTheme?: boolean }) {
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
@@ -71,8 +66,9 @@ export default function RegisterForm(props: { disableCustomTheme?: boolean }) {
   };
 
   const navigate = useNavigate();
+  const { login } = useAuthContext();
 
-  const onSubmit: SubmitHandler<INPUTS> = async (data) => {
+  const onSubmit: SubmitHandler<InputsRegister> = async (data) => {
     const requestUser = {
       name: data.name,
       email: data.email,
@@ -273,7 +269,7 @@ export default function RegisterForm(props: { disableCustomTheme?: boolean }) {
                 </FormControl>
                 <Divider />
 
-                <Button type="submit" fullWidth variant="contained">
+                <Button onClick={login} type="submit" fullWidth variant="contained">
                   登録
                 </Button>
               </Box>

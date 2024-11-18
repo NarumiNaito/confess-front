@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import { axios } from "../../api/Axios";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
@@ -14,14 +14,16 @@ import SkeletonLoading from "../loading/SkeletonLoading";
 import Chip from "@mui/material/Chip";
 import { categoryItems } from "../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { CurrentPage, Post } from "../../types/Types";
 
 export default function Content() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [loading, setLoading] = React.useState(false);
-  const [posts, setPosts] = React.useState([]);
-  const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
-  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [posts, setPosts] = React.useState<Post[]>([]);
+  const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
+  const [open, setOpen] = React.useState<boolean>(false);
 
+  const navigate = useNavigate();
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
 
@@ -160,13 +162,21 @@ export default function Content() {
                       <Box sx={{ position: "relative", mb: 3 }}>
                         <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
                           <Tooltip title="赦す">
-                            <Button component="label" variant="outlined" sx={{ color: "#fff", mr: 1 }} tabIndex={-1} size="small" startIcon={<VolunteerActivismIcon />}>
-                              (0)
+                            <Button color="inherit" component="label" variant="outlined" sx={{ mr: 1 }} tabIndex={-1} size="small" startIcon={<VolunteerActivismIcon />}>
+                              ({post["forgives_count"]})
                             </Button>
                           </Tooltip>
                           <Tooltip title="コメント">
-                            <Button component="label" variant="outlined" sx={{ color: "#fff" }} tabIndex={-1} size="small" startIcon={<CommentIcon />}>
-                              (0)
+                            <Button
+                              onClick={() => navigate(`/comment/${post["id"]}`, { state: post })}
+                              component="label"
+                              variant="outlined"
+                              color="inherit"
+                              tabIndex={-1}
+                              size="small"
+                              startIcon={<CommentIcon />}
+                            >
+                              ({post["comment_count"]})
                             </Button>
                           </Tooltip>
                         </Box>

@@ -22,6 +22,7 @@ import Loading from "../../loading/Loading";
 import Header from "../../header/AuthHeader";
 import AuthFooter from "../../footer/AuthFooter";
 import { useAuthContext } from "../../../router/useAuthContext";
+import { InputsLogin } from "../../../types/Types";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -46,11 +47,6 @@ const LoginContainer = styled(Stack)(({ theme }) => ({
     position: "absolute",
   },
 }));
-
-interface INPUTS {
-  email: string;
-  password: string;
-}
 
 export default function LoginForm(props: { disableCustomTheme?: boolean }) {
   const { login } = useAuthContext();
@@ -81,7 +77,7 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<INPUTS> = async (data) => {
+  const onSubmit: SubmitHandler<InputsLogin> = async (data) => {
     const requestUser = {
       email: data.email,
       password: data.password,

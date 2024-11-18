@@ -10,11 +10,12 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { axios } from "../../../api/Axios";
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, InputLabel, MenuItem, Select, Slide } from "@mui/material";
 import { categoryItems } from "../../../data/Category";
 import { TransitionProps } from "@mui/material/transitions";
+import { PostInputs } from "../../../types/Types";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -49,11 +50,6 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-interface INPUTS {
-  category_id: string;
-  content: string;
-}
-
 export default function Edit(props: { disableCustomTheme?: boolean }) {
   const location = useLocation();
   console.log(location);
@@ -65,9 +61,9 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
     },
   });
 
-  const [open, setOpen] = React.useState(false);
-  const [dialog, setDialog] = React.useState(false);
-  const [authError, setAuthError] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [dialog, setDialog] = React.useState<boolean>(false);
+  const [authError, setAuthError] = React.useState<boolean>(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -78,7 +74,7 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<INPUTS> = async (data) => {
+  const onSubmit: SubmitHandler<PostInputs> = async (data) => {
     const Posts = {
       id: location.state.id,
       category_id: data.category_id,
