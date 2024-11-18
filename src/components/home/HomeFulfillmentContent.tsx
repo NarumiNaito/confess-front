@@ -5,23 +5,23 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
-import { axios } from "../../../api/Axios";
+import { axios } from "../../api/Axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import SkeletonLoading from "../../loading/SkeletonLoading";
+import SkeletonLoading from "../loading/SkeletonLoading";
 import Chip from "@mui/material/Chip";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import { categoryItems } from "../../../data/Category";
+import { categoryItems } from "../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
-import { CurrentPage, ForgiveState, Post } from "../../../types/Types";
+import { CurrentPage, ForgiveState, Post } from "../../types/Types";
 
 // interface CurrentPage {
 //   last_page: number;
 // }
 
-export default function FulfillmentContent() {
+export default function HomeFulfillmentContent() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [posts, setPosts] = React.useState<Post[]>([]);
@@ -42,7 +42,7 @@ export default function FulfillmentContent() {
   const fetchPost = async (page: number, categoryId: number) => {
     setLoading(true);
     axios
-      .get(`api/posts/fulfillmentIndex?page=${page}&category_id=${categoryId}`)
+      .get(`api/posts/homeFulfillment?page=${page}&category_id=${categoryId}`)
       .then((res) => {
         console.log(res.data.data);
         setPosts(res.data.data);
@@ -86,26 +86,6 @@ export default function FulfillmentContent() {
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
     setSearchParams({ page: String(page), category_id: searchParams.get("category_id") || "0" });
-  };
-
-  // toggleForgive 関数の修正
-  const toggleForgive = async (postId: number) => {
-    // 現在の状態を取得
-    const currentForgive = forgiveState[postId]?.forgive || false;
-    const updatedCount = currentForgive ? forgiveState[postId].forgiveCount - 1 : forgiveState[postId].forgiveCount + 1;
-
-    // 状態を更新
-    setForgiveState((prevForgiveState) => ({
-      ...prevForgiveState,
-      [postId]: { forgive: !currentForgive, forgiveCount: updatedCount },
-    }));
-
-    await axios.get(`sanctum/csrf-cookie`).then(() => {
-      axios.post("api/forgives/toggle", {
-        post_id: postId,
-        is_forgive: !currentForgive,
-      });
-    });
   };
 
   return (
@@ -178,13 +158,7 @@ export default function FulfillmentContent() {
                 {posts.map((post, id) => (
                   <Grid key={id} size={{ xs: 12, sm: 6 }}>
                     <Box sx={{ position: "relative", mb: 3 }}>
-                      <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
-                        <Tooltip title="ブックマーク">
-                          <IconButton component="label" sx={{ color: "#fff", mr: 1 }} tabIndex={-1} size="small">
-                            <BookmarkIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </Box>
+                      <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}></Box>
                     </Box>
                     <Box
                       sx={{
@@ -206,22 +180,13 @@ export default function FulfillmentContent() {
                       <Box sx={{ position: "relative", mb: 3 }}>
                         <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
                           <Tooltip title="赦す">
-                            <Button
-                              onClick={() => toggleForgive(post["id"])}
-                              color={forgiveState[post["id"]]?.forgive ? "primary" : "inherit"}
-                              component="label"
-                              variant="outlined"
-                              sx={{ mr: 1 }}
-                              tabIndex={-1}
-                              size="small"
-                              startIcon={<VolunteerActivismIcon />}
-                            >
+                            <Button color="inherit" component="label" variant="outlined" sx={{ mr: 1 }} tabIndex={-1} size="small" startIcon={<VolunteerActivismIcon />}>
                               ({forgiveState[post["id"]]?.forgiveCount || 0})
                             </Button>
                           </Tooltip>
                           <Tooltip title="コメント">
                             <Button
-                              onClick={() => navigate(`/myPage/comment/${post["id"]}`, { state: post })}
+                              onClick={() => navigate(`/comment/${post["id"]}`, { state: post })}
                               component="label"
                               variant="outlined"
                               color="inherit"

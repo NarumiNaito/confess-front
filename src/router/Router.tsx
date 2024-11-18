@@ -16,6 +16,7 @@ import MyComment from "../templates/myPage/comment/MyComment";
 import Comment from "../templates/myPage/comment/Comment";
 import HomeComment from "../templates/home/HomeComment";
 import Fulfillment from "../templates/myPage/fulfillment/Fulfillment";
+import HomeFulfillment from "../templates/home/HomeFulfillment";
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
         <Routes>
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/fulfillment" element={<HomeFulfillment />} />
             <Route path="/comment/:id" element={<HomeComment />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
