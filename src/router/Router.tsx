@@ -18,6 +18,7 @@ import HomeComment from "../templates/home/HomeComment";
 import Fulfillment from "../templates/myPage/fulfillment/Fulfillment";
 import HomeFulfillment from "../templates/home/HomeFulfillment";
 import Bookmark from "../templates/myPage/bookmark/Bookmark";
+import Profile from "../templates/myPage/profile/Profile";
 
 const Router = () => {
   return (
@@ -33,6 +34,7 @@ const Router = () => {
           </Route>
           <Route element={<PrivateLayout />}>
             <Route path="/myPage" element={<MyPage />} />
+            <Route path="/myPage/profile" element={<Profile />} />
             <Route path="/myPage/post" element={<PostRegister />} />
             <Route path="/myPage/postList" element={<PostList />} />
             <Route path="/myPage/postList/:id" element={<PostEdit />} />
@@ -42,7 +44,6 @@ const Router = () => {
             <Route path="/myPage/bookmarkList" element={<Bookmark />} />
           </Route>
           <Route path="*" element={<Page404 />} />
-
           <Route path="/loading" element={<Loading />} />
           <Route path="/skeletonLoading" element={<SkeletonLoading />} />
         </Routes>
