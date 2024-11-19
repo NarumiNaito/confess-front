@@ -58,7 +58,7 @@ function Header() {
   };
 
   const handleAccount = () => {
-    navigate("/account");
+    navigate("/myPage/profile");
     setAnchorElUser(null);
   };
 
@@ -81,7 +81,7 @@ function Header() {
   const handleLogout = () => {
     axios.get(`sanctum/csrf-cookie`).then((response) => {
       axios
-        .post(`api/logout`)
+        .post(`api/user/logout`)
         .then((res) => {
           setAnchorElUser(null);
           logout();
@@ -104,7 +104,7 @@ function Header() {
     { name: "懺悔する", path: "/post", clickEvent: handlePost },
     { name: "懺悔一覧", path: "/postList", clickEvent: handleList },
     { name: "ブックマーク一覧", path: "/bookmarkList", clickEvent: handleBookmarkList },
-    { name: "アカウント編集", path: "/", clickEvent: handleAccount },
+    { name: "アカウント編集", path: "profile", clickEvent: handleAccount },
     { name: "ログアウト", path: "/login", clickEvent: handleLogout },
   ];
 

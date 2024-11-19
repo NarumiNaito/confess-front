@@ -10,6 +10,10 @@ export interface InputsRegister {
   reenter: string;
 }
 
+export interface InputsProfile {
+  name: string;
+  image: string;
+}
 export interface Post {
   id: number;
   user_id: number;
