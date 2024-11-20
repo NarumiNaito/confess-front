@@ -1,8 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import LoginForm from "../../components/auth/login/LoginForm";
+import GuestLoginForm from "../../components/auth/guest/GuestLoginForm";
 
-export default function Login() {
+export default function GuestLogin() {
   return (
     <>
       <Box
@@ -12,7 +12,7 @@ export default function Login() {
           flexDirection: "column",
         }}
       >
-        <LoginForm />
+        <GuestLoginForm />
       </Box>
     </>
   );
