@@ -9,7 +9,7 @@ export const footerItems = ["利用規約", "プライバシーポリシー", "�
 export const navItems = [
   { name: "新規登録", path: "/register", icon: <PersonAddIcon /> },
   { name: "ログイン", path: "/login", icon: <LoginIcon /> },
-  { name: "ゲストログイン", path: "/register", icon: <PeopleAltIcon /> },
+  { name: "ゲストログイン", path: "/guest", icon: <PeopleAltIcon /> },
 ];
 
 export const pages = [

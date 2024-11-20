@@ -20,6 +20,7 @@ import Fulfillment from "../templates/myPage/fulfillment/Fulfillment";
 import HomeFulfillment from "../templates/home/HomeFulfillment";
 import Bookmark from "../templates/myPage/bookmark/Bookmark";
 import Profile from "../templates/myPage/profile/Profile";
+import GuestLogin from "../templates/auth/GuestLogin";
 
 const Router = () => {
   return (
@@ -31,8 +32,9 @@ const Router = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/fulfillment" element={<HomeFulfillment />} />
             <Route path="/comment/:id" element={<HomeComment />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/guest" element={<GuestLogin />} />
           </Route>
           <Route element={<PrivateLayout />}>
             <Route path="/myPage" element={<MyPage />} />
