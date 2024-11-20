@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Top from "../templates/home/Top";
 import Home from "../templates/home/Home";
 import Login from "../templates/auth/Login";
 import Register from "../templates/auth/Register";
@@ -26,7 +27,8 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Top />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/fulfillment" element={<HomeFulfillment />} />
             <Route path="/comment/:id" element={<HomeComment />} />
             <Route path="/login" element={<Login />} />

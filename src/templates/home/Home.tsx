@@ -1,6 +1,6 @@
 import { Box, Container } from "@mui/material";
 import Header from "../../components/header/AuthHeader";
-import Footer from "../../components/footer/Footer";
+import Footer from "../../components/footer/AuthFooter";
 import Content from "../../components/home/Content";
 
 function Home() {
@@ -14,7 +14,6 @@ function Home() {
         }}
       >
         <Header />
-
         <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
           <Content />
         </Container>
