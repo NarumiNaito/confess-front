@@ -134,7 +134,7 @@ function Header() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", lg: "flex" } }}>
+          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
             {/* <Button onClick={handleCloseItemMenu} sx={{ my: 2, display: "block" }}> */}
             {navItems.map((item, i) => (
               <Button key={i} onClick={() => navigate(item.path)} sx={{ color: "#fff" }} startIcon={item.icon}>

@@ -13,7 +13,6 @@ import PostEdit from "../templates/myPage/post/PostEdit";
 import { AuthContextProvider } from "./AuthContextProvider";
 import PublicLayout from "./PublicLayout";
 import PrivateLayout from "./PrivateLayout";
-import MyComment from "../templates/myPage/comment/MyComment";
 import Comment from "../templates/myPage/comment/Comment";
 import HomeComment from "../templates/home/HomeComment";
 import Fulfillment from "../templates/myPage/fulfillment/Fulfillment";
@@ -21,6 +20,7 @@ import HomeFulfillment from "../templates/home/HomeFulfillment";
 import Bookmark from "../templates/myPage/bookmark/Bookmark";
 import Profile from "../templates/myPage/profile/Profile";
 import GuestLogin from "../templates/auth/GuestLogin";
+import MyFulfillment from "../templates/myPage/fulfillment/MyFulfillment";
 
 const Router = () => {
   return (
@@ -42,8 +42,8 @@ const Router = () => {
             <Route path="/myPage/post" element={<PostRegister />} />
             <Route path="/myPage/postList" element={<PostList />} />
             <Route path="/myPage/postList/:id" element={<PostEdit />} />
-            <Route path="/myPage/myComment/:id" element={<MyComment />} />
             <Route path="/myPage/comment/:id" element={<Comment />} />
+            <Route path="/myPage/myFulfillment/:id" element={<MyFulfillment />} />
             <Route path="/myPage/fulfillment" element={<Fulfillment />} />
             <Route path="/myPage/bookmarkList" element={<Bookmark />} />
           </Route>

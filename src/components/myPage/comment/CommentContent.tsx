@@ -61,7 +61,7 @@ export default function CommentContent(props: any) {
 
   const deleteComment = async (comment: any) => {
     await axios.delete(`api/comments/delete`, { data: comment }).then((res) => {
-      navigate(`/myPage/myComment/${comment.post_id}`, { state: props.state });
+      navigate(`/myPage/comment/${comment.post_id}`, { state: props.state });
     });
   };
 
