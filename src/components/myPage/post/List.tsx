@@ -80,7 +80,7 @@ export default function Content() {
                   <Box sx={{ position: "relative", mb: 3 }}>
                     <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
                       <Tooltip title="コメントを見る">
-                        <IconButton component="label" sx={{ color: "#fff", mr: 2 }} tabIndex={-1} size="small" onClick={() => navigate(`/myPage/myComment/${post["id"]}`, { state: post })}>
+                        <IconButton component="label" sx={{ color: "#fff", mr: 2 }} tabIndex={-1} size="small" onClick={() => navigate(`/myPage/Comment/${post["id"]}`, { state: post })}>
                           <CommentIcon />
                         </IconButton>
                       </Tooltip>
@@ -103,7 +103,14 @@ export default function Content() {
                   >
                     <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
                       <Tooltip title="赦された数">
-                        <Button component="label" sx={{ color: "#fff", mr: 1 }} tabIndex={-1} size="small" startIcon={<VolunteerActivismIcon />}>
+                        <Button
+                          onClick={() => navigate(`/myPage/myFulfillment/${post["id"]}`, { state: post })}
+                          component="label"
+                          sx={{ color: "#fff", mr: 1 }}
+                          tabIndex={-1}
+                          size="small"
+                          startIcon={<VolunteerActivismIcon />}
+                        >
                           ({post["forgives_count"]})件成就
                         </Button>
                       </Tooltip>

@@ -11,17 +11,10 @@ import dayjs from "dayjs";
 import { Button, Divider, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-// const commonStyles = {
-//   bgcolor: "#212121",
-//   px: 2,
-//   border: 0.1,
-// };
-
-export default function CommentContent(props: any) {
+export default function MyFulfillmentContent(props: any) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [comments, setComments] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
-  const [userId, setUserId] = React.useState<number>();
 
   console.log(props);
   console.log(comments);
@@ -39,18 +32,13 @@ export default function CommentContent(props: any) {
 
   const fetchComment = async (page: number) => {
     axios
-      .get(`api/comments/index/${id}?page=${page}`)
+      .get(`api/forgives/index/${id}?page=${page}`)
       .then((res) => {
         console.log(res.data.data);
         setComments(res.data.data);
         setCurrentPage(res.data);
       })
-      .then((res) => {
-        axios.get("api/user").then((res) => {
-          // console.log(res.data[0]);
-          setUserId(res.data[0].id);
-        });
-      })
+
       .catch((res) => {
         if (res.status === 401) {
           return;
@@ -59,13 +47,7 @@ export default function CommentContent(props: any) {
   };
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
-    navigate(`/myPage/myComment/${id}?page=${page}`, { state: props.state });
-  };
-
-  const deleteComment = async (comment: any) => {
-    await axios.delete(`api/comments/delete`, { data: comment }).then((res) => {
-      navigate(`/myPage/myComment/${comment.post_id}`, { state: props.state });
-    });
+    navigate(`/myPage/forgives/${id}?page=${page}`, { state: props.state });
   };
 
   return (
@@ -76,7 +58,7 @@ export default function CommentContent(props: any) {
             <Grid size={{ xs: 12, sm: 6 }}>
               <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <Box mb={2}>
-                  <Typography variant="h5">神からの助言</Typography>
+                  <Typography variant="h5">赦しを得た懺悔</Typography>
                 </Box>
               </Box>
               <Box
@@ -125,7 +107,7 @@ export default function CommentContent(props: any) {
           <Grid sx={{ width: 800 }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <Box mb={5}>
-                <Typography variant="h5">コメント一覧</Typography>
+                <Typography variant="h5">赦しをくれた子羊達</Typography>
               </Box>
             </Box>
             {comments.map((comment, id) => (
@@ -146,7 +128,7 @@ export default function CommentContent(props: any) {
                   <Typography m={1} whiteSpace={"pre-line"} variant="h6">
                     {comment["content"]}
                   </Typography>
-
+                  {/* 
                   {userId === comment["user_id"] && (
                     <Box sx={{ position: "relative", mb: 3 }}>
                       <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
@@ -157,7 +139,7 @@ export default function CommentContent(props: any) {
                         </Tooltip>
                       </Box>
                     </Box>
-                  )}
+                  )} */}
                   <Box
                     sx={{
                       display: "flex",
