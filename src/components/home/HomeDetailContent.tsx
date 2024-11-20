@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import { axios } from "../../api/Axios";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
@@ -15,40 +15,42 @@ import Chip from "@mui/material/Chip";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { categoryItems } from "../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
-import { CurrentPage, ForgiveState, Post } from "../../types/Types";
+import { BookMarkState, CurrentPage, ForgiveState, Post } from "../../types/Types";
 
 // interface CurrentPage {
 //   last_page: number;
 // }
 
-export default function HomeFulfillmentContent() {
+export default function HomeDetailContent() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
-  const [open, setOpen] = React.useState<boolean>(false);
   const [forgiveState, setForgiveState] = React.useState<ForgiveState>({});
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = useParams();
+  const id = params.id;
+
+  console.log(location);
 
   React.useEffect(() => {
     const qpPage = parseInt(searchParams.get("page") || "1", 10);
-    const qpCategory = parseInt(searchParams.get("category_id") || "0", 10);
-    fetchPost(qpPage, qpCategory);
+    fetchPost(qpPage);
   }, [searchParams]);
 
-  const fetchPost = async (page: number, categoryId: number) => {
+  const fetchPost = async (page: number) => {
     setLoading(true);
     axios
-      .get(`api/posts/homeFulfillment?page=${page}&category_id=${categoryId}`)
+      .get(`api/posts/homeUserIndex/${id}?page=${page}`)
       .then((res) => {
         console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
 
-        // 初期の forgiveState を作成し、is_like の状態も含める
         const initialForgiveState: ForgiveState = res.data.data.reduce((acc: ForgiveState, post: Post) => {
           acc[post.id] = {
             forgive: post.is_like || false,
@@ -68,86 +70,27 @@ export default function HomeFulfillmentContent() {
       });
   };
 
-  const handleChange = (event: SelectChangeEvent<number>) => {
-    setSearchParams({ page: "1", category_id: String(event.target.value) });
-  };
-
-  const handleClick = (categoryId: number) => {
-    setSearchParams({ page: "1", category_id: String(categoryId) });
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
-    setSearchParams({ page: String(page), category_id: searchParams.get("category_id") || "0" });
+    navigate(`/detail/${id}?page=${page}`, { state: location.state });
   };
 
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <Box mb={2}>
-          <Typography variant="h5" mb={3}>
-            成就した懺悔
-          </Typography>
-          <Typography>神より赦しを得て成就した投稿一覧</Typography>
-        </Box>
-
-        <Box sx={{ display: { md: "none" } }}>
-          <Button sx={{ mr: 6 }} color="error" onClick={handleOpen}>
-            カテゴリー検索
-          </Button>
-          <Box>
-            <FormControl sx={{ minWidth: 150 }} size="small">
-              <InputLabel id="demo-select-small-label">カテゴリー</InputLabel>
-              <Select labelId="demo-select-small-label" id="demo-select-small" label="カテゴリー" open={open} onClose={handleClose} onOpen={handleOpen} onChange={handleChange}>
-                {categoryItems.map((category, id) => (
-                  <MenuItem key={id} value={category.id}>
-                    {category.category_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: { xs: "none", md: "flex" },
-            flexDirection: { xs: "column-reverse", md: "row" },
-            width: "100%",
-            justifyContent: "center",
-            alignItems: { xs: "center" },
-            gap: 4,
-            overflow: "auto",
-          }}
-        >
-          {categoryItems.map((category, id) => (
-            <Box
-              key={id}
-              sx={{
-                flexDirection: "row",
-                gap: 3,
-                overflow: "auto",
-              }}
-            >
-              <Chip
-                onClick={() => handleClick(category.id)}
-                size="medium"
-                label={category.category_name}
-                icon={category.icon}
-                sx={{
-                  backgroundColor: "transparent",
-                }}
-              />
-            </Box>
-          ))}
+        <Box mt={2} sx={{ justifyContent: "center", display: "flex", gap: 1, alignItems: "center" }}>
+          <Tooltip title={location.state.name}>
+            <AvatarGroup max={3}>
+              <Avatar src={location.state.image} sx={{ width: 36, height: 36 }} />
+            </AvatarGroup>
+          </Tooltip>
+          <Typography variant="h5">{location.state.name}のページ</Typography>
         </Box>
       </Box>
+
+      <Box mt={2} mb={2}>
+        <Divider />
+      </Box>
+      <Typography variant="h5">投稿一覧</Typography>
       {loading ? (
         <SkeletonLoading />
       ) : (
@@ -157,9 +100,6 @@ export default function HomeFulfillmentContent() {
               <Grid sx={{ width: 800 }}>
                 {posts.map((post, id) => (
                   <Grid key={id} size={{ xs: 12, sm: 6 }}>
-                    <Box sx={{ position: "relative", mb: 3 }}>
-                      <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}></Box>
-                    </Box>
                     <Box
                       sx={{
                         display: "flex",
@@ -180,7 +120,7 @@ export default function HomeFulfillmentContent() {
                       <Box sx={{ position: "relative", mb: 3 }}>
                         <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
                           <Tooltip title="赦す">
-                            <Button color="inherit" component="label" variant="outlined" sx={{ mr: 1 }} tabIndex={-1} size="small" startIcon={<VolunteerActivismIcon />}>
+                            <Button color={"inherit"} component="label" variant="outlined" sx={{ mr: 1 }} tabIndex={-1} size="small" startIcon={<VolunteerActivismIcon />}>
                               ({forgiveState[post["id"]]?.forgiveCount || 0})
                             </Button>
                           </Tooltip>
@@ -209,14 +149,7 @@ export default function HomeFulfillmentContent() {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Button onClick={() => navigate(`/detail/${post["user_id"]}`, { state: post })} color="inherit" sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
-                          <Tooltip title={post["name"]}>
-                            <AvatarGroup max={3}>
-                              <Avatar src={post["image"]} sx={{ width: 24, height: 24 }} />
-                            </AvatarGroup>
-                          </Tooltip>
-                          <Typography variant="subtitle1">{post["name"]}</Typography>
-                        </Button>
+                        <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}></Box>
                         <Typography variant="subtitle1">{dayjs(post["created_at"]).format("YYYY年M月D日")}</Typography>
                       </Box>
                     </Box>

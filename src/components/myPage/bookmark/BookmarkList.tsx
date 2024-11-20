@@ -17,10 +17,6 @@ import { categoryItems } from "../../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
 import { BookMarkState, CurrentPage, ForgiveState, Post } from "../../../types/Types";
 
-// interface CurrentPage {
-//   last_page: number;
-// }
-
 export default function BookmarkList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -279,14 +275,18 @@ export default function BookmarkList() {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+                        <Button
+                          color="inherit"
+                          onClick={() => navigate(`/myPage/detail/${post["user_id"]}`, { state: post })}
+                          sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}
+                        >
                           <Tooltip title={post["name"]}>
                             <AvatarGroup max={3}>
                               <Avatar src={post["image"]} sx={{ width: 24, height: 24 }} />
                             </AvatarGroup>
                           </Tooltip>
                           <Typography variant="subtitle1">{post["name"]}</Typography>
-                        </Box>
+                        </Button>
                         <Typography variant="subtitle1">{dayjs(post["created_at"]).format("YYYY年M月D日")}</Typography>
                       </Box>
                     </Box>

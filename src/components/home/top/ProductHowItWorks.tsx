@@ -45,8 +45,8 @@ function ProductHowItWork() {
               <Box sx={item}>
                 <Box sx={number}>1.懺悔投稿</Box>
                 <CreateIcon sx={{ my: 4 }} />
-                <Typography variant="h5" align="center">
-                  貴方の心の奥底にある後悔やわだかまり等、 匿名で懺悔を投稿できます
+                <Typography variant="h6" align="center">
+                  貴方の心の奥底にある後悔やわだかまり等、 匿名で懺悔することができます
                 </Typography>
               </Box>
             </Grid>
@@ -54,7 +54,7 @@ function ProductHowItWork() {
               <Box sx={item}>
                 <Box sx={number}>2.コメント</Box>
                 <CommentIcon sx={{ my: 4 }} />
-                <Typography variant="h5" align="center">
+                <Typography variant="h6" align="center">
                   他人の懺悔に対してコメントすることができます
                 </Typography>
               </Box>
@@ -63,7 +63,7 @@ function ProductHowItWork() {
               <Box sx={item}>
                 <Box sx={number}>3.赦す</Box>
                 <VolunteerActivismIcon sx={{ my: 4 }} />
-                <Typography variant="h5" align="center">
+                <Typography variant="h6" align="center">
                   他人の懺悔に対し赦しを与えることができます
                 </Typography>
               </Box>

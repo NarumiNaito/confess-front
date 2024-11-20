@@ -21,6 +21,8 @@ import Bookmark from "../templates/myPage/bookmark/Bookmark";
 import Profile from "../templates/myPage/profile/Profile";
 import GuestLogin from "../templates/auth/GuestLogin";
 import MyFulfillment from "../templates/myPage/fulfillment/MyFulfillment";
+import DetailUser from "../templates/myPage/details/DetailUser";
+import HomeDetailUser from "../templates/home/HomeDetailUser";
 
 const Router = () => {
   return (
@@ -30,6 +32,7 @@ const Router = () => {
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Top />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/detail/:id" element={<HomeDetailUser />} />
             <Route path="/fulfillment" element={<HomeFulfillment />} />
             <Route path="/comment/:id" element={<HomeComment />} />
             <Route path="/register" element={<Register />} />
@@ -38,6 +41,7 @@ const Router = () => {
           </Route>
           <Route element={<PrivateLayout />}>
             <Route path="/myPage" element={<MyPage />} />
+            <Route path="/myPage/detail/:id" element={<DetailUser />} />
             <Route path="/myPage/profile" element={<Profile />} />
             <Route path="/myPage/post" element={<PostRegister />} />
             <Route path="/myPage/postList" element={<PostList />} />

@@ -45,7 +45,7 @@ function ProductHowItWorks() {
               <Box sx={item}>
                 <Box sx={number}>5.Bookmark</Box>
                 <BookmarkIcon sx={{ my: 4 }} />
-                <Typography variant="h5" align="center">
+                <Typography variant="h6" align="center">
                   気になった懺悔に対しBookmarkをつけることができます
                 </Typography>
               </Box>
@@ -54,8 +54,8 @@ function ProductHowItWorks() {
               <Box sx={item}>
                 <Box sx={number}>6.通知</Box>
                 <NotificationsIcon sx={{ my: 4 }} />
-                <Typography variant="h5" align="center">
-                  貴方の投稿に対し赦す及びコメントがついたらベルで件数を表示し通知一覧から内容を確認できます。
+                <Typography variant="h6" align="center">
+                  貴方の投稿に対し赦す及びコメントがついた場合、通知一覧から内容を確認することができます。
                 </Typography>
               </Box>
             </Grid>
@@ -63,8 +63,8 @@ function ProductHowItWorks() {
               <Box sx={item}>
                 <Box sx={number}>7.ゲストログイン</Box>
                 <PeopleAltIcon sx={{ my: 4 }} />
-                <Typography variant="h5" align="center">
-                  会員登録不要でゲストログインから懺悔することができます。
+                <Typography variant="h6" align="center">
+                  お試しで会員登録不要のゲストログインから懺悔することができます。
                 </Typography>
               </Box>
             </Grid>

@@ -149,14 +149,18 @@ export default function MyFulfillmentContent(props: any) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+                    <Button
+                      color="inherit"
+                      onClick={() => navigate(`/myPage/detail/${comment["user_id"]}`, { state: comment })}
+                      sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}
+                    >
                       <Tooltip title={comment["name"]}>
                         <AvatarGroup max={3}>
                           <Avatar src={comment["image"]} sx={{ width: 24, height: 24 }} />
                         </AvatarGroup>
                       </Tooltip>
                       <Typography variant="subtitle1">{comment["name"]}</Typography>
-                    </Box>
+                    </Button>
 
                     <Typography variant="subtitle1">{dayjs(comment["created_at"]).format("YYYY年M月D日")}</Typography>
                   </Box>
