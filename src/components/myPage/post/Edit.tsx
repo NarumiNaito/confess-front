@@ -133,7 +133,7 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
   return (
     <>
       <LoginContainer direction="column" justifyContent="space-between" sx={{ flexGrow: 1 }}>
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{ bgcolor: "rgba(255, 255, 255, 0.12)" }}>
           <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 4 }}>
             懺悔を編集
           </Typography>
