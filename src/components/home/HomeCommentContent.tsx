@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { axios } from "../../api/Axios";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
-import { Divider, Tooltip } from "@mui/material";
+import { Button, Divider, Tooltip } from "@mui/material";
 import { Comment, CurrentPage } from "../../types/Types";
 
 // const commonStyles = {
@@ -147,14 +147,14 @@ export default function HomeCommentContent(props: any) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+                    <Button onClick={() => navigate(`/detail/${comment["user_id"]}`, { state: comment })} color="inherit" sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
                       <Tooltip title={comment["name"]}>
                         <AvatarGroup max={3}>
                           <Avatar src={comment["image"]} sx={{ width: 24, height: 24 }} />
                         </AvatarGroup>
                       </Tooltip>
                       <Typography variant="subtitle1">{comment["name"]}</Typography>
-                    </Box>
+                    </Button>
 
                     <Typography variant="subtitle1">{dayjs(comment["created_at"]).format("YYYY年M月D日")}</Typography>
                   </Box>

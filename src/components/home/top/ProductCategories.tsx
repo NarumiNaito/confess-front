@@ -104,6 +104,9 @@ export default function ProductCategories() {
   return (
     <Container component="section" sx={{ mt: 6, mb: 10 }}>
       <Box sx={number}>4.カテゴリー検索</Box>
+      <Typography m={4} variant="h6" align="center">
+        カテゴリー別に検索することができます。
+      </Typography>
       <Box sx={{ mt: 4, display: "flex", flexWrap: "wrap" }}>
         {images.map((image) => (
           <ImageIconButton

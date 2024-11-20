@@ -288,14 +288,18 @@ export default function FulfillmentContent() {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+                        <Button
+                          color="inherit"
+                          onClick={() => navigate(`/myPage/detail/${post["user_id"]}`, { state: post })}
+                          sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}
+                        >
                           <Tooltip title={post["name"]}>
                             <AvatarGroup max={3}>
                               <Avatar src={post["image"]} sx={{ width: 24, height: 24 }} />
                             </AvatarGroup>
                           </Tooltip>
                           <Typography variant="subtitle1">{post["name"]}</Typography>
-                        </Box>
+                        </Button>
                         <Typography variant="subtitle1">{dayjs(post["created_at"]).format("YYYY年M月D日")}</Typography>
                       </Box>
                     </Box>
