@@ -7,9 +7,13 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 // export const footerItems = ["利用規約", "プライバシーポリシー", "お問合せ"];
 
 export const footerItems = [
-  { name: "利用規約", path: "/termsOfService", icon: <PersonAddIcon /> },
-  { name: "プライバシーポリシー", path: "/privacyPolicy", icon: <LoginIcon /> },
-  // { name: "お問合せ", path: "/guest", icon: <PeopleAltIcon /> },
+  { name: "利用規約", path: "/termsOfService" },
+  { name: "プライバシーポリシー", path: "/privacyPolicy" },
+];
+
+export const myFooterItems = [
+  { name: "利用規約", path: "/myPage/termsOfService" },
+  { name: "プライバシーポリシー", path: "/myPage?/privacyPolicy" },
 ];
 
 export const navItems = [

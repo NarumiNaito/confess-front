@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import PageImage from "../assets/Image404.png";
-import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
-import Footer from "../components/footer/AuthFooter";
+import { AppBar, Box, Button, Container, IconButton, Toolbar, Typography } from "@mui/material";
 import { SiteMarkIcon } from "../components/CustomIcons";
+import FacebookIcon from "@mui/icons-material/GitHub";
 
 function Page404() {
   const navigate = useNavigate();
@@ -78,7 +78,30 @@ function Page404() {
           />
         </Box>
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
-          <Footer />
+          <AppBar position="sticky">
+            <Container sx={{ Bottom: 0, padding: 2, mt: 1 }}>
+              <Box>
+                <Box sx={{ display: { sm: "block" } }} justifyContent={"center"}></Box>
+                <Button onClick={clickBack}>
+                  <SiteMarkIcon />
+                </Button>
+                <Typography>
+                  ©since 2024 懺悔の館
+                  <IconButton color="inherit" size="large" href="https://github.com/NarumiNaito/confess-front" aria-label="LinkedIn" sx={{ alignSelf: "center" }}>
+                    <FacebookIcon />
+                  </IconButton>
+                </Typography>
+              </Box>
+            </Container>
+            <Box
+              sx={{
+                position: "fixed",
+                bottom: 16,
+                right: 16,
+                zIndex: 1000,
+              }}
+            ></Box>
+          </AppBar>
         </Box>
       </Box>
     </>

@@ -10,7 +10,7 @@ import FacebookIcon from "@mui/icons-material/GitHub";
 import { Link, useNavigate } from "react-router-dom";
 import { footerItems } from "../../data/NavItems";
 
-function Footer() {
+function AuthFooter() {
   const navigate = useNavigate();
   return (
     <AppBar position="sticky">
@@ -22,6 +22,9 @@ function Footer() {
                 {item.name}
               </Button>
             ))}
+            <Button href="mailto:confess-customer-contact@gmail.com" color="inherit">
+              お問合せ
+            </Button>
           </Box>
           <Link to="/">
             <SiteMarkIcon />
@@ -45,4 +48,4 @@ function Footer() {
     </AppBar>
   );
 }
-export default Footer;
+export default AuthFooter;

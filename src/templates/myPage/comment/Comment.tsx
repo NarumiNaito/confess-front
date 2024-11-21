@@ -20,7 +20,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { Controller, useForm } from "react-hook-form";
 import { axios } from "../../../api/Axios";
-import { footerItems } from "../../../data/NavItems";
+import { myFooterItems } from "../../../data/NavItems";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -86,11 +86,14 @@ function Comment() {
             <Container sx={{ Bottom: 0, padding: 2, mt: 1 }}>
               <Box>
                 <Box sx={{ display: { sm: "block" } }} justifyContent={"center"}>
-                  {footerItems.map((item, id) => (
+                  {myFooterItems.map((item, id) => (
                     <Button onClick={() => navigate(item.path)} color="inherit" key={id} sx={{ textAlign: "white" }}>
                       {item.name}
                     </Button>
                   ))}
+                  <Button href="mailto:confess-customer-contact@gmail.com" color="inherit">
+                    お問合せ
+                  </Button>
                 </Box>
                 <Link to="/myPage">
                   <SiteMarkIcon />

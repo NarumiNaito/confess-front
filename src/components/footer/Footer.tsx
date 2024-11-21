@@ -7,20 +7,24 @@ import Button from "@mui/material/Button";
 import { SiteMarkIcon } from "../CustomIcons";
 import { IconButton } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/GitHub";
-import { Link } from "react-router-dom";
-import { footerItems } from "../../data/NavItems";
+import { Link, useNavigate } from "react-router-dom";
+import { myFooterItems } from "../../data/NavItems";
 
 function Footer() {
+  const navigate = useNavigate();
   return (
     <AppBar position="sticky">
       <Container sx={{ Bottom: 0, padding: 2, mt: 1 }}>
         <Box>
           <Box sx={{ display: { sm: "block" } }} justifyContent={"center"}>
-            {footerItems.map((item, id) => (
-              <Button color="inherit" key={id} sx={{ textAlign: "white" }}>
+            {myFooterItems.map((item, id) => (
+              <Button onClick={() => navigate(item.path)} color="inherit" key={id} sx={{ textAlign: "white" }}>
                 {item.name}
               </Button>
             ))}
+            <Button href="mailto:confess-customer-contact@gmail.com" color="inherit">
+              お問合せ
+            </Button>
           </Box>
           <Link to="/myPage">
             <SiteMarkIcon />
