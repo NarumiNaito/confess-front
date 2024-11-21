@@ -4,7 +4,13 @@ import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
-export const footerItems = ["利用規約", "プライバシーポリシー", "お問合せ"];
+// export const footerItems = ["利用規約", "プライバシーポリシー", "お問合せ"];
+
+export const footerItems = [
+  { name: "利用規約", path: "/termsOfService", icon: <PersonAddIcon /> },
+  { name: "プライバシーポリシー", path: "/privacyPolicy", icon: <LoginIcon /> },
+  // { name: "お問合せ", path: "/guest", icon: <PeopleAltIcon /> },
+];
 
 export const navItems = [
   { name: "新規登録", path: "/register", icon: <PersonAddIcon /> },

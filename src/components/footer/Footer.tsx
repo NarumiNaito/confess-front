@@ -16,9 +16,9 @@ function Footer() {
       <Container sx={{ Bottom: 0, padding: 2, mt: 1 }}>
         <Box>
           <Box sx={{ display: { sm: "block" } }} justifyContent={"center"}>
-            {footerItems.map((item) => (
-              <Button color="inherit" key={item} sx={{ textAlign: "white" }}>
-                {item}
+            {footerItems.map((item, id) => (
+              <Button color="inherit" key={id} sx={{ textAlign: "white" }}>
+                {item.name}
               </Button>
             ))}
           </Box>

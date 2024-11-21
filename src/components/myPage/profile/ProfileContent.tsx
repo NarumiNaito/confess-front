@@ -1,4 +1,5 @@
 import * as React from "react";
+import Axios from "axios";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -21,6 +22,8 @@ import { InputsProfile } from "../../../types/Types";
 import { Tooltip } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import useFileInput from "../../../hooks/useFileInput";
+import Footer from "../../footer/Footer";
+import Header from "../../header/Header";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -45,6 +48,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
   const [user, setUser] = React.useState<any>(null);
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [authError, setAuthError] = React.useState(false);
 
   const { control, handleSubmit, register, reset } = useForm<InputsProfile>({
     defaultValues: {
@@ -89,15 +93,6 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
   }, [reset]);
 
   const onSubmit: SubmitHandler<InputsProfile> = async (data) => {
-    // 画像が未選択の場合、デフォルト値として null を送信
-
-    // const requestUser = {
-    //   id: user.id,
-    //   name: data.name,
-    //   image: file ? file : null, // 画像がなければ null を送信
-    // };
-    // console.log(requestUser);
-
     const formData = new FormData();
     formData.append("id", user.id);
     formData.append("name", data.name);
@@ -105,21 +100,54 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
       formData.append("image", file);
     }
 
-    try {
+    await axios.get(`sanctum/csrf-cookie`).then((response) => {
       setLoading(true);
-      await axios.get(`sanctum/csrf-cookie`);
-      await axios.post(`api/user/update`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      navigate("/myPage");
-    } catch (error) {
-      console.error("ユーザー更新に失敗しました:", error);
-    } finally {
-      setLoading(false);
-    }
+      axios
+        .post(`api/user/update`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(() => {
+          navigate("/myPage");
+        })
+        .catch((res) => {
+          console.log(res);
+          if (res.status === 413) {
+            setAuthError(true);
+            return;
+          }
+          // if (res.status === 422) {
+          //   setIsError(true);
+          // }
+        })
+        .then(() => {
+          setTimeout(() => setLoading(false), 2000);
+        });
+    });
   };
+
+  // try {
+  //   setLoading(true);
+  //   await axios.get(`sanctum/csrf-cookie`);
+  //   await axios.post(`api/user/update`, formData, {
+  //     headers: {
+  //       "Content-Type": "multipart/form-data",
+  //     },
+  //   });
+  //   navigate("/myPage");
+  // } catch (error: any) {
+  //   if (Axios.isAxiosError(error) && error.response) {
+  //     const status = error.response.status;
+  //     if (status === 413) {
+  //       console.log(status);
+  //       setAuthError(true);
+  //       return;
+  //     }
+  //   }
+  // } finally {
+  //   setLoading(false);
+  // }
 
   return (
     <>
@@ -127,10 +155,14 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
         <Loading />
       ) : (
         <>
+          <Header />
           <LoginContainer direction="column" justifyContent="space-between" sx={{ flexGrow: 1 }}>
             <Card variant="outlined" sx={{ bgcolor: "rgba(255, 255, 255, 0.12)" }}>
               <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
                 アカウント編集
+              </Typography>
+              <Typography color="error" variant="overline" component="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
+                {authError && "画像サイズが大きすぎます。"}
               </Typography>
               <Box
                 component="form"
@@ -149,27 +181,26 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
                   render={({ field }) => (
                     <Box marginTop={2}>
                       {contextHolder}
-                      <Tooltip title="アイコン">
-                        {file ? (
-                          <Box>
-                            <IconButton onClick={selectFile} sx={{ p: 0, color: "white", textTransform: "none" }}>
-                              <img src={imageData} alt="選択された画像" style={{ margin: "auto", width: "10rem", height: "10rem", borderRadius: "50%", objectFit: "cover" }} />
-                            </IconButton>
-                            <Box marginTop={1}>
-                              <Button variant="outlined" size="small" color="error" onClick={resets}>
-                                削除
-                              </Button>
-                            </Box>
-                          </Box>
-                        ) : (
+                      {file ? (
+                        <Box>
                           <IconButton onClick={selectFile} sx={{ p: 0, color: "white", textTransform: "none" }}>
-                            <AccountCircle sx={{ fontSize: "10rem" }} />
+                            <img src={imageData} alt="選択された画像" style={{ margin: "auto", width: "10rem", height: "10rem", borderRadius: "50%", objectFit: "cover" }} />
                           </IconButton>
-                        )}
-                      </Tooltip>
+                          <Box marginTop={1}>
+                            <Button variant="outlined" size="small" color="error" onClick={resets}>
+                              削除
+                            </Button>
+                          </Box>
+                        </Box>
+                      ) : (
+                        <IconButton onClick={selectFile} sx={{ p: 0, color: "white", textTransform: "none" }}>
+                          <AccountCircle sx={{ fontSize: "10rem" }} />
+                        </IconButton>
+                      )}
                     </Box>
                   )}
                 />
+
                 <FormControl sx={{ mb: 2, mt: 2 }}>
                   <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <FormLabel htmlFor="name">名前</FormLabel>
@@ -216,7 +247,9 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
               </Box>
             </Card>
           </LoginContainer>
-          <Box component="footer" sx={{ mt: "auto", width: "100%" }}></Box>
+          <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
+            <Footer />
+          </Box>
         </>
       )}
     </>

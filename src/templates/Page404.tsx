@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PageImage from "../assets/Image404.png";
 import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
-import Footer from "../components/footer/Footer";
+import Footer from "../components/footer/AuthFooter";
 import { SiteMarkIcon } from "../components/CustomIcons";
 
 function Page404() {

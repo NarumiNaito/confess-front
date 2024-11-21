@@ -23,6 +23,7 @@ import GuestLogin from "../templates/auth/GuestLogin";
 import MyFulfillment from "../templates/myPage/fulfillment/MyFulfillment";
 import DetailUser from "../templates/myPage/details/DetailUser";
 import HomeDetailUser from "../templates/home/HomeDetailUser";
+import PrivacyPolicy from "../templates/privacyPolicy/PrivacyPolicy";
 
 const Router = () => {
   return (
@@ -52,6 +53,7 @@ const Router = () => {
             <Route path="/myPage/bookmarkList" element={<Bookmark />} />
           </Route>
           <Route path="*" element={<Page404 />} />
+          <Route path="privacyPolicy" element={<PrivacyPolicy />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/skeletonLoading" element={<SkeletonLoading />} />
         </Routes>
