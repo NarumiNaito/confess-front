@@ -24,6 +24,9 @@ import MyFulfillment from "../templates/myPage/fulfillment/MyFulfillment";
 import DetailUser from "../templates/myPage/details/DetailUser";
 import HomeDetailUser from "../templates/home/HomeDetailUser";
 import PrivacyPolicy from "../templates/privacyPolicy/PrivacyPolicy";
+import TermsOfService from "../templates/termsOfService/TermsOfService";
+import AuthPrivacyPolicy from "../templates/privacyPolicy/AuthPrivacyPolicy";
+import AuthTermsOfService from "../templates/termsOfService/AuthTermsOfService";
 
 const Router = () => {
   return (
@@ -39,6 +42,8 @@ const Router = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/guest" element={<GuestLogin />} />
+            <Route path="privacyPolicy" element={<AuthPrivacyPolicy />} />
+            <Route path="termsOfService" element={<AuthTermsOfService />} />
           </Route>
           <Route element={<PrivateLayout />}>
             <Route path="/myPage" element={<MyPage />} />
@@ -51,9 +56,12 @@ const Router = () => {
             <Route path="/myPage/myFulfillment/:id" element={<MyFulfillment />} />
             <Route path="/myPage/fulfillment" element={<Fulfillment />} />
             <Route path="/myPage/bookmarkList" element={<Bookmark />} />
+            <Route path="/myPage/privacyPolicy" element={<PrivacyPolicy />} />
+            <Route path="/myPage/termsOfService" element={<TermsOfService />} />
+            <Route path="/myPage/privacyPolicy" element={<PrivacyPolicy />} />
+            <Route path="/myPage/termsOfService" element={<TermsOfService />} />
           </Route>
           <Route path="*" element={<Page404 />} />
-          <Route path="privacyPolicy" element={<PrivacyPolicy />} />
           <Route path="/loading" element={<Loading />} />
           <Route path="/skeletonLoading" element={<SkeletonLoading />} />
         </Routes>

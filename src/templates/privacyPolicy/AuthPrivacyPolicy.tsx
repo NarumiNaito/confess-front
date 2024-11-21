@@ -1,6 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+import AuthHeader from "../../components/header/AuthHeader";
+import AuthFooter from "../../components/footer/AuthFooter";
 
 const number = {
   fontSize: 15,
@@ -15,7 +15,7 @@ const content = {
   fontSize: 15,
 };
 
-function PrivacyPolicy() {
+function AuthPrivacyPolicy() {
   return (
     <>
       <Box
@@ -25,7 +25,7 @@ function PrivacyPolicy() {
           flexDirection: "column",
         }}
       >
-        <Header />
+        <AuthHeader />
         <Box component="section" sx={{ bgcolor: "rgba(255, 255, 255, 0.12)", display: "flex", overflow: "hidden" }}>
           <Container
             sx={{
@@ -151,10 +151,10 @@ function PrivacyPolicy() {
           </Container>
         </Box>
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
-          <Footer />
+          <AuthFooter />
         </Box>
       </Box>
     </>
   );
 }
-export default PrivacyPolicy;
+export default AuthPrivacyPolicy;
