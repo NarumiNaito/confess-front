@@ -24,6 +24,7 @@ const Background = styled("div")({
   bottom: 0,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
+  // backgroundImage: "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
   zIndex: -1,
 });
 
