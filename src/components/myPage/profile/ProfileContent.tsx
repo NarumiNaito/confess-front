@@ -113,13 +113,13 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
         })
         .catch((res) => {
           console.log(res);
-          if (res.status === 413) {
-            setAuthError(true);
-            return;
-          }
-          // if (res.status === 422) {
-          //   setIsError(true);
+          // if (res.status === 413) {
+          //   setAuthError(true);
+          //   return;
           // }
+          if (res.status === 422) {
+            setAuthError(true);
+          }
         })
         .then(() => {
           setTimeout(() => setLoading(false), 2000);
@@ -161,7 +161,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
               <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
                 アカウント編集
               </Typography>
-              <Typography color="error" variant="overline" component="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
+              <Typography color="error" variant="subtitle2" sx={{ width: "100%", mt: 3 }}>
                 {authError && "画像サイズが大きすぎます。"}
               </Typography>
               <Box

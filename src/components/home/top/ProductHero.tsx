@@ -5,12 +5,8 @@ import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 
 export default function ProductHero() {
-  const fadeInVariants = {
-    // hidden: { opacity: 0 },
-    // visible: { opacity: 1, transition: { duration: 1 } },
-  };
   return (
-    <motion.div initial="hidden" animate="visible" variants={fadeInVariants}>
+    <motion.div initial="hidden" animate="visible">
       <ProductHeroLayout
         sxBackground={{
           backgroundImage: `url(${dinner})`,

@@ -76,6 +76,9 @@ export default function Content() {
     if (savedCategory) {
       setSearchParams({ page: "1", category_id: savedCategory });
     }
+    //  else {
+    //   setSearchParams({ page: "1", category_id: "0" });
+    // }
     return () => {
       localStorage.removeItem("selectedCategory");
     };

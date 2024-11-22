@@ -24,6 +24,7 @@ function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [userName, setUserName] = React.useState<number>();
+  const [image, setImage] = React.useState<any>();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -69,6 +70,7 @@ function Header() {
         console.log(res.data);
         if (res.data && res.data.length > 0) {
           setUserName(res.data[0].name);
+          setImage(res.data[0].image);
         }
       } catch (error) {
         console.error("ユーザー情報の取得に失敗しました:", error);
@@ -88,13 +90,9 @@ function Header() {
           navigate("/login");
         })
         .catch((res) => {
-          if (res.status === 409) {
-            console.log(res);
-            return;
-          }
-
           if (res.status === 422) {
             console.log(res);
+            return;
           }
         });
     });
@@ -189,7 +187,7 @@ function Header() {
               </Tooltip>
             </IconButton>
           </Box>
-
+          {/* <img src={image} alt="" /> */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="マイページ">
               <Button onClick={handleOpenUserMenu} sx={{ p: 0, color: "white", textTransform: "none" }} startIcon={<AccountCircle />}>

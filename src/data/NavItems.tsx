@@ -13,7 +13,7 @@ export const footerItems = [
 
 export const myFooterItems = [
   { name: "利用規約", path: "/myPage/termsOfService" },
-  { name: "プライバシーポリシー", path: "/myPage?/privacyPolicy" },
+  { name: "プライバシーポリシー", path: "/myPage/privacyPolicy" },
 ];
 
 export const navItems = [

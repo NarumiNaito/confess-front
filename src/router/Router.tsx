@@ -58,8 +58,6 @@ const Router = () => {
             <Route path="/myPage/bookmarkList" element={<Bookmark />} />
             <Route path="/myPage/privacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/myPage/termsOfService" element={<TermsOfService />} />
-            <Route path="/myPage/privacyPolicy" element={<PrivacyPolicy />} />
-            <Route path="/myPage/termsOfService" element={<TermsOfService />} />
           </Route>
           <Route path="*" element={<Page404 />} />
           <Route path="/loading" element={<Loading />} />
