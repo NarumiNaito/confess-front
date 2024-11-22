@@ -67,37 +67,12 @@ const number = {
 };
 
 const images = [
-  {
-    url: `${friend}`,
-    title: "友達",
-    width: "40%",
-  },
-  {
-    url: `${love}`,
-    title: "恋愛",
-    width: "25%",
-  },
-  {
-    url: `${family}`,
-    title: "家族",
-    width: "35%",
-  },
-
-  {
-    url: `${company}`,
-    title: "職場",
-    width: "38%",
-  },
-  {
-    url: `${school}`,
-    title: "学校",
-    width: "38%",
-  },
-  {
-    url: `${others}`,
-    title: "その他",
-    width: "24%",
-  },
+  { id: 1, url: friend, title: "友達", width: "40%" },
+  { id: 2, url: family, title: "家族", width: "25%" },
+  { id: 3, url: love, title: "恋愛", width: "35%" },
+  { id: 4, url: company, title: "職場", width: "38%" },
+  { id: 5, url: school, title: "学校", width: "38%" },
+  { id: 6, url: others, title: "その他", width: "24%" },
 ];
 
 export default function ProductCategories() {
@@ -109,12 +84,7 @@ export default function ProductCategories() {
       </Typography>
       <Box sx={{ mt: 4, display: "flex", flexWrap: "wrap" }}>
         {images.map((image) => (
-          <ImageIconButton
-            key={image.title}
-            style={{
-              width: image.width,
-            }}
-          >
+          <ImageIconButton key={image.id} style={{ width: image.width }}>
             <Box
               sx={{
                 position: "absolute",

@@ -17,10 +17,6 @@ import { categoryItems } from "../../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
 import { CurrentPage, ForgiveState, BookMarkState, Post } from "../../../types/Types";
 
-// interface CurrentPage {
-//   last_page: number;
-// }
-
 export default function Content() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -30,6 +26,7 @@ export default function Content() {
   const [forgiveState, setForgiveState] = React.useState<ForgiveState>({});
   const [bookmark, setBookmark] = React.useState<BookMarkState>({});
   const [userId, setUserId] = React.useState<number>();
+  const [total, setTotal] = React.useState<number>();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
@@ -50,6 +47,7 @@ export default function Content() {
         console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
+        setTotal(res.data.total);
 
         // 初期の forgiveState を作成し、is_like の状態も含める
         const initialForgiveState: ForgiveState = res.data.data.reduce((acc: ForgiveState, post: Post) => {
@@ -90,7 +88,18 @@ export default function Content() {
     setSearchParams({ page: "1", category_id: String(event.target.value) });
   };
 
+  React.useEffect(() => {
+    const savedCategory = localStorage.getItem("selectedCategory");
+    if (savedCategory) {
+      setSearchParams({ page: "1", category_id: savedCategory });
+    }
+    return () => {
+      localStorage.removeItem("selectedCategory");
+    };
+  }, []);
+
   const handleClick = (categoryId: number) => {
+    localStorage.setItem("selectedCategory", String(categoryId));
     setSearchParams({ page: "1", category_id: String(categoryId) });
   };
 
@@ -163,9 +172,27 @@ export default function Content() {
           <Box>
             <FormControl sx={{ minWidth: 150 }} size="small">
               <InputLabel id="demo-select-small-label">カテゴリー</InputLabel>
-              <Select labelId="demo-select-small-label" id="demo-select-small" label="カテゴリー" open={open} onClose={handleClose} onOpen={handleOpen} onChange={handleChange}>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                label="カテゴリー"
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                onChange={handleChange}
+                value={parseInt(searchParams.get("category_id") || "0", 10)}
+              >
                 {categoryItems.map((category, id) => (
-                  <MenuItem key={id} value={category.id}>
+                  <MenuItem
+                    key={id}
+                    value={id}
+                    onClick={() => handleClick(category.id)}
+                    sx={{
+                      transition: "all 0.3s",
+                      backgroundColor: searchParams.get("category_id") === String(category.id) ? "#1976d2" : "transparent", // 選択時の背景色
+                      color: searchParams.get("category_id") === String(category.id) ? "#fff" : "inherit", // 選択時の文字色
+                    }}
+                  >
                     {category.category_name}
                   </MenuItem>
                 ))}
@@ -199,12 +226,15 @@ export default function Content() {
                 label={category.category_name}
                 icon={category.icon}
                 sx={{
-                  backgroundColor: "transparent",
+                  transition: "all 0.3s",
+                  backgroundColor: searchParams.get("category_id") === String(category.id) && searchParams.get("category_id") ? "#1976d2" : "transparent",
+                  color: searchParams.get("category_id") === String(category.id) && searchParams.get("category_id") ? "#fff" : "inherit",
                 }}
               />
             </Box>
           ))}
         </Box>
+        <Typography variant="h5">全 {total} 件</Typography>
       </Box>
       {loading ? (
         <SkeletonLoading />

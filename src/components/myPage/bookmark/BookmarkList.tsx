@@ -25,6 +25,7 @@ export default function BookmarkList() {
   const [open, setOpen] = React.useState<boolean>(false);
   const [forgiveState, setForgiveState] = React.useState<ForgiveState>({});
   const [bookmark, setBookmark] = React.useState<BookMarkState>({});
+  const [total, setTotal] = React.useState<number>();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
@@ -44,6 +45,7 @@ export default function BookmarkList() {
         console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
+        setTotal(res.data.total);
 
         // 初期の forgiveState を作成し、is_like の状態も含める
         const initialForgiveState: ForgiveState = res.data.data.reduce((acc: ForgiveState, post: Post) => {
@@ -78,7 +80,18 @@ export default function BookmarkList() {
     setSearchParams({ page: "1", category_id: String(event.target.value) });
   };
 
+  React.useEffect(() => {
+    const savedCategory = localStorage.getItem("selectedCategory");
+    if (savedCategory) {
+      setSearchParams({ page: "1", category_id: savedCategory });
+    }
+    return () => {
+      localStorage.removeItem("selectedCategory");
+    };
+  }, []);
+
   const handleClick = (categoryId: number) => {
+    localStorage.setItem("selectedCategory", String(categoryId));
     setSearchParams({ page: "1", category_id: String(categoryId) });
   };
 
@@ -149,9 +162,27 @@ export default function BookmarkList() {
           <Box>
             <FormControl sx={{ minWidth: 150 }} size="small">
               <InputLabel id="demo-select-small-label">カテゴリー</InputLabel>
-              <Select labelId="demo-select-small-label" id="demo-select-small" label="カテゴリー" open={open} onClose={handleClose} onOpen={handleOpen} onChange={handleChange}>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                label="カテゴリー"
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                onChange={handleChange}
+                value={parseInt(searchParams.get("category_id") || "0", 10)}
+              >
                 {categoryItems.map((category, id) => (
-                  <MenuItem key={id} value={category.id}>
+                  <MenuItem
+                    key={id}
+                    value={id}
+                    onClick={() => handleClick(category.id)}
+                    sx={{
+                      transition: "all 0.3s",
+                      backgroundColor: searchParams.get("category_id") === String(category.id) ? "#1976d2" : "transparent",
+                      color: searchParams.get("category_id") === String(category.id) ? "#fff" : "inherit",
+                    }}
+                  >
                     {category.category_name}
                   </MenuItem>
                 ))}
@@ -185,12 +216,15 @@ export default function BookmarkList() {
                 label={category.category_name}
                 icon={category.icon}
                 sx={{
-                  backgroundColor: "transparent",
+                  transition: "all 0.3s",
+                  backgroundColor: searchParams.get("category_id") === String(category.id) && searchParams.get("category_id") ? "#1976d2" : "transparent",
+                  color: searchParams.get("category_id") === String(category.id) && searchParams.get("category_id") ? "#fff" : "inherit",
                 }}
               />
             </Box>
           ))}
         </Box>
+        <Typography variant="h5">全 {total} 件</Typography>
       </Box>
       {loading ? (
         <SkeletonLoading />
