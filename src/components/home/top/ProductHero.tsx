@@ -17,14 +17,13 @@ export default function ProductHero() {
           backgroundPosition: "center",
         }}
       >
-        {/* <img style={{ display: "none" }} src={dinner} alt="dinner" /> */}
         <Box sx={{ fontStyle: "italic", mt: 12 }}>
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.5 } },
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
             }}
           >
             <Typography
@@ -40,11 +39,11 @@ export default function ProductHero() {
           </motion.div>
 
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 1 } },
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 1 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
             }}
           >
             <Typography

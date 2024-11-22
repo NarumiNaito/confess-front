@@ -23,7 +23,6 @@ export default function Content() {
   const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
   const [open, setOpen] = React.useState<boolean>(false);
   const [total, setTotal] = React.useState<number>();
-  // const [categoryName, setCategoryName] = React.useState<any[]>([]);
 
   const navigate = useNavigate();
   const page = parseInt(searchParams.get("page") || "1", 10);
