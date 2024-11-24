@@ -1,6 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
@@ -13,8 +11,9 @@ import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import SkeletonLoading from "../loading/SkeletonLoading";
 import Chip from "@mui/material/Chip";
 import { categoryItems } from "../../data/Category";
-import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
 import { CurrentPage, Post } from "../../types/Types";
+import { AccountCircle } from "@mui/icons-material";
 
 export default function Content() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,7 +38,7 @@ export default function Content() {
     axios
       .get(`api/posts?page=${page}&category_id=${categoryId}`)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
         setTotal(res.data.total);
@@ -67,7 +66,6 @@ export default function Content() {
   };
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
-    console.log(page);
     setSearchParams({ page: String(page), category_id: searchParams.get("category_id") || "0" });
   };
 
@@ -76,9 +74,6 @@ export default function Content() {
     if (savedCategory) {
       setSearchParams({ page: "1", category_id: savedCategory });
     }
-    //  else {
-    //   setSearchParams({ page: "1", category_id: "0" });
-    // }
     return () => {
       localStorage.removeItem("selectedCategory");
     };
@@ -228,15 +223,18 @@ export default function Content() {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Button onClick={() => navigate(`/detail/${post["user_id"]}`, { state: post })} color="inherit" sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
-                          <Tooltip title={post["name"]}>
-                            <AvatarGroup max={3}>
-                              <Avatar src={post["image"]} sx={{ width: 24, height: 24 }} />
-                            </AvatarGroup>
-                          </Tooltip>
-                          <Typography variant="subtitle1">{post["name"]}</Typography>
-                        </Button>
-
+                        <Tooltip title={post["name"]}>
+                          <Button
+                            onClick={() => navigate(`/detail/${post["user_id"]}`, { state: post })}
+                            color="inherit"
+                            sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
+                            startIcon={
+                              post["image"] ? <img src={post["image"]} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
+                            }
+                          >
+                            {post["name"]}
+                          </Button>
+                        </Tooltip>
                         <Typography variant="subtitle1">{dayjs(post["created_at"]).format("YYYY年M月D日")}</Typography>
                       </Box>
                     </Box>

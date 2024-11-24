@@ -1,6 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
@@ -11,10 +9,7 @@ import dayjs from "dayjs";
 import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import EditIcon from "@mui/icons-material/Edit";
-import SkeletonLoading from "../../loading/SkeletonLoading";
-import Chip from "@mui/material/Chip";
-import { categoryItems } from "../../../data/Category";
-import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
+import { Button, Divider, Tooltip, IconButton } from "@mui/material";
 import { CurrentPage, Post } from "../../../types/Types";
 
 export default function Content() {

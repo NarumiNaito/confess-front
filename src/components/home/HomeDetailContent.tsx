@@ -11,15 +11,8 @@ import dayjs from "dayjs";
 import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import SkeletonLoading from "../loading/SkeletonLoading";
-import Chip from "@mui/material/Chip";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import { categoryItems } from "../../data/Category";
-import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
-import { BookMarkState, CurrentPage, ForgiveState, Post } from "../../types/Types";
-
-// interface CurrentPage {
-//   last_page: number;
-// }
+import { Button, Divider, Tooltip } from "@mui/material";
+import { CurrentPage, ForgiveState, Post } from "../../types/Types";
 
 export default function HomeDetailContent() {
   const [searchParams, setSearchParams] = useSearchParams();

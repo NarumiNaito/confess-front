@@ -11,15 +11,9 @@ import dayjs from "dayjs";
 import CommentIcon from "@mui/icons-material/Comment";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import SkeletonLoading from "../../loading/SkeletonLoading";
-import Chip from "@mui/material/Chip";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import { categoryItems } from "../../../data/Category";
-import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
+import { Button, Divider, Tooltip, IconButton } from "@mui/material";
 import { BookMarkState, CurrentPage, ForgiveState, Post } from "../../../types/Types";
-
-// interface CurrentPage {
-//   last_page: number;
-// }
 
 export default function DetailContent() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -85,7 +79,6 @@ export default function DetailContent() {
     navigate(`/myPage/detail/${id}?page=${page}`, { state: location.state });
   };
 
-  // toggleForgive 関数の修正
   const toggleForgive = async (postId: number) => {
     // 現在の状態を取得
     const currentForgive = forgiveState[postId]?.forgive || false;

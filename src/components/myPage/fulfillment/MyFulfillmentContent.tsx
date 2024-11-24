@@ -1,6 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
@@ -9,7 +7,7 @@ import { axios } from "../../../api/Axios";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { Button, Divider, Tooltip } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { AccountCircle } from "@mui/icons-material";
 
 export default function MyFulfillmentContent(props: any) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -68,9 +66,6 @@ export default function MyFulfillmentContent(props: any) {
                   justifyContent: "space-between",
                   gap: 1,
                   height: "100%",
-                  // ...commonStyles,
-                  // borderRadius: 1,
-                  // borderColor: "grey.500",
                 }}
               >
                 <Typography mt={2} variant="h6" component="div" color="error">
@@ -120,26 +115,12 @@ export default function MyFulfillmentContent(props: any) {
                     gap: 1,
                     height: "100%",
                     mb: 5,
-                    // ...commonStyles,
-                    // borderRadius: 1,
-                    // borderColor: "grey.500",
                   }}
                 >
                   <Typography m={1} whiteSpace={"pre-line"} variant="h6">
                     {comment["content"]}
                   </Typography>
-                  {/* 
-                  {userId === comment["user_id"] && (
-                    <Box sx={{ position: "relative", mb: 3 }}>
-                      <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
-                        <Tooltip title="削除">
-                          <Button onClick={() => deleteComment(comment)} component="label" variant="outlined" color="error" tabIndex={-1} size="small" startIcon={<DeleteIcon />}>
-                            削除
-                          </Button>
-                        </Tooltip>
-                      </Box>
-                    </Box>
-                  )} */}
+
                   <Box
                     sx={{
                       display: "flex",
@@ -149,19 +130,18 @@ export default function MyFulfillmentContent(props: any) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Button
-                      color="inherit"
-                      onClick={() => navigate(`/myPage/detail/${comment["user_id"]}`, { state: comment })}
-                      sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}
-                    >
-                      <Tooltip title={comment["name"]}>
-                        <AvatarGroup max={3}>
-                          <Avatar src={comment["image"]} sx={{ width: 24, height: 24 }} />
-                        </AvatarGroup>
-                      </Tooltip>
-                      <Typography variant="subtitle1">{comment["name"]}</Typography>
-                    </Button>
-
+                    <Tooltip title={comment["name"]}>
+                      <Button
+                        onClick={() => navigate(`/myPage/detail/${comment["user_id"]}`, { state: comment })}
+                        color="inherit"
+                        sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
+                        startIcon={
+                          comment["image"] ? <img src={comment["image"]} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
+                        }
+                      >
+                        {comment["name"]}
+                      </Button>
+                    </Tooltip>
                     <Typography variant="subtitle1">{dayjs(comment["created_at"]).format("YYYY年M月D日")}</Typography>
                   </Box>
                   <Divider />

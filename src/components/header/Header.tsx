@@ -25,6 +25,7 @@ function Header() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [userName, setUserName] = React.useState<number>();
   const [image, setImage] = React.useState<any>();
+  const [Notification, setNotification] = React.useState<any>();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -106,6 +107,37 @@ function Header() {
     { name: "ログアウト", path: "/login", clickEvent: handleLogout },
   ];
 
+  React.useEffect(() => {
+    const fetch = async () => {
+      try {
+        const res = await axios.get("api/notifications");
+        console.log(res.data);
+        // if (res.data && res.data.length > 0) {
+        // setUserName(res.data[0].name);
+        // setImage(res.data[0].image);
+        // }
+      } catch (error) {
+        console.error("ユーザー情報の取得に失敗しました:", error);
+      }
+    };
+
+    fetch();
+  }, []);
+
+  React.useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const res = await axios.get("api/notifications/count");
+        console.log(res.data);
+        setNotification(res.data.count);
+      } catch (error) {
+        console.error("ユーザー情報の取得に失敗しました:", error);
+      }
+    };
+
+    fetchCount();
+  }, []);
+
   return (
     <AppBar position="sticky">
       <Container maxWidth="xl">
@@ -181,16 +213,20 @@ function Header() {
           <Box paddingRight={1}>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Tooltip title="通知">
-                <Badge badgeContent={17} color="error">
+                <Badge badgeContent={Notification} color="error">
                   <NotificationsIcon />
                 </Badge>
               </Tooltip>
             </IconButton>
           </Box>
-          {/* <img src={image} alt="" /> */}
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="マイページ">
-              <Button onClick={handleOpenUserMenu} sx={{ p: 0, color: "white", textTransform: "none" }} startIcon={<AccountCircle />}>
+              <Button
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0, color: "white", textTransform: "none" }}
+                startIcon={image ? <img src={image} alt="userIcon" style={{ width: 24, height: 24, borderRadius: "50%" }} /> : <AccountCircle />}
+              >
                 {userName}
               </Button>
             </Tooltip>
