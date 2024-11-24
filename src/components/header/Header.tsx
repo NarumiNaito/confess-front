@@ -65,20 +65,21 @@ function Header() {
   };
 
   React.useEffect(() => {
-    const fetchUser = async () => {
+    const fetchData = async () => {
       try {
-        const res = await axios.get("api/user");
-        console.log(res.data);
-        if (res.data && res.data.length > 0) {
-          setUserName(res.data[0].name);
-          setImage(res.data[0].image);
+        const [userRes, countRes] = await Promise.all([axios.get("api/user"), axios.get("api/notifications/count")]);
+
+        if (userRes.data && userRes.data.length > 0) {
+          setUserName(userRes.data[0].name);
+          setImage(userRes.data[0].image);
         }
+        setNotification(countRes.data.count);
       } catch (error) {
-        console.error("ユーザー情報の取得に失敗しました:", error);
+        console.error("データの取得に失敗しました:", error);
       }
     };
 
-    fetchUser();
+    fetchData();
   }, []);
 
   const handleLogout = () => {
@@ -106,33 +107,6 @@ function Header() {
     { name: "アカウント編集", path: "profile", clickEvent: handleAccount },
     { name: "ログアウト", path: "/", clickEvent: handleLogout },
   ];
-
-  React.useEffect(() => {
-    const fetch = async () => {
-      try {
-        const res = await axios.get("api/notifications");
-        console.log(res.data);
-      } catch (error) {
-        console.error("ユーザー情報の取得に失敗しました:", error);
-      }
-    };
-
-    fetch();
-  }, []);
-
-  React.useEffect(() => {
-    const fetchCount = async () => {
-      try {
-        const res = await axios.get("api/notifications/count");
-        console.log(res.data);
-        setNotification(res.data.count);
-      } catch (error) {
-        console.error("ユーザー情報の取得に失敗しました:", error);
-      }
-    };
-
-    fetchCount();
-  }, []);
 
   return (
     <AppBar position="sticky">

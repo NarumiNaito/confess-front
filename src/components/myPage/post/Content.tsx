@@ -15,6 +15,8 @@ import { categoryItems } from "../../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
 import { CurrentPage, ForgiveState, BookMarkState, Post } from "../../../types/Types";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import dinner from "../../../assets/dinner.jpg";
+import { motion } from "framer-motion";
 
 export default function Content() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -153,11 +155,78 @@ export default function Content() {
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <Box mb={2}>
-          <Typography variant="h5" mb={3}>
-            みんなの懺悔
-          </Typography>
-          <Typography>自分が犯した罪や過ちなど、心残りを神の前で告白しませんか？</Typography>
+        <Box
+          mt={5}
+          mb={2}
+          sx={{
+            fontStyle: "italic",
+            position: "relative",
+            backgroundImage: `url(${dinner})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            color: "#fff",
+            padding: "5rem",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              borderRadius: "inherit",
+              zIndex: 1,
+            },
+            zIndex: 2,
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+          >
+            <Typography color="error" variant="h5" sx={{ fontFamily: "YuMincho", position: "relative", zIndex: 2 }}>
+              みんなの懺悔
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 1 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontFamily: "cursive",
+                mb: 5,
+                position: "relative",
+                zIndex: 2,
+              }}
+            >
+              Everyone's Confession
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 1.5 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+          >
+            <Typography sx={{ fontFamily: "YuMincho", position: "relative", zIndex: 2 }}>自分が犯した罪や過ちなど、心残りを神の前で告白しませんか？</Typography>
+          </motion.div>
         </Box>
 
         <Box sx={{ display: { md: "none" } }}>

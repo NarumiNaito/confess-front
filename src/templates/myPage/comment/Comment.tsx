@@ -1,7 +1,7 @@
 import { Box, Container, Fab, FormControl, FormLabel, TextField, Tooltip } from "@mui/material";
 import Header from "../../../components/header/Header";
-import Content from "../../../components/myPage/comment/CommentContent";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import CommentContent from "../../../components/myPage/comment/CommentContent";
+import { useLocation, useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
@@ -34,11 +34,10 @@ const Transition = React.forwardRef(function Transition(
 function Comment() {
   const navigate = useNavigate();
   const location = useLocation();
-  const params = useParams();
+
   const [open, setOpen] = React.useState(false);
 
-  console.log(params);
-  console.log(location);
+  // console.log(location);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -79,7 +78,7 @@ function Comment() {
       >
         <Header />
         <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <Content {...location} />
+          <CommentContent />
         </Container>
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <AppBar position="sticky">

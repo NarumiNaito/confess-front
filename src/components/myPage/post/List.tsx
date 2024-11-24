@@ -46,7 +46,7 @@ export default function Content() {
           <Typography variant="h5" mb={3}>
             貴方の懺悔履歴
           </Typography>
-          <Typography>過去を振り返るの者は赦しへの第一歩となる。</Typography>
+          <Typography>過去を振り返る者は赦しへの第一歩となる。</Typography>
         </Box>
       </Box>
 

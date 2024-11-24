@@ -13,6 +13,8 @@ import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import SkeletonLoading from "../loading/SkeletonLoading";
 import { Button, Divider, Tooltip } from "@mui/material";
 import { CurrentPage, ForgiveState, Post } from "../../types/Types";
+import maria from "../../assets/maria.png";
+import { motion } from "framer-motion";
 
 export default function HomeDetailContent() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,7 +30,7 @@ export default function HomeDetailContent() {
   const params = useParams();
   const id = params.id;
 
-  console.log(location);
+  // console.log(location);
 
   React.useEffect(() => {
     const qpPage = parseInt(searchParams.get("page") || "1", 10);
@@ -70,17 +72,82 @@ export default function HomeDetailContent() {
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <Box mt={2} sx={{ justifyContent: "center", display: "flex", gap: 1, alignItems: "center" }}>
-          <Tooltip title={location.state.name}>
-            <AvatarGroup max={3}>
-              <Avatar src={location.state.image} sx={{ width: 36, height: 36 }} />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+        >
+          <Box
+            mt={5}
+            sx={{
+              fontStyle: "italic",
+              position: "relative",
+              backgroundImage: `url(${maria})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              color: "#fff",
+              padding: "3rem",
+              borderRadius: "8px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                borderRadius: "inherit",
+                zIndex: 1,
+              },
+              zIndex: 2,
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              transition={{ duration: 1 }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+            >
+              <Typography variant="h4" sx={{ fontFamily: "cursive", position: "relative", zIndex: 2 }}>
+                Room of confession
+              </Typography>
+            </motion.div>
+          </Box>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          transition={{ duration: 1.5 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+        >
+          <Box mt={3} sx={{ zIndex: 2, justifyContent: "center", display: "flex", gap: 1, alignItems: "center" }}>
+            <AvatarGroup max={3} sx={{ zIndex: 2 }}>
+              <Avatar
+                src={location.state.image}
+                sx={{
+                  width: 48,
+                  height: 48,
+                  zIndex: 2,
+                }}
+              />
             </AvatarGroup>
-          </Tooltip>
-          <Typography variant="h5">{location.state.name}のページ</Typography>
-        </Box>
+            <Typography color="error" variant="h5" sx={{ fontFamily: "YuMincho", position: "relative", zIndex: 2 }}>
+              {location.state.name}の部屋
+            </Typography>
+          </Box>
+        </motion.div>
       </Box>
 
-      <Box mt={2} mb={2}>
+      <Box mt={3} mb={2}>
         <Divider />
       </Box>
       <Typography variant="h5">投稿一覧</Typography>
