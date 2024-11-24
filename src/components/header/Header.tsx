@@ -184,7 +184,7 @@ function Header() {
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Tooltip title="通知">
                 <Badge badgeContent={Notification} color="error">
-                  <NotificationsIcon />
+                  {Notification > 0 ? <NotificationsIcon color="warning" /> : <NotificationsIcon />}
                 </Badge>
               </Tooltip>
             </IconButton>

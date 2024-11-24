@@ -103,8 +103,8 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
           <Header />
           <LoginContainer direction="column" justifyContent="space-between" sx={{ flexGrow: 1 }}>
             <Card variant="outlined" sx={{ mb: 5, bgcolor: "rgba(255, 255, 255, 0.12)" }}>
-              <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
-                ログイン
+              <Typography color="error" component="h2" variant="h2" sx={{ fontFamily: "cursive", width: "100%", mt: 3 }}>
+                Login
               </Typography>
               <Typography color="error" variant="overline">
                 {authError && "ログインに失敗しました。もう一度お試し下さい。"}
