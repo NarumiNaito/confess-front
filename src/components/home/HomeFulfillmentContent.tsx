@@ -14,6 +14,8 @@ import { categoryItems } from "../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
 import { CurrentPage, ForgiveState, Post } from "../../types/Types";
 import { AccountCircle } from "@mui/icons-material";
+import { motion } from "framer-motion";
+import easter from "../../assets/easter.jpg";
 
 export default function HomeFulfillmentContent() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -98,11 +100,78 @@ export default function HomeFulfillmentContent() {
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <Box mb={2}>
-          <Typography variant="h5" mb={3}>
-            成就した懺悔
-          </Typography>
-          <Typography>神より赦しを得て成就した投稿一覧</Typography>
+        <Box
+          mt={5}
+          mb={2}
+          sx={{
+            fontStyle: "italic",
+            position: "relative",
+            backgroundImage: `url(${easter})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            color: "#fff",
+            padding: "5rem",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              borderRadius: "inherit",
+              zIndex: 1,
+            },
+            zIndex: 2,
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+          >
+            <Typography color="error" variant="h5" sx={{ fontFamily: "YuMincho", position: "relative", zIndex: 2 }}>
+              成就した懺悔
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 1 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontFamily: "cursive",
+                mb: 5,
+                position: "relative",
+                zIndex: 2,
+              }}
+            >
+              Fulfilled Confession
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 1.5 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+          >
+            <Typography sx={{ fontFamily: "YuMincho", position: "relative", zIndex: 2 }}>神より赦しを得て成就した懺悔一覧</Typography>
+          </motion.div>
         </Box>
 
         <Box sx={{ display: { md: "none" } }}>
