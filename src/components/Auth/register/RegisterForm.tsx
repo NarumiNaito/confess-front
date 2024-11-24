@@ -105,7 +105,7 @@ export default function RegisterForm(props: { disableCustomTheme?: boolean }) {
         <>
           <Header />
           <RegisterContainer direction="column" justifyContent="space-between">
-            <Card variant="outlined" sx={{ bgcolor: "rgba(255, 255, 255, 0.12)" }}>
+            <Card variant="outlined" sx={{ mb: 5, bgcolor: "rgba(255, 255, 255, 0.12)" }}>
               <Typography component="h1" variant="h4" color="error" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
                 新規登録
               </Typography>
@@ -267,16 +267,10 @@ export default function RegisterForm(props: { disableCustomTheme?: boolean }) {
                     )}
                   />
                 </FormControl>
-                <Divider />
+                <Divider sx={{ mb: 2 }} />
 
-                <Button onClick={login} type="submit" fullWidth variant="contained">
+                <Button sx={{ mb: 3 }} onClick={login} type="submit" fullWidth variant="contained">
                   登録
-                </Button>
-              </Box>
-              <Divider>または</Divider>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <Button type="submit" fullWidth variant="outlined" onClick={() => alert("Sign in with Google")} startIcon={<GoogleIcon />}>
-                  Googleアカウントで登録
                 </Button>
               </Box>
             </Card>

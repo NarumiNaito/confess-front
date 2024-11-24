@@ -88,7 +88,7 @@ function Header() {
         .then((res) => {
           setAnchorElUser(null);
           logout();
-          navigate("/login");
+          navigate("/");
         })
         .catch((res) => {
           if (res.status === 422) {
@@ -104,7 +104,7 @@ function Header() {
     { name: "懺悔一覧", path: "/postList", clickEvent: handleList },
     { name: "ブックマーク一覧", path: "/bookmarkList", clickEvent: handleBookmarkList },
     { name: "アカウント編集", path: "profile", clickEvent: handleAccount },
-    { name: "ログアウト", path: "/login", clickEvent: handleLogout },
+    { name: "ログアウト", path: "/", clickEvent: handleLogout },
   ];
 
   React.useEffect(() => {
@@ -112,10 +112,6 @@ function Header() {
       try {
         const res = await axios.get("api/notifications");
         console.log(res.data);
-        // if (res.data && res.data.length > 0) {
-        // setUserName(res.data[0].name);
-        // setImage(res.data[0].image);
-        // }
       } catch (error) {
         console.error("ユーザー情報の取得に失敗しました:", error);
       }

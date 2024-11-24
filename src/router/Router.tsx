@@ -19,7 +19,6 @@ import Fulfillment from "../templates/myPage/fulfillment/Fulfillment";
 import HomeFulfillment from "../templates/home/HomeFulfillment";
 import Bookmark from "../templates/myPage/bookmark/Bookmark";
 import Profile from "../templates/myPage/profile/Profile";
-import GuestLogin from "../templates/auth/GuestLogin";
 import MyFulfillment from "../templates/myPage/fulfillment/MyFulfillment";
 import DetailUser from "../templates/myPage/details/DetailUser";
 import HomeDetailUser from "../templates/home/HomeDetailUser";
@@ -41,7 +40,6 @@ const Router = () => {
             <Route path="/comment/:id" element={<HomeComment />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/guest" element={<GuestLogin />} />
             <Route path="privacyPolicy" element={<AuthPrivacyPolicy />} />
             <Route path="termsOfService" element={<AuthTermsOfService />} />
           </Route>
