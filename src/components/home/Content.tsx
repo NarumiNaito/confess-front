@@ -11,7 +11,7 @@ import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import SkeletonLoading from "../loading/SkeletonLoading";
 import Chip from "@mui/material/Chip";
 import { categoryItems } from "../../data/Category";
-import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
+import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { CurrentPage, Post } from "../../types/Types";
 import { AccountCircle } from "@mui/icons-material";
 
@@ -163,7 +163,15 @@ export default function Content() {
             </Box>
           ))}
         </Box>
-        <Typography variant="h5">全 {total} 件</Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            mt: 2,
+            fontFamily: "cursive",
+          }}
+        >
+          {total} Number of Confession
+        </Typography>
       </Box>
       {loading ? (
         <SkeletonLoading />
