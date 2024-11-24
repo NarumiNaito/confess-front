@@ -152,7 +152,6 @@ export default function BookmarkList() {
           </Typography>
           <Typography>他人の懺悔は人生の教訓となる</Typography>
         </Box>
-
         <Box sx={{ display: { md: "none" } }}>
           <Button sx={{ mr: 6 }} color="error" onClick={handleOpen}>
             カテゴリー検索
@@ -222,7 +221,15 @@ export default function BookmarkList() {
             </Box>
           ))}
         </Box>
-        <Typography variant="h5">全 {total} 件</Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            mt: 5,
+            fontFamily: "cursive",
+          }}
+        >
+          {total} Number of Confession
+        </Typography>
       </Box>
       {loading ? (
         <SkeletonLoading />

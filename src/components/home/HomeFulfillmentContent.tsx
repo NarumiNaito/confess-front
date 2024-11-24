@@ -174,7 +174,15 @@ export default function HomeFulfillmentContent() {
             </Box>
           ))}
         </Box>
-        <Typography variant="h5">全 {total} 件</Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            mt: 5,
+            fontFamily: "cursive",
+          }}
+        >
+          {total} Number of Confession
+        </Typography>
       </Box>
       {loading ? (
         <SkeletonLoading />
