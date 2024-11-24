@@ -10,12 +10,7 @@ import { useLocation, useNavigate, useParams, useSearchParams } from "react-rout
 import dayjs from "dayjs";
 import { Button, Divider, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-// const commonStyles = {
-//   bgcolor: "#212121",
-//   px: 2,
-//   border: 0.1,
-// };
+import { AccountCircle } from "@mui/icons-material";
 
 export default function CommentContent(props: any) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -87,10 +82,6 @@ export default function CommentContent(props: any) {
                   justifyContent: "space-between",
                   gap: 1,
                   height: "100%",
-
-                  // ...commonStyles,
-                  // borderRadius: 1,
-                  // borderColor: "grey.500",
                 }}
               >
                 <Typography mt={2} variant="h6" component="div" color="error">
@@ -176,13 +167,18 @@ export default function CommentContent(props: any) {
                   >
                     <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
                       <Tooltip title={comment["name"]}>
-                        <AvatarGroup max={3}>
-                          <Avatar src={comment["image"]} sx={{ width: 24, height: 24 }} />
-                        </AvatarGroup>
+                        <Button
+                          onClick={() => navigate(`/myPage/detail/${comment["user_id"]}`, { state: comment })}
+                          color="inherit"
+                          sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
+                          startIcon={
+                            comment["image"] ? <img src={comment["image"]} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
+                          }
+                        >
+                          {comment["name"]}
+                        </Button>
                       </Tooltip>
-                      <Typography variant="subtitle1">{comment["name"]}</Typography>
                     </Box>
-
                     <Typography variant="subtitle1">{dayjs(comment["created_at"]).format("YYYY年M月D日")}</Typography>
                   </Box>
                   <Divider />

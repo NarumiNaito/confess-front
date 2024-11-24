@@ -65,29 +65,15 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
       content: data.content,
     };
     console.log(Posts);
-    // setLoading(true);
+
     await axios
       .get(`sanctum/csrf-cookie`)
       .then((response) => {
-        // setLoading(true);
         axios.post(`api/posts/register`, Posts);
       })
       .then((res) => {
         navigate("/myPage");
       });
-    // .catch((res) => {
-    //   if (res.status === 401) {
-    //     setAuthError(true);
-    //     return;
-    //   }
-
-    //   if (res.status === 422) {
-    //     setIsError(true);
-    //   }
-    // })
-    // .finally(() => {
-    //   setTimeout(() => setLoading(false), 1000);
-    // });
   };
   const getCategories = () => {
     return categoryItems.filter((category) => category.id !== 0);

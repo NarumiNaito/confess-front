@@ -1,6 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import AvatarGroup from "@mui/material/AvatarGroup";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
@@ -15,6 +13,7 @@ import Chip from "@mui/material/Chip";
 import { categoryItems } from "../../data/Category";
 import { Button, Divider, Tooltip, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, IconButton } from "@mui/material";
 import { CurrentPage, ForgiveState, Post } from "../../types/Types";
+import { AccountCircle } from "@mui/icons-material";
 
 export default function HomeFulfillmentContent() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -238,14 +237,18 @@ export default function HomeFulfillmentContent() {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Button onClick={() => navigate(`/detail/${post["user_id"]}`, { state: post })} color="inherit" sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
-                          <Tooltip title={post["name"]}>
-                            <AvatarGroup max={3}>
-                              <Avatar src={post["image"]} sx={{ width: 24, height: 24 }} />
-                            </AvatarGroup>
-                          </Tooltip>
-                          <Typography variant="subtitle1">{post["name"]}</Typography>
-                        </Button>
+                        <Tooltip title={post["name"]}>
+                          <Button
+                            onClick={() => navigate(`/detail/${post["user_id"]}`, { state: post })}
+                            color="inherit"
+                            sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
+                            startIcon={
+                              post["image"] ? <img src={post["image"]} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
+                            }
+                          >
+                            {post["name"]}
+                          </Button>
+                        </Tooltip>
                         <Typography variant="subtitle1">{dayjs(post["created_at"]).format("YYYY年M月D日")}</Typography>
                       </Box>
                     </Box>

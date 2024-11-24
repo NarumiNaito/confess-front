@@ -1,5 +1,4 @@
 import * as React from "react";
-import Axios from "axios";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -19,8 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { axios } from "../../../api/Axios";
 import Loading from "../../loading/Loading";
 import { InputsProfile } from "../../../types/Types";
-import { Tooltip } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
+import { Avatar } from "@mui/material";
 import useFileInput from "../../../hooks/useFileInput";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
@@ -49,6 +47,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [authError, setAuthError] = React.useState(false);
+  const [image, setImage] = React.useState<string | null>(null);
 
   const { control, handleSubmit, register, reset } = useForm<InputsProfile>({
     defaultValues: {
@@ -75,15 +74,16 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
     const fetchUser = async () => {
       try {
         const res = await axios.get("api/user");
-        if (res.data && res.data.length > 0) {
-          const fetchedUser = res.data[0];
-          setUser(fetchedUser);
-          console.log(fetchedUser);
-          reset({
-            name: fetchedUser?.name || "",
-            image: fetchedUser?.image || null, // 画像がない場合は null
-          });
-        }
+        const fetchedUser = res.data[0];
+        setUser(fetchedUser);
+        console.log(fetchedUser);
+        setImage(fetchedUser.image);
+        console.log(fetchedUser.image);
+
+        reset({
+          name: fetchedUser?.name || "",
+          image: fetchedUser?.image || null,
+        });
       } catch (error) {
         console.error("ユーザー情報の取得に失敗しました:", error);
       }
@@ -113,10 +113,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
         })
         .catch((res) => {
           console.log(res);
-          // if (res.status === 413) {
-          //   setAuthError(true);
-          //   return;
-          // }
+
           if (res.status === 422) {
             setAuthError(true);
           }
@@ -126,28 +123,6 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
         });
     });
   };
-
-  // try {
-  //   setLoading(true);
-  //   await axios.get(`sanctum/csrf-cookie`);
-  //   await axios.post(`api/user/update`, formData, {
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //     },
-  //   });
-  //   navigate("/myPage");
-  // } catch (error: any) {
-  //   if (Axios.isAxiosError(error) && error.response) {
-  //     const status = error.response.status;
-  //     if (status === 413) {
-  //       console.log(status);
-  //       setAuthError(true);
-  //       return;
-  //     }
-  //   }
-  // } finally {
-  //   setLoading(false);
-  // }
 
   return (
     <>
@@ -161,9 +136,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
               <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
                 アカウント編集
               </Typography>
-              <Typography color="error" variant="subtitle2" sx={{ width: "100%", mt: 3 }}>
-                {authError && "画像サイズが大きすぎます。"}
-              </Typography>
+
               <Box
                 component="form"
                 onSubmit={handleSubmit(onSubmit)}
@@ -184,7 +157,17 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
                       {file ? (
                         <Box>
                           <IconButton onClick={selectFile} sx={{ p: 0, color: "white", textTransform: "none" }}>
-                            <img src={imageData} alt="選択された画像" style={{ margin: "auto", width: "10rem", height: "10rem", borderRadius: "50%", objectFit: "cover" }} />
+                            <img
+                              src={imageData}
+                              alt="imageData"
+                              style={{
+                                margin: "auto",
+                                width: "10rem",
+                                height: "10rem",
+                                borderRadius: "50%",
+                                objectFit: "cover",
+                              }}
+                            />
                           </IconButton>
                           <Box marginTop={1}>
                             <Button variant="outlined" size="small" color="error" onClick={resets}>
@@ -193,15 +176,26 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
                           </Box>
                         </Box>
                       ) : (
-                        <IconButton onClick={selectFile} sx={{ p: 0, color: "white", textTransform: "none" }}>
-                          <AccountCircle sx={{ fontSize: "10rem" }} />
-                        </IconButton>
+                        <Box>
+                          <IconButton onClick={selectFile} sx={{ p: 0, color: "white" }}>
+                            <Avatar src={image || undefined} sx={{ width: 120, height: 120 }} />
+                          </IconButton>
+                          {image && (
+                            <Box marginTop={1}>
+                              <Button variant="outlined" size="small" color="error" onClick={() => setImage(null)}>
+                                削除
+                              </Button>
+                            </Box>
+                          )}
+                        </Box>
                       )}
                     </Box>
                   )}
                 />
-
-                <FormControl sx={{ mb: 2, mt: 2 }}>
+                <Typography color="error" variant="subtitle2" sx={{ width: "100%" }}>
+                  {authError && "画像サイズが大きすぎます。2MBまでの別の画像でお試しください。"}
+                </Typography>
+                <FormControl sx={{ mb: 2 }}>
                   <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <FormLabel htmlFor="name">名前</FormLabel>
                   </Box>

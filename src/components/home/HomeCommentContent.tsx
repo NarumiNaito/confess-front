@@ -10,12 +10,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { Button, Divider, Tooltip } from "@mui/material";
 import { Comment, CurrentPage } from "../../types/Types";
-
-// const commonStyles = {
-//   bgcolor: "#212121",
-//   px: 2,
-//   border: 0.1,
-// };
+import { AccountCircle } from "@mui/icons-material";
 
 export default function HomeCommentContent(props: any) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -71,10 +66,6 @@ export default function HomeCommentContent(props: any) {
                   justifyContent: "space-between",
                   gap: 1,
                   height: "100%",
-
-                  // ...commonStyles,
-                  // borderRadius: 1,
-                  // borderColor: "grey.500",
                 }}
               >
                 <Typography mt={2} variant="h6" component="div" color="error">
@@ -147,15 +138,18 @@ export default function HomeCommentContent(props: any) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Button onClick={() => navigate(`/detail/${comment["user_id"]}`, { state: comment })} color="inherit" sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
-                      <Tooltip title={comment["name"]}>
-                        <AvatarGroup max={3}>
-                          <Avatar src={comment["image"]} sx={{ width: 24, height: 24 }} />
-                        </AvatarGroup>
-                      </Tooltip>
-                      <Typography variant="subtitle1">{comment["name"]}</Typography>
-                    </Button>
-
+                    <Tooltip title={comment["name"]}>
+                      <Button
+                        onClick={() => navigate(`/detail/${comment["user_id"]}`, { state: comment })}
+                        color="inherit"
+                        sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
+                        startIcon={
+                          comment["image"] ? <img src={comment["image"]} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
+                        }
+                      >
+                        {comment["name"]}
+                      </Button>
+                    </Tooltip>
                     <Typography variant="subtitle1">{dayjs(comment["created_at"]).format("YYYY年M月D日")}</Typography>
                   </Box>
                   <Divider />
