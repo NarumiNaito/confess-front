@@ -4,14 +4,11 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
-import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import ForgotPassword from "../login/ForgotPassword";
-import { GoogleIcon } from "../../CustomIcons";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { axios } from "../../../api/Axios";
@@ -57,7 +54,6 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
     },
   });
 
-  const [open, setOpen] = React.useState(false);
   const [password, setPassword] = React.useState(false);
   const [authError, setAuthError] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
@@ -65,14 +61,6 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
 
   const togglePassword = () => {
     setPassword(!password);
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const navigate = useNavigate();
@@ -114,7 +102,7 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
         <>
           <Header />
           <LoginContainer direction="column" justifyContent="space-between" sx={{ flexGrow: 1 }}>
-            <Card variant="outlined" sx={{ bgcolor: "rgba(255, 255, 255, 0.12)" }}>
+            <Card variant="outlined" sx={{ mb: 5, bgcolor: "rgba(255, 255, 255, 0.12)" }}>
               <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
                 ログイン
               </Typography>
@@ -219,27 +207,20 @@ export default function LoginForm(props: { disableCustomTheme?: boolean }) {
                     )}
                   />
                 </FormControl>
-                <Typography sx={{ textAlign: "right" }}>
-                  <Link onClick={handleClickOpen} variant="body2" color="error" sx={{ alignSelf: "baseline" }}>
-                    パスワードをお忘れの方はこちら
-                  </Link>
-                </Typography>
-                <Divider />
-                <ForgotPassword open={open} handleClose={handleClose} />
+                <Divider sx={{ mt: 2, mb: 2 }} />
                 <Button type="submit" onClick={login} fullWidth variant="contained">
                   ログイン
                 </Button>
                 <Typography sx={{ textAlign: "right" }}>
-                  <Link href="/material-ui/getting-started/templates/sign-in/" variant="body2" color="error" sx={{ alignSelf: "baseline" }}>
+                  <Button
+                    onClick={() => navigate("/register")}
+                    sx={{
+                      color: "red",
+                    }}
+                  >
                     アカウントをお持ちでない方はこちら
-                  </Link>
+                  </Button>
                 </Typography>
-              </Box>
-              <Divider>または</Divider>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <Button type="submit" fullWidth variant="outlined" onClick={() => alert("Sign in with Google")} startIcon={<GoogleIcon />}>
-                  Googleアカウントでログイン
-                </Button>
               </Box>
             </Card>
           </LoginContainer>

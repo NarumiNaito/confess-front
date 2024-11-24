@@ -5,13 +5,11 @@ import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
-import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import ForgotPassword from "../../auth/login/ForgotPassword";
 import { GoogleIcon } from "../../CustomIcons";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +42,6 @@ const LoginContainer = styled(Stack)(({ theme }) => ({
 
 export default function ProfileContent(props: { disableCustomTheme?: boolean }) {
   const [user, setUser] = React.useState<any>(null);
-  const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [authError, setAuthError] = React.useState(false);
   const [image, setImage] = React.useState<string | null>(null);
@@ -55,14 +52,6 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
       image: "",
     },
   });
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const navigate = useNavigate();
 
@@ -222,23 +211,17 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
                   />
                 </FormControl>
 
-                <Typography sx={{ textAlign: "right" }}>
-                  <Link onClick={handleClickOpen} variant="body2" color="error" sx={{ alignSelf: "baseline" }}>
-                    パスワードをお忘れの方はこちら
-                  </Link>
-                </Typography>
                 <Divider />
-                <ForgotPassword open={open} handleClose={handleClose} />
                 <Button type="submit" fullWidth variant="contained">
                   登録
                 </Button>
               </Box>
               <Divider>または</Divider>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {/* <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 <Button type="submit" fullWidth variant="outlined" onClick={() => alert("Sign in with Google")} startIcon={<GoogleIcon />}>
                   Googleアカウントでログイン
                 </Button>
-              </Box>
+              </Box> */}
             </Card>
           </LoginContainer>
           <Box component="footer" sx={{ mt: "auto", width: "100%" }}>

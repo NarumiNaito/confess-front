@@ -7,9 +7,35 @@ import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../../router/useAuthContext";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { InputsLogin } from "../../../types/Types";
+import { axios } from "../../../api/Axios";
 
 function ProductCTA() {
   const navigate = useNavigate();
+  const { login } = useAuthContext();
+  const { handleSubmit } = useForm({
+    defaultValues: {
+      email: "welcome@guest.com",
+      password: "welcome4649",
+    },
+  });
+
+  const onSubmit: SubmitHandler<InputsLogin> = async (data) => {
+    const requestUser = {
+      email: data.email,
+      password: data.password,
+    };
+
+    await axios.get(`sanctum/csrf-cookie`).then((response) => {
+      axios.post(`api/login`, requestUser).then((res) => {
+        navigate("/myPage");
+        login();
+      });
+    });
+  };
+
   return (
     <Container component="section" sx={{ mt: 13, mb: 10, display: "flex" }}>
       <Grid container>
@@ -30,7 +56,7 @@ function ProductCTA() {
               <Button onClick={() => navigate("/login")} color="primary" variant="contained" sx={{ width: "100%", mt: 4 }} startIcon={<LoginIcon />}>
                 ログイン
               </Button>
-              <Button onClick={() => navigate("/guest")} color="warning" variant="contained" sx={{ width: "100%", mt: 4 }} startIcon={<PersonAddIcon />}>
+              <Button type="button" onClick={handleSubmit(onSubmit)} color="warning" variant="contained" sx={{ width: "100%", mt: 4 }} startIcon={<PersonAddIcon />}>
                 ゲストログイン
               </Button>
             </Box>
