@@ -122,7 +122,7 @@ export default function DetailContent() {
     <>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
           whileInView={{
             opacity: 1,
@@ -172,7 +172,7 @@ export default function DetailContent() {
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: 1 }}
           whileInView={{
             opacity: 1,
             y: 0,

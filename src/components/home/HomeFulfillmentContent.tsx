@@ -129,11 +129,11 @@ export default function HomeFulfillmentContent() {
           }}
         >
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.5 }}
             whileInView={{
               opacity: 1,
-              y: 0,
+              x: 0,
             }}
           >
             <Typography color="error" variant="h5" sx={{ fontFamily: "YuMincho", position: "relative", zIndex: 2 }}>
@@ -142,11 +142,11 @@ export default function HomeFulfillmentContent() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, x: 20 }}
             transition={{ duration: 1 }}
             whileInView={{
               opacity: 1,
-              y: 0,
+              x: 0,
             }}
           >
             <Typography

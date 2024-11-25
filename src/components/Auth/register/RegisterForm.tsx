@@ -106,8 +106,8 @@ export default function RegisterForm(props: { disableCustomTheme?: boolean }) {
           <Header />
           <RegisterContainer direction="column" justifyContent="space-between">
             <Card variant="outlined" sx={{ mb: 5, bgcolor: "rgba(255, 255, 255, 0.12)" }}>
-              <Typography component="h1" variant="h4" color="error" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
-                新規登録
+              <Typography component="h2" variant="h2" color="error" sx={{ fontFamily: "cursive", width: "100%", mt: 3 }}>
+                Register
               </Typography>
 
               <Typography color="error" variant="overline">
