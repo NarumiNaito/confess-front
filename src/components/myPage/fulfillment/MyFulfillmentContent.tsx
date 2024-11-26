@@ -144,7 +144,16 @@ export default function MyFulfillmentContent(props: any) {
               justifyContent: "space-between",
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}></Box>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+              <Button
+                color="inherit"
+                sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
+                startIcon={props.state.image ? <img src={props.state.image} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />}
+              >
+                {props.state.name}
+              </Button>
+            </Box>
+
             <Typography variant="subtitle1">{dayjs(props.state.updated_at).format("YYYY年M月D日")}</Typography>
           </Box>
           <Divider />

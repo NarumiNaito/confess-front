@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import { axios } from "../../../api/Axios";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { Button, Divider, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -12,7 +12,7 @@ import { AccountCircle } from "@mui/icons-material";
 import revival from "../../../assets/revival.jpg";
 import { motion } from "framer-motion";
 
-export default function CommentContent() {
+export default function CommentContent(props: any) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [comments, setComments] = React.useState([]);
   const [userId, setUserId] = React.useState<number>();
@@ -22,11 +22,8 @@ export default function CommentContent() {
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
   const navigate = useNavigate();
-  const params = useParams();
-  const id = params.id;
+  const id = props.state.id;
   const location = useLocation();
-
-  console.log(location.state);
 
   React.useEffect(() => {
     const qpPage = parseInt(searchParams.get("page") || "1", 10);
