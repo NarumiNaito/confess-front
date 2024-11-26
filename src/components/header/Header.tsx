@@ -181,7 +181,7 @@ function Header() {
           </Box>
 
           <Box paddingRight={1}>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            <IconButton onClick={() => navigate("/myPage/notification")} aria-label="show 17 new notifications" color="inherit">
               <Tooltip title="通知">
                 <Badge badgeContent={Notification} color="error">
                   {Notification > 0 ? <NotificationsIcon color="warning" /> : <NotificationsIcon />}

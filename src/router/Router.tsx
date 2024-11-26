@@ -26,6 +26,7 @@ import PrivacyPolicy from "../templates/privacyPolicy/PrivacyPolicy";
 import TermsOfService from "../templates/termsOfService/TermsOfService";
 import AuthPrivacyPolicy from "../templates/privacyPolicy/AuthPrivacyPolicy";
 import AuthTermsOfService from "../templates/termsOfService/AuthTermsOfService";
+import Notification from "../templates/myPage/notification/Notification";
 
 const Router = () => {
   return (
@@ -53,6 +54,7 @@ const Router = () => {
             <Route path="/myPage/comment/:id" element={<Comment />} />
             <Route path="/myPage/myFulfillment/:id" element={<MyFulfillment />} />
             <Route path="/myPage/fulfillment" element={<Fulfillment />} />
+            <Route path="/myPage/notification" element={<Notification />} />
             <Route path="/myPage/bookmarkList" element={<Bookmark />} />
             <Route path="/myPage/privacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/myPage/termsOfService" element={<TermsOfService />} />

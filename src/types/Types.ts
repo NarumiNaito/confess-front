@@ -39,6 +39,21 @@ export interface Comment {
   updated_at: string;
 }
 
+export interface Notification {
+  id: number;
+  user_id: string;
+  post_id: string;
+  forgive_id: number;
+  comment_id: number;
+  content: string;
+  name: string;
+  image: string;
+  created_at: string;
+  updated_at: string;
+  type: string;
+  postName: string;
+  userImage: string;
+}
 export interface PostInputs {
   category_id: string;
   content: string;
