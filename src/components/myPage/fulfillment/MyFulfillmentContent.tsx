@@ -16,8 +16,8 @@ export default function MyFulfillmentContent(props: any) {
   const [comments, setComments] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
 
-  console.log(props);
-  console.log(comments);
+  // console.log(props);
+  // console.log(comments);
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
