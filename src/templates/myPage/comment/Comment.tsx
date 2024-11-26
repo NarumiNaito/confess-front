@@ -46,7 +46,7 @@ function Comment() {
     setOpen(false);
   };
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       content: "",
     },
@@ -64,6 +64,8 @@ function Comment() {
         axios.post(`api/comments/register`, comments);
       })
       .then((res) => {
+        reset();
+        setOpen(false);
         navigate(`/myPage/comment/${location.state.id}`, { state: location.state });
       });
   };
@@ -78,7 +80,7 @@ function Comment() {
       >
         <Header />
         <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <CommentContent />
+          <CommentContent {...location} />
         </Container>
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <AppBar position="sticky">

@@ -125,7 +125,7 @@ function Header() {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              fontFamily: "YuMincho",
               fontWeight: 100,
               letterSpacing: ".2rem",
               color: "inherit",

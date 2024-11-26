@@ -74,9 +74,9 @@ function AuthHeader() {
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
+              fontFamily: "YuMincho",
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
               fontWeight: 100,
               letterSpacing: ".2rem",
               color: "inherit",
