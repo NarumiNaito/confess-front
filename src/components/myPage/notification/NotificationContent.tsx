@@ -3,78 +3,77 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { axios } from "../../../api/Axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
-import { Button, Divider, Tooltip } from "@mui/material";
-import { Notification } from "../../../types/Types";
+import { Button, Divider, Pagination, Tooltip } from "@mui/material";
+import { CurrentPage, Notification } from "../../../types/Types";
 import { AccountCircle } from "@mui/icons-material";
 import revival from "../../../assets/revival.jpg";
 import { motion } from "framer-motion";
 
 export default function HomeCommentContent() {
-  const [notifications, setNotifications] = React.useState<Notification[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [notifications, setNotifications] = React.useState<any[]>([]);
+  const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
+
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  const pageCount = currentPage.last_page;
+
+  React.useEffect(() => {
+    const qpPage = parseInt(searchParams.get("page") || "1", 10);
+    fetchNotification(qpPage);
+  }, [searchParams]);
 
   const navigate = useNavigate();
-  React.useEffect(() => {
-    fetchNotification();
-  }, []);
 
-  const fetchNotification = async () => {
+  const fetchNotification = async (page: number) => {
     try {
-      const res = await axios.get(`api/notifications`);
-      console.log(res);
-      const notifications = res.data.map((notification: any) => {
-        if (notification.type === "comment") {
-          return {
-            type: "comment",
-            comment_id: notification.comment_id,
-            content: notification.post.content,
-            id: notification.post.id,
-            postName: notification.user.name,
-            userImage: notification.image,
-            updated_at: notification.user.updated_at,
-            category_name: notification.category_name,
-            name: notification.userName,
-            image: notification.userImage,
-          };
-        } else if (notification.type === "forgive") {
-          return {
-            type: "forgive",
-            forgive_id: notification.forgive_id,
-            content: notification.post.content,
-            id: notification.post.id,
-            postName: notification.user.name,
-            userImage: notification.image,
-            updated_at: notification.user.updated_at,
-            category_name: notification.category_name,
-            name: notification.userName,
-            image: notification.userImage,
-          };
-        }
-      });
+      const res = await axios.get(`api/notifications?page=${page}`);
+      // console.log(res.data.data);
+      const notifications = res.data.data;
       console.log(notifications);
       setNotifications(notifications);
+      setCurrentPage(res.data);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
   };
 
-  const commentNotification = async (post: Notification) => {
-    const id = post["comment_id"];
+  const commentNotification = async (post: any) => {
+    const id = post.comment_id;
+    const data = {
+      id: post.post.id,
+      content: post.post.content,
+      image: post.image,
+      name: post.post.user.name,
+      category_name: post.post.category.category_name,
+    };
     await axios.post(`api/comments/update/notification/${id}`);
-    navigate(`/myPage/comment/${post["id"]}`, { state: post });
+    navigate(`/myPage/comment/${post.post.id}`, { state: data });
   };
 
-  const forgiveNotification = async (post: Notification) => {
-    const id = post["forgive_id"];
+  const forgiveNotification = async (post: any) => {
+    const id = post.forgive_id;
+    const data = {
+      id: post.user.id,
+      content: post.post.content,
+      image: post.image,
+      name: post.post.user.name,
+      category_name: post.post.category.category_name,
+    };
     await axios.post(`api/forgives/update/notification/${id}`);
-    navigate(`/myPage/myFulfillment/${post["id"]}`, { state: post });
+    navigate(`/myPage/myFulfillment/${post.post.id}`, { state: data });
+  };
+
+  const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
+    // console.log(page);
+    setSearchParams({ page: String(page) });
   };
 
   return (
     <>
       <div>
-        <Box sx={{ mb: 5, display: "flex", flexDirection: "column", gap: 4 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <Box
             mt={5}
             mb={8}
@@ -160,9 +159,9 @@ export default function HomeCommentContent() {
                       gap: 1,
                     }}
                   >
-                    <Tooltip title={post["postName"]}>
+                    <Tooltip title={post.user.name}>
                       <Button
-                        onClick={() => navigate(`/myPage/detail/${post["id"]}`, { state: post })}
+                        onClick={() => navigate(`/myPage/detail/${post.user.id}`, { state: post })}
                         color="inherit"
                         sx={{
                           textTransform: "none",
@@ -173,10 +172,10 @@ export default function HomeCommentContent() {
                           fontSize: 20,
                         }}
                         startIcon={
-                          post["userImage"] ? <img src={post["userImage"]} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
+                          post.userImage ? <img src={post.userImage} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
                         }
                       >
-                        {post["postName"]}
+                        {post.user.name}
                       </Button>
                     </Tooltip>
                     <Typography variant="subtitle1">より下記懺悔に対して</Typography>
@@ -193,7 +192,7 @@ export default function HomeCommentContent() {
                   }}
                 >
                   <Typography m={1} whiteSpace={"pre-line"} variant="h6">
-                    {post["content"]}
+                    {post.post.content}
                   </Typography>
 
                   <Box
@@ -205,7 +204,7 @@ export default function HomeCommentContent() {
                       gap: 2,
                     }}
                   >
-                    {post["type"] === "comment" ? (
+                    {post.type === "comment" ? (
                       <>
                         <Button
                           onClick={() => {
@@ -251,7 +250,7 @@ export default function HomeCommentContent() {
                       marginLeft: "auto",
                     }}
                   >
-                    {dayjs(post["updated_at"]).format("YYYY年M月D日")}
+                    {dayjs(post.user.updated_at).format("YYYY年M月D日")}
                   </Typography>
                   <Divider />
                 </Box>
@@ -260,6 +259,9 @@ export default function HomeCommentContent() {
           </Grid>
         </Box>
       </div>
+      <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }} justifyContent={"center"}>
+        <Pagination hidePrevButton hideNextButton page={page} onChange={handleChangePage} count={pageCount} boundaryCount={1} />
+      </Box>
     </>
   );
 }

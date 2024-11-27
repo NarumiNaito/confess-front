@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 
 export default function MyFulfillmentContent(props: any) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [comments, setComments] = React.useState([]);
+  const [posts, setPosts] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
 
   // console.log(props);
@@ -27,15 +27,15 @@ export default function MyFulfillmentContent(props: any) {
 
   React.useEffect(() => {
     const qpPage = parseInt(searchParams.get("page") || "1", 10);
-    fetchComment(qpPage);
+    fetchPost(qpPage);
   }, [searchParams]);
 
-  const fetchComment = async (page: number) => {
+  const fetchPost = async (page: number) => {
     axios
       .get(`api/forgives/index/${id}?page=${page}`)
       .then((res) => {
         console.log(res.data.data);
-        setComments(res.data.data);
+        setPosts(res.data.data);
         setCurrentPage(res.data);
       })
 
@@ -167,7 +167,7 @@ export default function MyFulfillmentContent(props: any) {
                 <Typography variant="h5">赦しをくれた子羊達</Typography>
               </Box>
             </Box>
-            {comments.map((comment, id) => (
+            {posts.map((post, id) => (
               <Grid key={id} size={{ xs: 12, sm: 6 }}>
                 <Box
                   sx={{
@@ -180,7 +180,7 @@ export default function MyFulfillmentContent(props: any) {
                   }}
                 >
                   <Typography m={1} whiteSpace={"pre-line"} variant="h6">
-                    {comment["content"]}
+                    {post["content"]}
                   </Typography>
 
                   <Box
@@ -192,19 +192,17 @@ export default function MyFulfillmentContent(props: any) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Tooltip title={comment["name"]}>
+                    <Tooltip title={post["name"]}>
                       <Button
-                        onClick={() => navigate(`/myPage/detail/${comment["user_id"]}`, { state: comment })}
+                        onClick={() => navigate(`/myPage/detail/${post["user_id"]}`, { state: post })}
                         color="inherit"
                         sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
-                        startIcon={
-                          comment["image"] ? <img src={comment["image"]} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
-                        }
+                        startIcon={post["image"] ? <img src={post["image"]} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />}
                       >
-                        {comment["name"]}
+                        {post["name"]}
                       </Button>
                     </Tooltip>
-                    <Typography variant="subtitle1">{dayjs(comment["created_at"]).format("YYYY年M月D日")}</Typography>
+                    <Typography variant="subtitle1">{dayjs(post["created_at"]).format("YYYY年M月D日")}</Typography>
                   </Box>
                   <Divider />
                 </Box>
