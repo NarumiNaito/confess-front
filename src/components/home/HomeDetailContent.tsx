@@ -108,7 +108,7 @@ export default function HomeDetailContent() {
             }}
           >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: -20 }}
               transition={{ duration: 1 }}
               whileInView={{
                 opacity: 1,
@@ -116,7 +116,7 @@ export default function HomeDetailContent() {
               }}
             >
               <Typography variant="h4" sx={{ fontFamily: "cursive", position: "relative", zIndex: 2 }}>
-                Room of confession
+                confession Room
               </Typography>
             </motion.div>
           </Box>
@@ -141,7 +141,7 @@ export default function HomeDetailContent() {
               />
             </AvatarGroup>
             <Typography color="error" variant="h5" sx={{ fontFamily: "YuMincho", position: "relative", zIndex: 2 }}>
-              {location.state.name}の部屋
+              {location.state.name}の懺悔室
             </Typography>
           </Box>
         </motion.div>
@@ -150,7 +150,7 @@ export default function HomeDetailContent() {
       <Box mt={3} mb={2}>
         <Divider />
       </Box>
-      <Typography variant="h5">投稿一覧</Typography>
+      <Typography variant="h5">懺悔一覧</Typography>
       {loading ? (
         <SkeletonLoading />
       ) : (
