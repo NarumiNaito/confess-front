@@ -87,9 +87,6 @@ export default function DeleteForm(props: { disableCustomTheme?: boolean }) {
       password: data.password,
     };
 
-    // console.log(requestUser);
-    // alert("送信");
-
     await axios.get(`sanctum/csrf-cookie`).then((response) => {
       setLoading(true);
       setOpen(false);
@@ -258,7 +255,7 @@ export default function DeleteForm(props: { disableCustomTheme?: boolean }) {
                     )}
                   />
                 </FormControl>
-                <Divider sx={{ mt: 2, mb: 2 }} />
+                <Divider sx={{ mt: 2, mb: 3 }} />
                 <Button onClick={handleClickOpen} color="error" fullWidth variant="contained">
                   削除
                 </Button>
@@ -271,7 +268,7 @@ export default function DeleteForm(props: { disableCustomTheme?: boolean }) {
                     disableEnforceFocus={false} // Keeps focus trap active
                     disablePortal={false} // Ensures dialog is rendered in a separate layer
                   >
-                    <DialogTitle id="alert-dialog-title" color="error">
+                    <DialogTitle sx={{ mt: 2 }} id="alert-dialog-title" color="error">
                       {"アカウントを削除しますか？"}
                     </DialogTitle>
                     <DialogContent>
@@ -280,7 +277,7 @@ export default function DeleteForm(props: { disableCustomTheme?: boolean }) {
                         <br />
                         本当にアカウントを削除してもよろしいですか？
                       </DialogContentText>
-                      <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+                      <Box sx={{ display: "flex", alignItems: "center", mt: 2, mb: -2 }}>
                         <Controller
                           control={control}
                           name="check"
@@ -305,16 +302,10 @@ export default function DeleteForm(props: { disableCustomTheme?: boolean }) {
                     </DialogActions>
                   </Dialog>
                 </>
-                <Typography sx={{ textAlign: "right" }}>
-                  <Button
-                    onClick={() => navigate(-1)}
-                    sx={{
-                      color: "red",
-                    }}
-                  >
-                    戻る
-                  </Button>
-                </Typography>
+
+                <Button sx={{ mt: 3, mb: 3 }} variant="contained" onClick={() => navigate(-1)}>
+                  戻る
+                </Button>
               </Box>
             </Card>
           </LoginContainer>

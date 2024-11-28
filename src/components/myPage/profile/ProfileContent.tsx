@@ -211,14 +211,14 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
                 </FormControl>
 
                 <Divider />
-                <Button type="submit" fullWidth variant="contained">
+                <Button sx={{ mb: 1, mt: 1 }} type="submit" fullWidth variant="contained">
                   登録
                 </Button>
               </Box>
               {params.id === "11" || (
                 <>
                   <Divider>または</Divider>
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Box sx={{ mb: 1, mt: 1, display: "flex", flexDirection: "column", gap: 2 }}>
                     <Button onClick={() => navigate(`/myPage/profile/delete/${params.id}`, { state: user })} color="error" fullWidth variant="contained">
                       アカウント削除はこちら
                     </Button>
