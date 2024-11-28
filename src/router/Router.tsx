@@ -27,6 +27,7 @@ import TermsOfService from "../templates/termsOfService/TermsOfService";
 import AuthPrivacyPolicy from "../templates/privacyPolicy/AuthPrivacyPolicy";
 import AuthTermsOfService from "../templates/termsOfService/AuthTermsOfService";
 import Notification from "../templates/myPage/notification/Notification";
+import UserDelete from "../templates/auth/UserDelete";
 
 const Router = () => {
   return (
@@ -47,7 +48,7 @@ const Router = () => {
           <Route element={<PrivateLayout />}>
             <Route path="/myPage" element={<MyPage />} />
             <Route path="/myPage/detail/:id" element={<DetailUser />} />
-            <Route path="/myPage/profile" element={<Profile />} />
+            <Route path="/myPage/profile/:id" element={<Profile />} />
             <Route path="/myPage/post" element={<PostRegister />} />
             <Route path="/myPage/postList" element={<PostList />} />
             <Route path="/myPage/postList/:id" element={<PostEdit />} />
@@ -58,6 +59,7 @@ const Router = () => {
             <Route path="/myPage/bookmarkList" element={<Bookmark />} />
             <Route path="/myPage/privacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/myPage/termsOfService" element={<TermsOfService />} />
+            <Route path="/myPage/profile/delete/:id" element={<UserDelete />} />
           </Route>
           <Route path="*" element={<Page404 />} />
           <Route path="/loading" element={<Loading />} />

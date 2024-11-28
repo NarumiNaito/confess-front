@@ -3,6 +3,12 @@ export interface InputsLogin {
   password: string;
 }
 
+export interface InputsDelete {
+  id: string | undefined;
+  email: string;
+  password: string;
+}
+
 export interface InputsRegister {
   name: string;
   email: string;

@@ -26,6 +26,8 @@ function Header() {
   const [userName, setUserName] = React.useState<number>();
   const [image, setImage] = React.useState<any>();
   const [Notification, setNotification] = React.useState<any>();
+  const [params, setParams] = React.useState<number>();
+  const id = params;
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -60,7 +62,7 @@ function Header() {
   };
 
   const handleAccount = () => {
-    navigate("/myPage/profile");
+    navigate(`/myPage/profile/${id}`);
     setAnchorElUser(null);
   };
 
@@ -72,6 +74,7 @@ function Header() {
         if (userRes.data && userRes.data.length > 0) {
           setUserName(userRes.data[0].name);
           setImage(userRes.data[0].image);
+          setParams(userRes.data[0].id);
         }
         setNotification(countRes.data.count);
       } catch (error) {
