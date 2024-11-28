@@ -6,9 +6,9 @@ import { axios } from "../../../api/Axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { Button, Divider, Pagination, Tooltip } from "@mui/material";
-import { CurrentPage, Notification } from "../../../types/Types";
+import { CurrentPage } from "../../../types/Types";
 import { AccountCircle } from "@mui/icons-material";
-import revival from "../../../assets/revival.jpg";
+import angel from "../../../assets/angel.jpg";
 import { motion } from "framer-motion";
 
 export default function HomeCommentContent() {
@@ -29,7 +29,7 @@ export default function HomeCommentContent() {
   const fetchNotification = async (page: number) => {
     try {
       const res = await axios.get(`api/notifications?page=${page}`);
-      // console.log(res.data.data);
+      console.log(res.data.data);
       const notifications = res.data.data;
       console.log(notifications);
       setNotifications(notifications);
@@ -80,7 +80,7 @@ export default function HomeCommentContent() {
             sx={{
               fontStyle: "italic",
               position: "relative",
-              backgroundImage: `url(${revival})`,
+              backgroundImage: `url(${angel})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -103,7 +103,7 @@ export default function HomeCommentContent() {
             }}
           >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
               whileInView={{
                 opacity: 1,
@@ -161,7 +161,14 @@ export default function HomeCommentContent() {
                   >
                     <Tooltip title={post.user.name}>
                       <Button
-                        onClick={() => navigate(`/myPage/detail/${post.user.id}`, { state: post })}
+                        onClick={() =>
+                          navigate(`/myPage/detail/${post.user.id}`, {
+                            state: {
+                              name: post.user.name,
+                              image: post.userImage,
+                            },
+                          })
+                        }
                         color="inherit"
                         sx={{
                           textTransform: "none",

@@ -11,7 +11,7 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { axios } from "../../../api/Axios";
 import Loading from "../../loading/Loading";
 import { InputsProfile } from "../../../types/Types";
@@ -53,7 +53,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
   });
 
   const navigate = useNavigate();
-
+  const params = useParams();
   const inputProps = register("image");
 
   const { file, imageData, resets, selectFile, contextHolder } = useFileInput(inputProps);
@@ -215,12 +215,16 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
                   登録
                 </Button>
               </Box>
-              <Divider>または</Divider>
-              {/* <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <Button type="submit" fullWidth variant="outlined" onClick={() => alert("Sign in with Google")} startIcon={<GoogleIcon />}>
-                  Googleアカウントでログイン
-                </Button>
-              </Box> */}
+              {params.id === "11" || (
+                <>
+                  <Divider>または</Divider>
+                  <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                    <Button onClick={() => navigate(`/myPage/profile/delete/${params.id}`, { state: user })} color="error" fullWidth variant="contained">
+                      アカウント削除はこちら
+                    </Button>
+                  </Box>
+                </>
+              )}
             </Card>
           </LoginContainer>
           <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
