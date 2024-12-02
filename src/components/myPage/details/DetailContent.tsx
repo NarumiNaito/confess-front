@@ -24,6 +24,7 @@ export default function DetailContent() {
   const [currentPage, setCurrentPage] = React.useState<CurrentPage>({ last_page: 1 });
   const [forgiveState, setForgiveState] = React.useState<ForgiveState>({});
   const [bookmark, setBookmark] = React.useState<BookMarkState>({});
+  const [userId, setUserId] = React.useState<number>();
 
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
@@ -66,6 +67,12 @@ export default function DetailContent() {
           return prev;
         }, {});
         setBookmark(initialBookMarkState);
+      })
+      .then((res) => {
+        axios.get("api/user").then((res) => {
+          // console.log(res.data[0]);
+          setUserId(res.data[0].id);
+        });
       })
       .catch((res) => {
         if (res.status === 401) {
@@ -211,18 +218,20 @@ export default function DetailContent() {
                   <Grid key={id} size={{ xs: 12, sm: 6 }}>
                     <Box sx={{ position: "relative", mb: 3 }}>
                       <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
-                        <Tooltip title="ブックマーク">
-                          <IconButton
-                            onClick={() => toggleBookmark(post["id"])}
-                            color={bookmark[post["id"]]?.bookmark ? "primary" : "inherit"}
-                            component="label"
-                            sx={{ mr: 1 }}
-                            tabIndex={-1}
-                            size="small"
-                          >
-                            <BookmarkIcon />
-                          </IconButton>
-                        </Tooltip>
+                        {userId === post.user_id || (
+                          <Tooltip title="ブックマーク">
+                            <IconButton
+                              onClick={() => toggleBookmark(post["id"])}
+                              color={bookmark[post["id"]]?.bookmark ? "primary" : "inherit"}
+                              component="label"
+                              sx={{ mr: 1 }}
+                              tabIndex={-1}
+                              size="small"
+                            >
+                              <BookmarkIcon />
+                            </IconButton>
+                          </Tooltip>
+                        )}
                       </Box>
                     </Box>
                     <Box
