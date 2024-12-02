@@ -72,7 +72,6 @@ function AuthHeader() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               fontFamily: "YuMincho",
               mr: 2,

@@ -352,20 +352,37 @@ export default function FulfillmentContent() {
 
                       <Box sx={{ position: "relative", mb: 3 }}>
                         <Box display="flex" justifyContent="space-between" sx={{ position: "absolute", right: 0 }}>
-                          <Tooltip title="赦す">
-                            <Button
-                              onClick={() => toggleForgive(post["id"])}
-                              color={forgiveState[post["id"]]?.forgive ? "primary" : "inherit"}
-                              component="label"
-                              variant="outlined"
-                              sx={{ mr: 1 }}
-                              tabIndex={-1}
-                              size="small"
-                              startIcon={<VolunteerActivismIcon />}
-                            >
-                              ({forgiveState[post["id"]]?.forgiveCount || 0})
-                            </Button>
-                          </Tooltip>
+                          {userId === post.user_id ? (
+                            <Tooltip title="赦す一覧">
+                              <Button
+                                onClick={() => navigate(`/myPage/myFulfillment/${post["id"]}`, { state: post })}
+                                color={forgiveState[post["id"]]?.forgive ? "primary" : "inherit"}
+                                component="label"
+                                variant="outlined"
+                                sx={{ mr: 1 }}
+                                tabIndex={-1}
+                                size="small"
+                                startIcon={<VolunteerActivismIcon />}
+                              >
+                                ({forgiveState[post["id"]]?.forgiveCount || 0})
+                              </Button>
+                            </Tooltip>
+                          ) : (
+                            <Tooltip title="赦す">
+                              <Button
+                                onClick={() => toggleForgive(post["id"])}
+                                color={forgiveState[post["id"]]?.forgive ? "primary" : "inherit"}
+                                component="label"
+                                variant="outlined"
+                                sx={{ mr: 1 }}
+                                tabIndex={-1}
+                                size="small"
+                                startIcon={<VolunteerActivismIcon />}
+                              >
+                                ({forgiveState[post["id"]]?.forgiveCount || 0})
+                              </Button>
+                            </Tooltip>
+                          )}
                           <Tooltip title="コメント">
                             <Button
                               onClick={() => navigate(`/myPage/comment/${post["id"]}`, { state: post })}

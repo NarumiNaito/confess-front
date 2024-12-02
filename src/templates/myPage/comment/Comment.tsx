@@ -131,10 +131,12 @@ function Comment() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  width: 310,
+                  width: { xs: "100%", sm: 500 },
+                  margin: "auto",
+                  p: 1,
                 }}
               >
-                <DialogTitle>{"救いの言葉を送ろう"}</DialogTitle>
+                <DialogTitle color="error">{"救いの言葉を送ろう"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-slide-description">
                     <FormControl fullWidth>
@@ -170,7 +172,9 @@ function Comment() {
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleClose}>戻る</Button>
+                  <Button color="inherit" onClick={handleClose}>
+                    戻る
+                  </Button>
                   <Button type="submit" onClick={handleClose}>
                     コメント
                   </Button>

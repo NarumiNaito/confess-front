@@ -120,7 +120,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
         <>
           <Header />
           <LoginContainer direction="column" justifyContent="space-between" sx={{ flexGrow: 1 }}>
-            <Card variant="outlined" sx={{ bgcolor: "rgba(255, 255, 255, 0.12)" }}>
+            <Card variant="outlined" sx={{ mb: 7, bgcolor: "rgba(255, 255, 255, 0.12)" }}>
               <Typography color="error" component="h4" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)", mt: 3 }}>
                 アカウント編集
               </Typography>
