@@ -35,7 +35,6 @@ export default function HomeCommentContent() {
     axios
       .get(`api/comments/show/${id}?page=${page}`)
       .then((res) => {
-        console.log(res.data.data);
         setComments(res.data.data);
         setCurrentPage(res.data);
       })

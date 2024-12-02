@@ -45,7 +45,6 @@ export default function Content() {
     axios
       .get(`api/posts/myIndex?page=${page}&category_id=${categoryId}`)
       .then((res) => {
-        console.log(res.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
         setTotal(res.data.total);
@@ -71,7 +70,6 @@ export default function Content() {
       })
       .then((res) => {
         axios.get("api/user").then((res) => {
-          // console.log(res.data[0]);
           setUserId(res.data[0].id);
         });
       })
@@ -113,7 +111,6 @@ export default function Content() {
   };
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
-    // console.log(page);
     setSearchParams({ page: String(page), category_id: searchParams.get("category_id") || "0" });
   };
 

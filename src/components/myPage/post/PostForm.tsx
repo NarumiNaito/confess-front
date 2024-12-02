@@ -64,7 +64,6 @@ export default function PostForm(props: { disableCustomTheme?: boolean }) {
       category_id: data.category_id,
       content: data.content,
     };
-    console.log(Posts);
 
     await axios
       .get(`sanctum/csrf-cookie`)

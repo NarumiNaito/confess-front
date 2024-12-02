@@ -37,7 +37,6 @@ function Comment() {
 
   const [open, setOpen] = React.useState(false);
 
-  // console.log(location);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -57,7 +56,6 @@ function Comment() {
       content: data.content,
       post_id: location.state.id,
     };
-    console.log(comments);
     await axios
       .get(`sanctum/csrf-cookie`)
       .then((res) => {

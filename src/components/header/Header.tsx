@@ -96,7 +96,6 @@ function Header() {
         })
         .catch((res) => {
           if (res.status === 422) {
-            console.log(res);
             return;
           }
         });

@@ -34,13 +34,11 @@ export default function CommentContent(props: any) {
     await axios
       .get(`api/comments/index/${id}?page=${page}`)
       .then((res) => {
-        console.log(res.data.data);
         setComments(res.data.data);
         setCurrentPage(res.data);
       })
       .then((res) => {
         axios.get("api/user").then((res) => {
-          console.log(res.data[0]);
           setUserId(res.data[0].id);
         });
       })

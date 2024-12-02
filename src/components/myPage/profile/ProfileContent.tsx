@@ -64,9 +64,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
         const res = await axios.get("api/user");
         const fetchedUser = res.data[0];
         setUser(fetchedUser);
-        console.log(fetchedUser);
         setImage(fetchedUser.image);
-        console.log(fetchedUser.image);
 
         reset({
           name: fetchedUser?.name || "",
@@ -100,8 +98,6 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
           navigate("/myPage");
         })
         .catch((res) => {
-          console.log(res);
-
           if (res.status === 422) {
             setAuthError(true);
           }
@@ -215,7 +211,7 @@ export default function ProfileContent(props: { disableCustomTheme?: boolean }) 
                   登録
                 </Button>
               </Box>
-              {params.id === "11" || (
+              {params.id === "1" || (
                 <>
                   <Divider>または</Divider>
                   <Box sx={{ mb: 1, mt: 1, display: "flex", flexDirection: "column", gap: 2 }}>
