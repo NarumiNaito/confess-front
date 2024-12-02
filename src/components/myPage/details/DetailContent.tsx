@@ -32,6 +32,7 @@ export default function DetailContent() {
   const location = useLocation();
   const params = useParams();
   const id = params.id;
+  const processing = React.useRef(false);
 
   console.log(location);
 
@@ -89,6 +90,8 @@ export default function DetailContent() {
   };
 
   const toggleForgive = async (postId: number) => {
+    if (processing.current) return;
+
     // 現在の状態を取得
     const currentForgive = forgiveState[postId]?.forgive || false;
     const updatedCount = currentForgive ? forgiveState[postId].forgiveCount - 1 : forgiveState[postId].forgiveCount + 1;
@@ -98,12 +101,17 @@ export default function DetailContent() {
       ...prevForgiveState,
       [postId]: { forgive: !currentForgive, forgiveCount: updatedCount },
     }));
+    processing.current = true;
 
     await axios.get(`sanctum/csrf-cookie`).then(() => {
-      axios.post("api/forgives/toggle", {
-        post_id: postId,
-        is_forgive: !currentForgive,
-      });
+      axios
+        .post("api/forgives/toggle", {
+          post_id: postId,
+          is_forgive: !currentForgive,
+        })
+        .finally(() => {
+          setTimeout(() => (processing.current = false), 200);
+        });
     });
   };
 
