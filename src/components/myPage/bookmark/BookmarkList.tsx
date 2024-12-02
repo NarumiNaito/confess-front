@@ -29,6 +29,7 @@ export default function BookmarkList() {
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
   const navigate = useNavigate();
+  const processing = React.useRef(false);
 
   React.useEffect(() => {
     const qpPage = parseInt(searchParams.get("page") || "1", 10);
@@ -107,6 +108,7 @@ export default function BookmarkList() {
   };
 
   const toggleForgive = async (postId: number) => {
+    if (processing.current) return;
     // 現在の状態を取得
     const currentForgive = forgiveState[postId]?.forgive || false;
     const updatedCount = currentForgive ? forgiveState[postId].forgiveCount - 1 : forgiveState[postId].forgiveCount + 1;
@@ -117,11 +119,17 @@ export default function BookmarkList() {
       [postId]: { forgive: !currentForgive, forgiveCount: updatedCount },
     }));
 
+    processing.current = true;
+
     await axios.get(`sanctum/csrf-cookie`).then(() => {
-      axios.post("api/forgives/toggle", {
-        post_id: postId,
-        is_forgive: !currentForgive,
-      });
+      axios
+        .post("api/forgives/toggle", {
+          post_id: postId,
+          is_forgive: !currentForgive,
+        })
+        .finally(() => {
+          setTimeout(() => (processing.current = false), 200);
+        });
     });
   };
 
