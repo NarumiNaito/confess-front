@@ -42,7 +42,6 @@ export default function BookmarkList() {
     axios
       .get(`api/posts/bookmark?page=${page}&category_id=${categoryId}`)
       .then((res) => {
-        console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
         setTotal(res.data.total);

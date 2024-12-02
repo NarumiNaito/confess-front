@@ -40,7 +40,6 @@ export default function Content() {
     axios
       .get(`api/posts?page=${page}&category_id=${categoryId}`)
       .then((res) => {
-        console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
         setTotal(res.data.total);

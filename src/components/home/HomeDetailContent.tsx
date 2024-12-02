@@ -30,8 +30,6 @@ export default function HomeDetailContent() {
   const params = useParams();
   const id = params.id;
 
-  // console.log(location);
-
   React.useEffect(() => {
     const qpPage = parseInt(searchParams.get("page") || "1", 10);
     fetchPost(qpPage);
@@ -42,7 +40,6 @@ export default function HomeDetailContent() {
     axios
       .get(`api/posts/homeUserIndex/${id}?page=${page}`)
       .then((res) => {
-        console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
 

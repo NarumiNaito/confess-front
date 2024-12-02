@@ -52,7 +52,6 @@ const Transition = React.forwardRef(function Transition(
 
 export default function Edit(props: { disableCustomTheme?: boolean }) {
   const location = useLocation();
-  console.log(location);
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -80,7 +79,6 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
       category_id: data.category_id,
       content: data.content,
     };
-    // console.log(Posts);
 
     await axios
       .get(`sanctum/csrf-cookie`)
@@ -103,7 +101,6 @@ export default function Edit(props: { disableCustomTheme?: boolean }) {
   };
 
   const deletePost = async (Posts: any) => {
-    console.log(Posts);
     await axios
       .delete(`api/posts/delete`, { data: Posts })
 

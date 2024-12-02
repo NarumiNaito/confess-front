@@ -16,9 +16,6 @@ export default function MyFulfillmentContent(props: any) {
   const [posts, setPosts] = React.useState([]);
   const [currentPage, setCurrentPage] = React.useState({ last_page: 1 });
 
-  // console.log(props);
-  // console.log(comments);
-
   const page = parseInt(searchParams.get("page") || "1", 10);
   const pageCount = currentPage.last_page;
   const navigate = useNavigate();
@@ -34,7 +31,6 @@ export default function MyFulfillmentContent(props: any) {
     axios
       .get(`api/forgives/index/${id}?page=${page}`)
       .then((res) => {
-        console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
       })

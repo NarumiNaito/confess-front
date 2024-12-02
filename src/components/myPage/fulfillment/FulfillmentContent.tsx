@@ -45,7 +45,6 @@ export default function FulfillmentContent() {
     axios
       .get(`api/posts/fulfillment?page=${page}&category_id=${categoryId}`)
       .then((res) => {
-        console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
         setTotal(res.data.total);
@@ -70,7 +69,6 @@ export default function FulfillmentContent() {
       })
       .then((res) => {
         axios.get("api/user").then((res) => {
-          // console.log(res.data[0]);
           setUserId(res.data[0].id);
         });
       })

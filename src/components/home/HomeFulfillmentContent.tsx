@@ -41,7 +41,6 @@ export default function HomeFulfillmentContent() {
     axios
       .get(`api/posts/homeFulfillment?page=${page}&category_id=${categoryId}`)
       .then((res) => {
-        console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
         setTotal(res.data.total);

@@ -28,14 +28,12 @@ export default function Content() {
 
   const fetchPost = async (page: number) => {
     axios.get(`api/posts/show?page=${page}`).then((res) => {
-      console.log(res);
       setPosts(res.data.data);
       setCurrentPage(res.data);
     });
   };
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
-    console.log(page);
     setSearchParams({ page: String(page) });
   };
 

@@ -34,8 +34,6 @@ export default function DetailContent() {
   const id = params.id;
   const processing = React.useRef(false);
 
-  console.log(location);
-
   React.useEffect(() => {
     const qpPage = parseInt(searchParams.get("page") || "1", 10);
     fetchPost(qpPage);
@@ -46,7 +44,6 @@ export default function DetailContent() {
     axios
       .get(`api/posts/userIndex/${id}?page=${page}`)
       .then((res) => {
-        console.log(res.data.data);
         setPosts(res.data.data);
         setCurrentPage(res.data);
 
@@ -71,7 +68,6 @@ export default function DetailContent() {
       })
       .then((res) => {
         axios.get("api/user").then((res) => {
-          // console.log(res.data[0]);
           setUserId(res.data[0].id);
         });
       })

@@ -29,9 +29,7 @@ export default function HomeCommentContent() {
   const fetchNotification = async (page: number) => {
     try {
       const res = await axios.get(`api/notifications?page=${page}`);
-      console.log(res.data.data);
       const notifications = res.data.data;
-      console.log(notifications);
       setNotifications(notifications);
       setCurrentPage(res.data);
     } catch (error) {
@@ -66,7 +64,6 @@ export default function HomeCommentContent() {
   };
 
   const handleChangePage = (e: React.ChangeEvent<unknown>, page: number) => {
-    // console.log(page);
     setSearchParams({ page: String(page) });
   };
 
