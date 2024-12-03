@@ -1,4 +1,4 @@
-name: Deploy Simple CI/CD
+name: Deploy Confess CI/CD
 
 on:
   push:
@@ -8,7 +8,7 @@ env:
   AWS_REGION: us-east-1
   ECS_SERVICE: confess-service
   ECS_CLUSTER: confess-cluster
-  ECS_TASK_DEFINITION: .aws/task-definition.json
+  ECS_TASK_DEFINITION: confess-front/.aws/task-definition.json
 
 permissions:
   contents: read
@@ -25,9 +25,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Debug directory structure
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Contents of current directory:"
+          ls -la
+          echo "Contents of confess-front directory:"
+          ls -la confess-front
+
       - name: Build an Image and Run Tests
         run: |
-          docker image build --target production -t temp_confess_image_name:latest --build-arg  .
+          docker image build --target production -t temp_confess_image_name:latest --build-arg .
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -79,7 +88,7 @@ jobs:
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.render-api-task-def.outputs.task-definition }}
+          task-definition: ${{ steps.render-web-task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
