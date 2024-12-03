@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 10
     defaults:
       run:
-        working-directory: ./user/bin/bash
+        working-directory: ../confess-front
 
     steps:
       - uses: actions/checkout@v3
