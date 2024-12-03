@@ -18,16 +18,16 @@ jobs:
     name: confess-front Container - Test and Build
     runs-on: ubuntu-20.04
     timeout-minutes: 10
-    # defaults:
-    #   run:
-    #     working-directory: ../confess-front
+    defaults:
+      run:
+        working-directory: confess-front
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Build an Image and Run Tests
         run: |
-docker buildx build --target production -t temp_confess_image_name:latest -f ./docker/Dockerfile .
+          docker image build --target production -t temp_confess_image_name:latest .
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
