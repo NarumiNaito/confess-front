@@ -72,7 +72,6 @@ export default function HomeCommentContent() {
       <div>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <Box
-            mt={5}
             mb={8}
             sx={{
               fontStyle: "italic",
@@ -82,7 +81,7 @@ export default function HomeCommentContent() {
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               color: "#fff",
-              padding: "6rem",
+              padding: "7rem",
               borderRadius: "8px",
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
               "&::before": {
@@ -263,7 +262,7 @@ export default function HomeCommentContent() {
           </Grid>
         </Box>
       </div>
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }} justifyContent={"center"}>
+      <Box sx={{ display: "flex", flexDirection: "row", pb: 4 }} justifyContent={"center"}>
         <Pagination hidePrevButton hideNextButton page={page} onChange={handleChangePage} count={pageCount} boundaryCount={1} />
       </Box>
     </>

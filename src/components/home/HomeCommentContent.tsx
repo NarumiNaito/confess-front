@@ -54,8 +54,6 @@ export default function HomeCommentContent() {
       <div>
         <Box sx={{ mb: 5, display: "flex", flexDirection: "column", gap: 4 }}>
           <Box
-            mt={5}
-            mb={8}
             sx={{
               fontStyle: "italic",
               position: "relative",
@@ -64,7 +62,7 @@ export default function HomeCommentContent() {
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               color: "#fff",
-              padding: "6rem",
+              padding: "7rem",
               borderRadius: "8px",
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
               "&::before": {
@@ -114,48 +112,52 @@ export default function HomeCommentContent() {
               </Typography>
             </motion.div>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              gap: 1,
-              height: "100%",
-            }}
-          >
-            <Typography mt={2} variant="h6" component="div" color="error">
-              「{location.state.category_name}」
-            </Typography>
-
-            <Typography m={1} whiteSpace={"pre-line"} variant="h6">
-              {location.state.content}
-            </Typography>
-
+        </Box>
+        <Box sx={{ flexGrow: 1, overflow: "hidden", margin: "0 auto", display: "flex", justifyContent: "center", px: 3 }}>
+          <Grid sx={{ width: 900 }}>
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
-                gap: 2,
-                alignItems: "center",
+                flexDirection: "column",
                 justifyContent: "space-between",
+                gap: 1,
+                height: "100%",
               }}
             >
-              <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
-                <Button
-                  color="inherit"
-                  sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
-                  startIcon={
-                    location.state.image ? <img src={location.state.image} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
-                  }
-                >
-                  {location.state.name}
-                </Button>
-              </Box>
+              <Typography mt={5} variant="h6" component="div" color="error">
+                「{location.state.category_name}」
+              </Typography>
 
-              <Typography variant="subtitle1">{dayjs(location.state.updated_at).format("YYYY年M月D日")}</Typography>
+              <Typography m={1} whiteSpace={"pre-line"} variant="h6">
+                {location.state.content}
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 2,
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box sx={{ display: "flex", flexDirection: "row", gap: 1, alignItems: "center" }}>
+                  <Button
+                    color="inherit"
+                    sx={{ textTransform: "none", display: "flex", flexDirection: "row", gap: 1, alignItems: "center", fontSize: 20 }}
+                    startIcon={
+                      location.state.image ? <img src={location.state.image} alt="userIcon" style={{ width: 32, height: 32, borderRadius: "50%" }} /> : <AccountCircle sx={{ width: 32, height: 32 }} />
+                    }
+                  >
+                    {location.state.name}
+                  </Button>
+                </Box>
+
+                <Typography variant="subtitle1">{dayjs(location.state.updated_at).format("YYYY年M月D日")}</Typography>
+              </Box>
+              <Divider />
             </Box>
-            <Divider />
-          </Box>
+          </Grid>
         </Box>
       </div>
 
@@ -163,7 +165,7 @@ export default function HomeCommentContent() {
         <Box sx={{ flexGrow: 1, overflow: "hidden", margin: "0 auto", display: "flex", justifyContent: "center", px: 3 }}>
           <Grid sx={{ width: 800 }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <Box mb={5}>
+              <Box my={7}>
                 <Typography variant="h5">コメント一覧</Typography>
               </Box>
             </Box>
@@ -213,7 +215,7 @@ export default function HomeCommentContent() {
           </Grid>
         </Box>
       </div>
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }} justifyContent={"center"}>
+      <Box sx={{ display: "flex", flexDirection: "row", pb: 7 }} justifyContent={"center"}>
         <Pagination hidePrevButton hideNextButton page={page} onChange={handleChangePage} count={pageCount} boundaryCount={1} />
       </Box>
     </>

@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../../../components/header/Header";
 import Footer from "../../../components/footer/Footer";
 import FulfillmentContent from "../../../components/myPage/fulfillment/FulfillmentContent";
@@ -14,9 +14,7 @@ function Fulfillment() {
         }}
       >
         <Header />
-        <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <FulfillmentContent />
-        </Container>
+        <FulfillmentContent />
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <Footer />
         </Box>

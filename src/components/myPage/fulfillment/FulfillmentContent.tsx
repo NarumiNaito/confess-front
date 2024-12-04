@@ -161,7 +161,6 @@ export default function FulfillmentContent() {
     <>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
         <Box
-          mt={5}
           mb={2}
           sx={{
             fontStyle: "italic",
@@ -171,7 +170,7 @@ export default function FulfillmentContent() {
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             color: "#fff",
-            padding: "5rem",
+            padding: "6rem",
             borderRadius: "8px",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             "&::before": {
@@ -276,6 +275,7 @@ export default function FulfillmentContent() {
             justifyContent: "center",
             alignItems: { xs: "center" },
             gap: 4,
+            mt: 3,
             overflow: "auto",
           }}
         >
@@ -437,7 +437,7 @@ export default function FulfillmentContent() {
           </div>
         </>
       )}
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }} justifyContent={"center"}>
+      <Box sx={{ display: "flex", flexDirection: "row", p: 7 }} justifyContent={"center"}>
         <Pagination hidePrevButton hideNextButton page={page} onChange={handleChangePage} count={pageCount} boundaryCount={1} />
       </Box>
     </>

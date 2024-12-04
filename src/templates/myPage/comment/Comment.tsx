@@ -77,9 +77,7 @@ function Comment() {
         }}
       >
         <Header />
-        <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <CommentContent {...location} />
-        </Container>
+        <CommentContent {...location} />
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <AppBar position="sticky">
             <Container sx={{ Bottom: 0, padding: 2, mt: 1 }}>

@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../../components/header/AuthHeader";
 import Footer from "../../components/footer/AuthFooter";
 import HomeDetailContent from "../../components/home/HomeDetailContent";
@@ -14,9 +14,7 @@ function HomeDetailUser() {
         }}
       >
         <Header />
-        <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <HomeDetailContent />
-        </Container>
+        <HomeDetailContent />
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <Footer />
         </Box>
