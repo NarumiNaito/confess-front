@@ -141,7 +141,6 @@ export default function DetailContent() {
           }}
         >
           <Box
-            mt={5}
             sx={{
               fontStyle: "italic",
               position: "relative",
@@ -150,7 +149,7 @@ export default function DetailContent() {
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               color: "#fff",
-              padding: "3rem",
+              padding: "7rem",
               borderRadius: "8px",
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
               "&::before": {
@@ -207,10 +206,12 @@ export default function DetailContent() {
         </motion.div>
       </Box>
 
-      <Box mt={3} mb={2}>
+      <Box mt={5}>
         <Divider />
       </Box>
-      <Typography variant="h5">懺悔一覧</Typography>
+      <Typography m={5} variant="h5">
+        懺悔一覧
+      </Typography>
       {loading ? (
         <SkeletonLoading />
       ) : (
@@ -308,7 +309,7 @@ export default function DetailContent() {
           </div>
         </>
       )}
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 4 }} justifyContent={"center"}>
+      <Box sx={{ display: "flex", flexDirection: "row", p: 7 }} justifyContent={"center"}>
         <Pagination hidePrevButton hideNextButton page={page} onChange={handleChangePage} count={pageCount} boundaryCount={1} />
       </Box>
     </>

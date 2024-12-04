@@ -14,9 +14,7 @@ function Notification() {
         }}
       >
         <Header />
-        <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <NotificationContent />
-        </Container>
+        <NotificationContent />
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <Footer />
         </Box>

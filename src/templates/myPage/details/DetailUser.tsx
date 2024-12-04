@@ -14,9 +14,7 @@ function DetailUser() {
         }}
       >
         <Header />
-        <Container maxWidth="lg" component="main" sx={{ display: "flex", flexDirection: "column", my: 7, gap: 4 }}>
-          <DetailContent />
-        </Container>
+        <DetailContent />
         <Box component="footer" sx={{ mt: "auto", width: "100%" }}>
           <Footer />
         </Box>

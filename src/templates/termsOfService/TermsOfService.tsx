@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 
@@ -29,11 +29,12 @@ function TermsOfService() {
         <Box component="section" sx={{ bgcolor: "rgba(255, 255, 255, 0.12)", display: "flex", overflow: "hidden" }}>
           <Container
             sx={{
-              m: 5,
+              my: 5,
               position: "relative",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Typography color="error" variant="h4" component="h4" sx={{ m: 5, fontFamily: "cursive", fontStyle: "italic" }}>
