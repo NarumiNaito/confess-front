@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import Header from "../../../components/header/Header";
 import { useLocation, useParams } from "react-router-dom";
 import Footer from "../../../components/footer/Footer";

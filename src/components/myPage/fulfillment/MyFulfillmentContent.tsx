@@ -51,7 +51,6 @@ export default function MyFulfillmentContent(props: any) {
       <div>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <Box
-            // mt={5}
             mb={8}
             sx={{
               fontStyle: "italic",

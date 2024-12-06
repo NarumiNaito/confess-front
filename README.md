@@ -7,7 +7,7 @@
 ## アプリ概要
 
 <br>
-URL ▶ <a href="https://zangenoyakata.com/" target="_blank" rel="noopener noreferrer">https://zangenoyakata.com/</a>
+URL ▶ <a href="https://confession.zangenoyakata.com" target="_blank" rel="noopener noreferrer">https://zangenoyakata.com/</a>
 <br>
 <br>
 
@@ -178,4 +178,4 @@ confess-api-server 参照 URL ▶ <a href="https://github.com/NarumiNaito/confes
 
 ## ER 図
 
-<img width="638" alt="ER図" src="https://github.com/user-attachments/assets/9b1f0cca-bab7-4fd3-871b-53dd0e94ca85">
+<img width="638" alt="ER図" src="https://github.com/user-attachments/assets/d9444c57-e1a7-4dd3-9ad3-c4f71180891d">
