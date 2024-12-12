@@ -178,4 +178,4 @@ confess-api-server 参照 URL ▶ <a href="https://github.com/NarumiNaito/confes
 
 ## ER 図
 
-<img width="638" alt="ER図" src="https://github.com/user-attachments/assets/d9444c57-e1a7-4dd3-9ad3-c4f71180891d">
+<img width="638" alt="ER図" src="https://github.com/user-attachments/assets/13d2d01e-4f08-463c-a78c-296a9ee15c0c">
