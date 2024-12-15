@@ -7,7 +7,7 @@
 ## アプリ概要
 
 <br>
-URL ▶ <a href="https://confession.zangenoyakata.com" target="_blank" rel="noopener noreferrer">https://zangenoyakata.com/</a>
+URL ▶ <a href="https://confession.zangenoyakata.com" target="_blank" rel="noopener noreferrer">https://confess.zangenoyakata.com/</a>
 <br>
 <br>
 
@@ -142,7 +142,7 @@ URL ▶ <a href="https://confession.zangenoyakata.com" target="_blank" rel="noop
 
 ### フロントエンド
 
-- 言語: JavaScript/TypeScript 4.9.5
+- 言語: TypeScript 4.9.5
 - フレームワーク: React.js 18.3.1
 - UI ライブラリ: Material UI 6.1.1
 - UI ライブラリ: Material Icons 6.1.1
@@ -167,11 +167,11 @@ confess-api-server 参照 URL ▶ <a href="https://github.com/NarumiNaito/confes
 ## インフラ
 
 - Docker/Docker-Compose
-- AWS(Route53, CloudFront, S3, ACM, VPC, ALB, ECS, Fargate, ECR, RDS)
+- AWS(Route53, CloudFront, S3, ACM, VPC, ALB, Fargate, ECS, ECR, RDS)
 
 ### インフラ構成図
 
-<!-- <img width="638" alt="構成図" src="https://user-images.githubusercontent.com/87213148/193205719-19da2de8-806a-49a3-99fb-69c4c07de5fa.png"> -->
+<img width="638" alt="構成図" src="https://github.com/user-attachments/assets/32b393da-dab9-43b3-a81e-a06a0aa7d709">
 
 <br>
 <br>
