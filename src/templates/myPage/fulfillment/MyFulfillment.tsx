@@ -6,10 +6,10 @@ import MyFulfillmentContent from "../../../components/myPage/fulfillment/MyFulfi
 
 function MyFulfillment() {
   const location = useLocation();
-  const params = useParams();
+  // const params = useParams();
 
-  console.log(params);
-  console.log(location);
+  // console.log(params);
+  // console.log(location);
 
   return (
     <>
